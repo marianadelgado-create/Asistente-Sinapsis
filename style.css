@@ -1,156 +1,164 @@
 /* ==========================================================================
-   1. CONFIGURACIÓN GENERAL Y ESTÉTICA NEON
+   1. BASES Y CONFIGURACIÓN RETRO-MODERNA
    ========================================================================== */
-body {
+   body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0b0f19;
+    background-color: #090d16; /* Negro cibernético */
     color: #f8fafc;
     scroll-behavior: smooth;
 }
 
 /* ==========================================================================
-   2. NAVBAR COMPONENT: CONTROL DE LOGO Y TRANSPARENCIA
+   2. NAVBAR COMPONENT: SOLUCIÓN VISUAL Y REDISEÑO DE LOGO
    ========================================================================== */
 .navbar-custom {
-    background-color: rgba(11, 15, 25, 0.9) !important;
-    backdrop-filter: blur(12px);
-    border-bottom: 2px solid #ff007f; /* Línea neón fucsia */
+    background-color: rgba(9, 13, 22, 0.95) !important; /* Fondo sólido oscuro refractario */
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid #ff007f; /* Línea de luz fucsia ochentera */
     z-index: 1050 !important;
-    padding: 15px 0; /* Más cuerpo a la barra */
+    padding: 12px 0;
 }
 
-/* CAMBIO RADICAL AL LOGO Y NOMBRE */
-.logo-texto-main {
-    font-size: 1.8rem; /* Mucho más grande y visible */
+/* Rediseño del Logo de Sinapsis */
+.logo-text-neon {
+    font-size: 1.75rem; /* Aumento de tamaño sustancial */
     font-weight: 800;
     letter-spacing: 3px;
     background: linear-gradient(to right, #ffffff, #00f0ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); /* Resplandor retro */
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6); /* Brillo cian */
 }
 
-.logo-icono-main {
-    font-size: 2.2rem; /* Icono grande a tono */
+.logo-icon-neon {
+    font-size: 2.1rem;
     color: #00f0ff;
-    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.7));
-}
-
-/* Título gigante en el inicio */
-.titulo-hero {
-    font-size: 4.5rem;
-    letter-spacing: 6px;
-    text-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+    filter: drop-shadow(0 0 6px #00f0ff);
 }
 
 /* ==========================================================================
-   3. SECCIONES Y TEXTOS
+   3. ESTRUCTURAS, SECCIONES Y TÍTULOS GIGANTES
    ========================================================================== */
 section {
     padding: 90px 0;
-    background-color: #0b0f19;
-    border-bottom: 1px solid rgba(255, 0, 127, 0.12);
-    scroll-margin-top: 85px;
+    background-color: #090d16;
+    border-bottom: 1px solid rgba(255, 0, 127, 0.1);
+    scroll-margin-top: 80px; /* Margen para que la barra no pise los títulos */
 }
 
-#generala, #reglamentos {
-    background-color: #05070c !important; 
-}
-
-/* Degradados para títulos internos */
-.text-info {
-    background: linear-gradient(45deg, #ff007f, #00f0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-color: transparent;
+/* Estilo para el título de marca en Header */
+.hero-title-neon {
+    font-size: 4.8rem;
+    letter-spacing: 5px;
+    text-shadow: 0 0 20px rgba(255, 0, 127, 0.7);
     font-weight: 700;
 }
 
+.text-info-neon {
+    background: linear-gradient(45deg, #ff007f, #00f0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.title-section-neon {
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+}
+
 /* ==========================================================================
-   4. COMPONENTES INTERACTIVOS (TARJETAS ARCADE)
+   4. TARJETAS FLOTANTES (CENTRAL GENERALA & REGLAMENTOS)
    ========================================================================== */
 .card-herramienta {
     background-color: #121826 !important;
-    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    border: 1px solid rgba(0, 240, 255, 0.15) !important;
     border-radius: 16px;
-    padding: 24px;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* Efecto Hover Arcade */
 .card-herramienta:hover {
-    transform: translateY(-8px) scale(1.02);
+    transform: translateY(-6px) scale(1.02);
     border-color: #00f0ff !important;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(255, 0, 127, 0.2);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4), 0 0 30px rgba(255, 0, 127, 0.15);
 }
 
 .icon-floating {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     color: #00f0ff;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
     transition: transform 0.3s ease;
 }
 
 .card-herramienta:hover .icon-floating {
     color: #ff007f;
-    text-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
-    transform: scale(1.1) rotate(5deg);
+    text-shadow: 0 0 12px rgba(255, 0, 127, 0.7);
+    transform: scale(1.08) rotate(4deg);
+}
+
+.card-historia-retro {
+    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* ==========================================================================
-   5. FORMULARIOS Y BOTONES
+   5. FORMULARIOS RETRO Y BOTONES DE MARCA
    ========================================================================== */
 .form-container-box {
-    background-color: #121826; 
-    border: 1px solid rgba(255, 0, 127, 0.3);
-    box-shadow: 0 0 25px rgba(255, 0, 127, 0.1);
+    background-color: #121826;
+    border: 1px solid rgba(255, 0, 127, 0.25) !important;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.08);
 }
 
 .form-control, .form-select {
-    background-color: #0b0f19;
-    border: 1px solid #334155;
-    color: #fff;
+    background-color: #090d16;
+    border: 1px solid #2d3748;
+    color: #fff !important;
 }
 
 .form-control:focus, .form-select:focus {
-    background-color: #0b0f19;
+    background-color: #090d16;
     border-color: #00f0ff;
-    color: #fff;
-    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
 }
 
+/* Botón interactivo Fucsia neón */
 .btn-brand {
     background: linear-gradient(45deg, #ff007f, #7928ca);
     color: #fff;
     font-weight: 600;
     border: none;
-    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 0, 127, 0.25);
     transition: all 0.2s ease;
 }
 
 .btn-brand:hover {
     background: linear-gradient(45deg, #7928ca, #ff007f);
     color: #fff;
-    box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
-    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+    transform: translateY(-1px);
 }
 
+/* Ajustes secundarios */
 .text-muted, .text-secondary {
     color: #64748b !important;
 }
 
 .list-group-item {
     background-color: #121826 !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-.badge.bg-success {
+.text-info-neon-flat {
+    color: #00f0ff;
+}
+
+.badge-online {
     background-color: #00ff66 !important;
     box-shadow: 0 0 8px #00ff66;
+    color: #090d16 !important;
 }
 
-.carousel-inner {
-    background-color: #121826;
-    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+.text-warning-neon {
+    color: #ffcc00;
+    filter: drop-shadow(0 0 4px rgba(255, 204, 0, 0.4));
 }
