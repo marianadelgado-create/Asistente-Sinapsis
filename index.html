@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="es"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinapsis - Tu Compañero Digital para Juegos de Mesa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <i class="bi bi-diagram-3-fill me-2 text-info"></i>
+                <span class="fw-bold tracking-wide text-uppercase">Sinapsis</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hibridos">Juegos Híbridos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#generala">Central Generala</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#registro">Crear Cuenta</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header id="inicio" class="py-5 text-center bg-dark bg-gradient position-relative">
+        <div class="container py-5">
+            <h1 class="display-4 fw-bold text-white mb-3">Tu Compañero Digital para Juegos de Mesa</h1>
+            <p class="lead text-muted mb-4">Potenciando los clásicos de siempre con herramientas digitales avanzadas.</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-secondary border-0 text-white"><i class="bi bi-search"></i></span>
+                        <input type="text" class="form-control" placeholder="Busca un juego, regla o herramienta...">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="hibridos">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-white">Explorá la Experiencia <span class="text-info">Híbrida</span></h2>
+                <p class="text-muted">Combinamos tableros físicos con soporte e inteligencia digital interactiva.</p>
+            </div>
+
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div id="carouselJuegos" class="carousel slide shadow-lg" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#carouselJuegos" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#carouselJuegos" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#carouselJuegos" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                        <div class="carousel-inner rounded-4 border border-secondary">
+                            <div class="carousel-item active" data-bs-interval="4000">
+                                <div class="bg-secondary bg-opacity-25 p-5 text-center d-flex flex-column justify-content-center align-items-center" style="min-height: 350px;">
+                                    <i class="bi bi-shield-shaded text-info display-1 mb-3"></i>
+                                    <h4 class="text-white">El 5to Jinete</h4>
+                                    <span class="badge bg-warning text-dark">JUEGO ORIGINAL - ESTRATEGIA</span>
+                                </div>
+                            </div>
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <div class="bg-dark bg-opacity-50 p-5 text-center d-flex flex-column justify-content-center align-items-center" style="min-height: 350px;">
+                                    <i class="bi bi-dice-5 text-success display-1 mb-3"></i>
+                                    <h4 class="text-white">Generala Táctica</h4>
+                                    <span class="badge bg-info text-dark">AZAR Y PROBABILIDAD</span>
+                                </div>
+                            </div>
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <div class="bg-secondary bg-opacity-10 p-5 text-center d-flex flex-column justify-content-center align-items-center" style="min-height: 350px;">
+                                    <i class="bi bi-suit-spade-fill text-danger display-1 mb-3"></i>
+                                    <h4 class="text-white">Truco Asistido</h4>
+                                    <span class="badge bg-danger">CARTAS - COMPAÑERO DIGITAL</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselJuegos" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselJuegos" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 ps-lg-5">
+                    <h3 class="text-white fw-bold mb-3">Soporte Digital en Tiempo Real</h3>
+                    <p class="text-secondary">Nuestra plataforma interactúa directamente con tus mecánicas en mesa física. No reemplazamos el tablero, lo expandimos mediante interfaces inteligentes que calculan, trackean y dinamizan cada turno.</p>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <button class="btn btn-danger"><i class="bi bi-play-fill me-1"></i> Iniciar Partida Asistida</button>
+                        <button class="btn btn-outline-info">Explorar Mecánicas</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="generala" class="bg-black bg-opacity-20">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-white">Central de Herramientas: <span class="text-info">La Generala</span></h2>
+                <p class="text-muted">Accedé a los asistentes interactivos con diseño dinámico.</p>
+            </div>
+            
+            <div class="row g-4 justify-content-center">
+                <div class="col-6 col-md-3">
+                    <div class="card-herramienta p-4 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-dice-5-fill icon-floating mb-3"></i>
+                        <h5 class="text-white mb-1">Anotador Táctil</h5>
+                        <small class="text-muted">Anotador de dados digital</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card-herramienta p-4 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-stopwatch icon-floating mb-3"></i>
+                        <h5 class="text-white mb-1">Cronómetro</h5>
+                        <small class="text-muted">Control de turnos 15:00</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="card-herramienta p-4 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-calculator icon-floating mb-3"></i>
+                        <h5 class="text-white mb-1">Conversión</h5>
+                        <small class="text-muted">Cálculo de puntajes</small>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3" id="btn-contador">
+                    <div class="card-herramienta p-4 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+                        <i class="bi bi-plus-square icon-floating mb-3"></i>
+                        <h5 class="text-white mb-1">Contador</h5>
+                        <small class="text-muted" id="txt-contador">Lanzamientos: 0</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comunidad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <h2 class="fw-bold mb-3">Comunidad <span class="text-info">Activa</span></h2>
+                    <p class="text-muted">Mirá quién está jugando en este momento e integrate a salas de asistencia global.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="list-group">
+                        <div class="list-group-item bg-dark border-secondary text-white d-flex justify-content-between align-items-center py-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle fs-3 text-info me-3"></i>
+                                <div>
+                                    <h6 class="mb-0">Lucas</h6>
+                                    <small class="text-muted">Gestionando El 5to Jinete</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success rounded-pill"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Online</span>
+                        </div>
+                        <div class="list-group-item bg-dark border-secondary text-white d-flex justify-content-between align-items-center py-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle fs-3 text-info me-3"></i>
+                                <div>
+                                    <h6 class="mb-0">Valeria</h6>
+                                    <small class="text-muted">Partida activa, Truco - 4 Part.</small>
+                                </div>
+                            </div>
+                            <span class="badge bg-success rounded-pill"><i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i> Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="registro" class="bg-dark">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="p-5 rounded-3 shadow-lg form-container-box">
+                        <h3 class="text-center fw-bold mb-4 text-white">Generar Usuario</h3>
+                        
+                        <div id="registro-alerta" class="alert alert-success d-none" role="alert"></div>
+
+                        <form id="form-registro" class="needs-validation" novalidate="">
+                            <div class="mb-3">
+                                <label for="username" class="form-label text-secondary">Nombre de Usuario</label>
+                                <input type="text" class="form-control" id="username" placeholder="Ej: JugadorGenerala" required="">
+                                <div class="invalid-feedback">Por favor ingresá un nombre de usuario válido.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label text-secondary">Correo Electrónico</label>
+                                <input type="email" class="form-control" id="email" placeholder="nombre@correo.com" required="">
+                                <div class="invalid-feedback">Ingresá una dirección de correo electrónico válida.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="juegoPreferido" class="form-label text-secondary">Juego Favorito</label>
+                                <select class="form-select" id="juegoPreferido" required="">
+                                    <option value="" disabled="" selected="">Selecciona una opción</option>
+                                    <option value="generala">La Generala</option>
+                                    <option value="truco">Truco</option>
+                                    <option value="5tojinete">El 5to Jinete (Híbrido)</option>
+                                </select>
+                                <div class="invalid-feedback">Por favor seleccioná un juego de la lista.</div>
+                            </div>
+                            <button type="submit" class="btn btn-brand w-100 mt-3 py-2">Registrarse en Sinapsis</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-4 text-center bg-black text-muted">
+        <div class="container">
+            <small>© 2026 Sinapsis App - Proyecto Académico Presentado para Evaluación.</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="main.js"></script>
+</body></html>
