@@ -3,56 +3,75 @@
    ========================================================================== */
    body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0b0f19; /* Negro azulado profundo de sala de arcade */
+    background-color: #0b0f19;
     color: #f8fafc;
     scroll-behavior: smooth;
 }
 
 /* ==========================================================================
-   2. NAVBAR COMPONENT: VIDRIO ESMERILADO OCHENTERO
+   2. NAVBAR COMPONENT: CONTROL DE LOGO Y TRANSPARENCIA
    ========================================================================== */
 .navbar-custom {
-    background-color: rgba(15, 23, 42, 0.85) !important; /* Semi-transparente */
-    backdrop-filter: blur(12px); /* Efecto vidrio moderno */
-    border-bottom: 2px solid #ff007f; /* Línea de neón fucsia abajo */
+    background-color: rgba(11, 15, 25, 0.9) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid #ff007f; /* Línea neón fucsia */
     z-index: 1050 !important;
+    padding: 15px 0; /* Más cuerpo a la barra */
 }
 
-/* Logo de Sinapsis brillando en cian */
-.navbar-brand {
-    text-shadow: 0 0 8px #00f0ff;
+/* CAMBIO RADICAL AL LOGO Y NOMBRE */
+.logo-texto-main {
+    font-size: 1.8rem; /* Mucho más grande y visible */
+    font-weight: 800;
+    letter-spacing: 3px;
+    background: linear-gradient(to right, #ffffff, #00f0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); /* Resplandor retro */
+}
+
+.logo-icono-main {
+    font-size: 2.2rem; /* Icono grande a tono */
+    color: #00f0ff;
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.7));
+}
+
+/* Título gigante en el inicio */
+.titulo-hero {
+    font-size: 4.5rem;
+    letter-spacing: 6px;
+    text-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
 }
 
 /* ==========================================================================
-   3. SECCIONES Y TÍTULOS (CON DEGRADADO DE LUZ)
+   3. SECCIONES Y TEXTOS
    ========================================================================== */
 section {
-    padding: 80px 0;
+    padding: 90px 0;
     background-color: #0b0f19;
-    border-bottom: 1px solid rgba(255, 0, 127, 0.15); /* Separadores tenues */
-    scroll-margin-top: 75px;
+    border-bottom: 1px solid rgba(255, 0, 127, 0.12);
+    scroll-margin-top: 85px;
 }
 
-/* Fondo ligeramente diferente para la generala */
-#generala {
+#generala, #reglamentos {
     background-color: #05070c !important; 
 }
 
-/* Títulos principales con degradado de Fucsia a Cian */
+/* Degradados para títulos internos */
 .text-info {
     background: linear-gradient(45deg, #ff007f, #00f0ff);
     -webkit-background-clip: text;
-    -webkit-background-fill-color: transparent;
     -webkit-text-fill-color: transparent;
+    -webkit-text-color: transparent;
     font-weight: 700;
 }
 
 /* ==========================================================================
-   4. INTERFACES FLOTANTES: LAS TARJETAS ARCADE (CENTRAL GENERALA)
+   4. COMPONENTES INTERACTIVOS (TARJETAS ARCADE)
    ========================================================================== */
 .card-herramienta {
     background-color: #121826 !important;
-    border: 1px solid rgba(0, 240, 255, 0.2) !important; /* Borde cian sutil */
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
     border-radius: 16px;
     padding: 24px;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -60,14 +79,12 @@ section {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Efecto cuando pasás el mouse: ¡Explosión de Neón! */
 .card-herramienta:hover {
     transform: translateY(-8px) scale(1.02);
     border-color: #00f0ff !important;
     box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(255, 0, 127, 0.2);
 }
 
-/* El icono flotante brilla con luz propia */
 .icon-floating {
     font-size: 2.5rem;
     color: #00f0ff;
@@ -82,29 +99,11 @@ section {
 }
 
 /* ==========================================================================
-   5. TEXTOS Y COMUNIDAD
-   ========================================================================== */
-.text-muted, .text-secondary {
-    color: #64748b !important; /* Gris retro legible */
-}
-
-/* Lista de comunidad estilo "Tablero de puntuaciones" */
-.list-group-item {
-    background-color: #121826 !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
-}
-
-.badge.bg-success {
-    background-color: #00ff66 !important;
-    box-shadow: 0 0 8px #00ff66;
-}
-
-/* ==========================================================================
-   6. FORMULARIO RETRO-FUTURISTA
+   5. FORMULARIOS Y BOTONES
    ========================================================================== */
 .form-container-box {
     background-color: #121826; 
-    border: 1px solid rgba(255, 0, 127, 0.3); /* Contenedor delineado en fucsia */
+    border: 1px solid rgba(255, 0, 127, 0.3);
     box-shadow: 0 0 25px rgba(255, 0, 127, 0.1);
 }
 
@@ -114,7 +113,6 @@ section {
     color: #fff;
 }
 
-/* Al hacer foco en un input, brilla en cian */
 .form-control:focus, .form-select:focus {
     background-color: #0b0f19;
     border-color: #00f0ff;
@@ -122,13 +120,11 @@ section {
     box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
 }
 
-/* Botón interactivo de registro fucsia brillante */
 .btn-brand {
     background: linear-gradient(45deg, #ff007f, #7928ca);
     color: #fff;
     font-weight: 600;
     border: none;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
     transition: all 0.2s ease;
 }
@@ -140,9 +136,20 @@ section {
     transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   7. AJUSTES DE GALERÍA (CAROUSEL)
-   ========================================================================== */
+.text-muted, .text-secondary {
+    color: #64748b !important;
+}
+
+.list-group-item {
+    background-color: #121826 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.badge.bg-success {
+    background-color: #00ff66 !important;
+    box-shadow: 0 0 8px #00ff66;
+}
+
 .carousel-inner {
     background-color: #121826;
     border: 1px solid rgba(0, 240, 255, 0.2) !important;
