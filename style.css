@@ -1,30 +1,38 @@
 /* --- CONFIGURACIÓN GENERAL Y TIPOGRAFÍA --- */
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0f172a;
+    background-color: #0f172a; /* Azul noche oscuro de base */
     color: #f8fafc;
     scroll-behavior: smooth;
 }
 
-/* --- MENÚ / NAVBAR PERSONALIZADA --- */
+/* --- MENÚ / NAVBAR (Soluciona la superposición de Captura 3) --- */
 .navbar-custom {
-    background-color: #1e293b;
+    background-color: #1e293b !important; /* Forzamos el color gris oscuro para que no sea transparente */
     border-bottom: 2px solid #334155;
+    z-index: 1050; /* Asegura que el menú siempre quede por encima del contenido al hacer scroll */
 }
 
-/* --- MAQUETACIÓN DE SECCIONES --- */
+/* --- MAQUETACIÓN DE SECCIONES (Unifica el Dark Mode de Captura 2) --- */
 section {
     padding: 80px 0;
     border-bottom: 1px solid #1e293b;
+    background-color: #0f172a; /* Forzamos a que todas las secciones hereden el fondo oscuro */
 }
 
-/* --- TARJETAS CON EFECTO FLOTANTE --- */
+/* Forzamos que la sección de la generala tenga un tono sutilmente distinto pero oscuro */
+#generala {
+    background-color: #090d16 !important; 
+}
+
+/* --- TARJETAS CON EFECTO FLOTANTE (Mejora el contraste de Captura 3) --- */
 .card-herramienta {
-    background: #1e293b;
+    background-color: #1e293b !important; /* Fondo gris claro intermedio para resaltar del fondo negro */
     border: 1px solid #334155;
     border-radius: 16px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Sombra suave para despegarse del fondo */
 }
 
 .card-herramienta:hover {
@@ -35,7 +43,7 @@ section {
 
 .icon-floating {
     font-size: 2.5rem;
-    color: #38bdf8;
+    color: #38bdf8; /* Color celeste brillante para los iconos */
     transition: transform 0.3s ease;
 }
 
@@ -43,7 +51,12 @@ section {
     transform: scale(1.1) rotate(5deg);
 }
 
-/* --- FORMULARIOS, INPUTS Y CONTENEDORES --- */
+/* --- TEXTOS SECUNDARIOS (Mejora la legibilidad) --- */
+.text-muted, .text-secondary {
+    color: #94a3b8 !important; /* Un gris más claro para que sea legible sobre fondo oscuro */
+}
+
+/* --- FORMULARIOS Y CONTENEDORES --- */
 .form-container-box {
     background-color: #1e293b; 
     border: 1px solid #334155;
