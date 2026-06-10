@@ -1,120 +1,149 @@
 /* ==========================================================================
-   1. CONFIGURACIÓN GENERAL Y TIPOGRAFÍA
+   1. CONFIGURACIÓN GENERAL Y ESTÉTICA NEON
    ========================================================================== */
    body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0f172a; /* Fondo azul noche oscuro de base */
+    background-color: #0b0f19; /* Negro azulado profundo de sala de arcade */
     color: #f8fafc;
     scroll-behavior: smooth;
 }
 
 /* ==========================================================================
-   2. COMPONENTE: NAVBAR / MENÚ DE NAVEGACIÓN
-   (Soluciona la transparencia y la superposición de palabras)
+   2. NAVBAR COMPONENT: VIDRIO ESMERILADO OCHENTERO
    ========================================================================== */
 .navbar-custom {
-    background-color: #1e293b !important; /* Fondo gris oscuro sólido para tapar el contenido de atrás */
-    border-bottom: 2px solid #334155;
-    z-index: 1050 !important; /* Obliga al menú a mantenerse siempre al frente de todo */
+    background-color: rgba(15, 23, 42, 0.85) !important; /* Semi-transparente */
+    backdrop-filter: blur(12px); /* Efecto vidrio moderno */
+    border-bottom: 2px solid #ff007f; /* Línea de neón fucsia abajo */
+    z-index: 1050 !important;
 }
 
-/* Evita que los enlaces del menú se peguen al borde del navegador */
-.navbar-custom .nav-link {
-    padding: 0.5rem 1rem;
-    transition: color 0.2s ease;
+/* Logo de Sinapsis brillando en cian */
+.navbar-brand {
+    text-shadow: 0 0 8px #00f0ff;
 }
 
 /* ==========================================================================
-   3. ESTRUCTURA DE SECCIONES
+   3. SECCIONES Y TÍTULOS (CON DEGRADADO DE LUZ)
    ========================================================================== */
 section {
     padding: 80px 0;
-    border-bottom: 1px solid #1e293b;
-    background-color: #0f172a; /* Forzamos consistencia oscura en todas las secciones */
-    scroll-margin-top: 75px; /* Le da "aire" al título para que la barra fija no lo tape al usar el menú */
+    background-color: #0b0f19;
+    border-bottom: 1px solid rgba(255, 0, 127, 0.15); /* Separadores tenues */
+    scroll-margin-top: 75px;
 }
 
-/* Tono sutilmente más oscuro para la sección de la generala (genera ritmo visual) */
+/* Fondo ligeramente diferente para la generala */
 #generala {
-    background-color: #090d16 !important; 
+    background-color: #05070c !important; 
+}
+
+/* Títulos principales con degradado de Fucsia a Cian */
+.text-info {
+    background: linear-gradient(45deg, #ff007f, #00f0ff);
+    -webkit-background-clip: text;
+    -webkit-background-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
 }
 
 /* ==========================================================================
-   4. COMPONENTE: TARJETAS FLOTANTES (CENTRAL GENERALA)
-   (Mejora el contraste y recupera la forma de contenedor)
+   4. INTERFACES FLOTANTES: LAS TARJETAS ARCADE (CENTRAL GENERALA)
    ========================================================================== */
 .card-herramienta {
-    background-color: #1e293b !important; /* Fondo gris intermedio para despegarse del fondo negro */
-    border: 1px solid #334155 !important;
+    background-color: #121826 !important;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important; /* Borde cian sutil */
     border-radius: 16px;
     padding: 24px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra suave para dar volumen */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
 }
 
+/* Efecto cuando pasás el mouse: ¡Explosión de Neón! */
 .card-herramienta:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
-    border-color: #38bdf8 !important;
+    transform: translateY(-8px) scale(1.02);
+    border-color: #00f0ff !important;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), 0 0 40px rgba(255, 0, 127, 0.2);
 }
 
+/* El icono flotante brilla con luz propia */
 .icon-floating {
     font-size: 2.5rem;
-    color: #38bdf8; /* Celeste brillante característico de Sinapsis */
+    color: #00f0ff;
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6);
     transition: transform 0.3s ease;
 }
 
 .card-herramienta:hover .icon-floating {
+    color: #ff007f;
+    text-shadow: 0 0 15px rgba(255, 0, 127, 0.8);
     transform: scale(1.1) rotate(5deg);
 }
 
 /* ==========================================================================
-   5. TEXTOS SECUNDARIOS Y LEGIBILIDAD
+   5. TEXTOS Y COMUNIDAD
    ========================================================================== */
 .text-muted, .text-secondary {
-    color: #94a3b8 !important; /* Gris claro con contraste suficiente para fondo oscuro */
+    color: #64748b !important; /* Gris retro legible */
+}
+
+/* Lista de comunidad estilo "Tablero de puntuaciones" */
+.list-group-item {
+    background-color: #121826 !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.badge.bg-success {
+    background-color: #00ff66 !important;
+    box-shadow: 0 0 8px #00ff66;
 }
 
 /* ==========================================================================
-   6. COMPONENTE: FORMULARIO DE REGISTRO
+   6. FORMULARIO RETRO-FUTURISTA
    ========================================================================== */
 .form-container-box {
-    background-color: #1e293b; 
-    border: 1px solid #334155;
+    background-color: #121826; 
+    border: 1px solid rgba(255, 0, 127, 0.3); /* Contenedor delineado en fucsia */
+    box-shadow: 0 0 25px rgba(255, 0, 127, 0.1);
 }
 
 .form-control, .form-select {
-    background-color: #0f172a;
+    background-color: #0b0f19;
     border: 1px solid #334155;
     color: #fff;
 }
 
+/* Al hacer foco en un input, brilla en cian */
 .form-control:focus, .form-select:focus {
-    background-color: #0f172a;
-    border-color: #38bdf8;
+    background-color: #0b0f19;
+    border-color: #00f0ff;
     color: #fff;
-    box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
 }
 
-/* ==========================================================================
-   7. BOTONES DE MARCA
-   ========================================================================== */
+/* Botón interactivo de registro fucsia brillante */
 .btn-brand {
-    background-color: #38bdf8;
-    color: #0f172a;
+    background: linear-gradient(45deg, #ff007f, #7928ca);
+    color: #fff;
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    border: none;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+    transition: all 0.2s ease;
 }
 
 .btn-brand:hover {
-    background-color: #0ea5e9;
-    color: #0f172a;
+    background: linear-gradient(45deg, #7928ca, #ff007f);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(255, 0, 127, 0.6);
+    transform: translateY(-2px);
 }
 
 /* ==========================================================================
-   8. AJUSTES DE GALERÍA (CAROUSEL)
+   7. AJUSTES DE GALERÍA (CAROUSEL)
    ========================================================================== */
-.carousel-item {
-    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+.carousel-inner {
+    background-color: #121826;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
 }
