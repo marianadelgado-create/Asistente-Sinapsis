@@ -1,49 +1,67 @@
-/* --- CONFIGURACIÓN GENERAL Y TIPOGRAFÍA --- */
-body {
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL Y TIPOGRAFÍA
+   ========================================================================== */
+   body {
     font-family: 'Poppins', sans-serif;
-    background-color: #0f172a; /* Azul noche oscuro de base */
+    background-color: #0f172a; /* Fondo azul noche oscuro de base */
     color: #f8fafc;
     scroll-behavior: smooth;
 }
 
-/* --- MENÚ / NAVBAR (Soluciona la superposición de Captura 3) --- */
+/* ==========================================================================
+   2. COMPONENTE: NAVBAR / MENÚ DE NAVEGACIÓN
+   (Soluciona la transparencia y la superposición de palabras)
+   ========================================================================== */
 .navbar-custom {
-    background-color: #1e293b !important; /* Forzamos el color gris oscuro para que no sea transparente */
+    background-color: #1e293b !important; /* Fondo gris oscuro sólido para tapar el contenido de atrás */
     border-bottom: 2px solid #334155;
-    z-index: 1050; /* Asegura que el menú siempre quede por encima del contenido al hacer scroll */
+    z-index: 1050 !important; /* Obliga al menú a mantenerse siempre al frente de todo */
 }
 
-/* --- MAQUETACIÓN DE SECCIONES (Unifica el Dark Mode de Captura 2) --- */
+/* Evita que los enlaces del menú se peguen al borde del navegador */
+.navbar-custom .nav-link {
+    padding: 0.5rem 1rem;
+    transition: color 0.2s ease;
+}
+
+/* ==========================================================================
+   3. ESTRUCTURA DE SECCIONES
+   ========================================================================== */
 section {
     padding: 80px 0;
     border-bottom: 1px solid #1e293b;
-    background-color: #0f172a; /* Forzamos a que todas las secciones hereden el fondo oscuro */
+    background-color: #0f172a; /* Forzamos consistencia oscura en todas las secciones */
+    scroll-margin-top: 75px; /* Le da "aire" al título para que la barra fija no lo tape al usar el menú */
 }
 
-/* Forzamos que la sección de la generala tenga un tono sutilmente distinto pero oscuro */
+/* Tono sutilmente más oscuro para la sección de la generala (genera ritmo visual) */
 #generala {
     background-color: #090d16 !important; 
 }
 
-/* --- TARJETAS CON EFECTO FLOTANTE (Mejora el contraste de Captura 3) --- */
+/* ==========================================================================
+   4. COMPONENTE: TARJETAS FLOTANTES (CENTRAL GENERALA)
+   (Mejora el contraste y recupera la forma de contenedor)
+   ========================================================================== */
 .card-herramienta {
-    background-color: #1e293b !important; /* Fondo gris claro intermedio para resaltar del fondo negro */
-    border: 1px solid #334155;
+    background-color: #1e293b !important; /* Fondo gris intermedio para despegarse del fondo negro */
+    border: 1px solid #334155 !important;
     border-radius: 16px;
+    padding: 24px;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3); /* Sombra suave para despegarse del fondo */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Sombra suave para dar volumen */
 }
 
 .card-herramienta:hover {
     transform: translateY(-8px);
     box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2);
-    border-color: #38bdf8;
+    border-color: #38bdf8 !important;
 }
 
 .icon-floating {
     font-size: 2.5rem;
-    color: #38bdf8; /* Color celeste brillante para los iconos */
+    color: #38bdf8; /* Celeste brillante característico de Sinapsis */
     transition: transform 0.3s ease;
 }
 
@@ -51,12 +69,16 @@ section {
     transform: scale(1.1) rotate(5deg);
 }
 
-/* --- TEXTOS SECUNDARIOS (Mejora la legibilidad) --- */
+/* ==========================================================================
+   5. TEXTOS SECUNDARIOS Y LEGIBILIDAD
+   ========================================================================== */
 .text-muted, .text-secondary {
-    color: #94a3b8 !important; /* Un gris más claro para que sea legible sobre fondo oscuro */
+    color: #94a3b8 !important; /* Gris claro con contraste suficiente para fondo oscuro */
 }
 
-/* --- FORMULARIOS Y CONTENEDORES --- */
+/* ==========================================================================
+   6. COMPONENTE: FORMULARIO DE REGISTRO
+   ========================================================================== */
 .form-container-box {
     background-color: #1e293b; 
     border: 1px solid #334155;
@@ -75,7 +97,9 @@ section {
     box-shadow: 0 0 0 0.25rem rgba(56, 189, 248, 0.25);
 }
 
-/* --- BOTONES DE MARCA --- */
+/* ==========================================================================
+   7. BOTONES DE MARCA
+   ========================================================================== */
 .btn-brand {
     background-color: #38bdf8;
     color: #0f172a;
@@ -88,7 +112,9 @@ section {
     color: #0f172a;
 }
 
-/* --- CUSTOMIZACIÓN DE GALERÍA (CAROUSEL) --- */
+/* ==========================================================================
+   8. AJUSTES DE GALERÍA (CAROUSEL)
+   ========================================================================== */
 .carousel-item {
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
