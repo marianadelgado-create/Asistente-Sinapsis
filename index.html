@@ -3,260 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinapsis - Asistente de Mesa Digital</title>
-    <!-- Framework, Iconos y Tipografía -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Sinapsis - Plataforma Híbrida de Juego</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- NAV SUPERIOR ESTILO RETRO-NEÓN -->
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-sinapsis sticky-top py-3">
+    <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
-                <div class="brand-logo-hex me-2">⬡</div>
-                <span class="logo-text">SINAPSIS</span>
+                <i class="bi bi-cpu-fill me-2 brand-icon"></i>
+                <span>SINAPSIS</span>
             </a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto text-uppercase fw-semibold dropdown-menu-end" style="font-size: 0.8rem; letter-spacing: 1px;">
-                    <li class="nav-item"><a class="nav-link mx-3 active" href="#">Biblioteca</a></li>
-                    <li class="nav-item"><a class="nav-link mx-3" href="#">Herramientas</a></li>
-                    <li class="nav-item"><a class="nav-link mx-3" href="#">Reglas</a></li>
-                    <li class="nav-item"><a class="nav-link mx-3" href="#">Comunidad</a></li>
-                </ul>
-                <div class="text-white fs-5 ms-auto cursor-pointer"><i class="bi bi-person-circle text-info"></i></div>
+            <div class="d-flex align-items-center ms-auto">
+                <span class="text-muted me-2 small d-none d-sm-inline">Registrador Activo:</span>
+                <button class="btn btn-avatar d-flex align-items-center" id="btnCambiarUsuario" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                    <div class="avatar-circle me-2" id="navAvatarInitials">L</div>
+                    <strong id="navAvatarName">Lucas</strong>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- CUERPO CENTRAL -->
-    <main class="container py-4">
-        
-        <!-- BUSCADOR PRINCIPAL (Fiel a tus capturas) -->
-        <div class="row justify-content-center mb-5">
-            <div class="col-md-7 col-lg-6">
-                <div class="search-container shadow-neon">
-                    <i class="bi bi-search text-muted me-2"></i>
-                    <input type="text" placeholder="Busco un juego, regla o herramienta...">
+    <div class="container my-4">
+        <header class="text-center mb-5 project-intro">
+            <h1 class="display-5 fw-bold">Asistente Digital en Segundo Plano</h1>
+            <p class="lead text-muted mx-auto" style="max-width: 700px;">
+                Mediación invisible para potenciar la socialización cara a cara. Diseñado para consultas rápidas a la distancia de la mesa de juego.
+            </p>
+        </header>
+
+        <div class="main-dashboard-grid">
+            
+            <main class="dashboard-main">
+                <h2 class="h4 mb-3 section-title"><i class="bi bi-controller me-2"></i>Asistentes de Mesa</h2>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 game-card">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="h5 card-title mb-0">Truco Argentino</h3>
+                                    <span class="badge bg-soft-primary">Fase 1</span>
+                                </div>
+                                
+                                <div class="row text-center my-auto py-3">
+                                    <div class="col-6 border-end">
+                                        <p class="small text-muted mb-1">NOSOTROS</p>
+                                        <div class="display-6 fw-bold score-counter" id="scoreNosotros">0</div>
+                                        <div class="d-flex justify-content-center gap-2 mt-2">
+                                            <button class="btn btn-sm btn-action rounded-circle" onclick="modificarTruco('nosotros', -1)"><i class="bi bi-dash"></i></button>
+                                            <button class="btn btn-sm btn-action rounded-circle btn-primary-custom" onclick="modificarTruco('nosotros', 1)"><i class="bi bi-plus"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <p class="small text-muted mb-1">ELLOS</p>
+                                        <div class="display-6 fw-bold score-counter" id="scoreEllos">0</div>
+                                        <div class="d-flex justify-content-center gap-2 mt-2">
+                                            <button class="btn btn-sm btn-action rounded-circle" onclick="modificarTruco('ellos', -1)"><i class="bi bi-dash"></i></button>
+                                            <button class="btn btn-sm btn-action rounded-circle btn-primary-custom" onclick="modificarTruco('ellos', 1)"><i class="bi bi-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-3 bg-light rounded p-2 text-center">
+                                    <small class="text-muted" id="trucoStatus">Sin partidas activas en LocalStorage</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card h-100 game-card">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h3 class="h5 card-title mb-0">Validación Léxica Scrabble</h3>
+                                    <span class="badge bg-soft-primary">SOWPODS Local</span>
+                                </div>
+                                <form id="formScrabble" onsubmit="validarPalabra(event)">
+                                    <div class="input-group mb-2">
+                                        <input type="text" id="inputPalabra" class="form-control" placeholder="Escribí palabra o usá '?'..." required>
+                                        <button class="btn btn-primary-custom text-white" type="submit">Validar</button>
+                                    </div>
+                                </form>
+                                <div id="scrabbleAlert" class="alert alert-soft py-2 px-3 mb-0 text-center small" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <p class="text-center text-uppercase tracking-widest text-muted mt-3 small">"Tu compañero de mesa digital | Clásicos y nativos híbridos"</p>
-            </div>
+            </main>
+
+            <aside class="dashboard-sidebar">
+                <div class="card h-100 game-card border-accent">
+                    <div class="card-body d-flex flex-column justify-content-between text-center">
+                        <div>
+                            <h3 class="h5 mb-1"><i class="bi bi-hourglass-split me-2 text-accent"></i>Reloj de Ajedrez</h3>
+                            <p class="small text-muted mb-3">Fórmula Fischer síncrona (+3s)</p>
+                        </div>
+
+                        <button class="btn btn-timer w-100 mb-3 active" id="btnTimer1" onclick="cambiarTurnoReloj(1)">
+                            <div class="small fw-semibold opacity-75">JUGADOR BLANCAS</div>
+                            <div class="display-5 font-monospace my-1" id="clock1">05:00</div>
+                        </button>
+
+                        <button class="btn btn-timer w-100" id="btnTimer2" onclick="cambiarTurnoReloj(2)">
+                            <div class="small fw-semibold opacity-75">JUGADOR NEGRAS</div>
+                            <div class="display-5 font-monospace my-1" id="clock2">05:00</div>
+                        </button>
+
+                        <div class="d-flex gap-2 justify-content-center mt-2">
+                            <button class="btn btn-outline-secondary btn-sm" id="btnPauseReloj" onclick="pausarReloj()">
+                                <i class="bi bi-pause-fill"></i> Pausar
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" onclick="reiniciarReloj()">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
         </div>
 
-        <!-- SECCIÓN DE JUEGO PRINCIPAL / FUTURO HÍBRIDO -->
-        <section class="row g-4 mb-5">
-            <div class="col-lg-8">
-                <div class="panel-card p-4 h-100 position-relative overflow-hidden">
-                    <div class="row align-items-center h-100">
-                        <div class="col-md-5 text-center mb-3 mb-md-0">
-                            <!-- Visual del juego insignia con estética de carátula ochentera -->
-                            <div class="cover-art-container rounded-3 d-flex flex-column justify-content-center align-items-center">
-                                <i class="bi bi-eye neon-icon-glow display-4 mb-2"></i>
-                                <span class="fw-bold tracking-wider text-uppercase text-info" style="font-size: 0.75rem;">El 5to Jinete</span>
-                            </div>
-                        </div>
-                        <div class="col-md-7">
-                            <span class="badge bg-neon-magenta text-uppercase mb-2 fw-bold" style="font-size: 0.65rem;">Juego Original | Híbrido PWA</span>
-                            <h3 class="text-white fw-bold mb-2 tracking-wide">El 5to Jinete</h3>
-                            <p class="text-muted small mb-4">Conduce la campaña digital. Automatiza eventos, audio-narrativa y gestión de recursos en tiempo real.</p>
-                            <div class="d-grid gap-2 d-sm-flex">
-                                <button class="btn btn-neon-pink text-uppercase fw-bold px-4 btn-sm">Iniciar Partida Asistida</button>
-                                <button class="btn btn-secondary-dark text-uppercase fw-bold px-3 btn-sm">Explorar Mecánica</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- COMUNIDAD Y PARTIDAS LATERAL -->
-            <div class="col-lg-4">
-                <div class="panel-card p-4 h-100">
-                    <h6 class="text-uppercase fw-bold text-muted mb-3 small tracking-wider border-bottom border-secondary border-opacity-20 pb-2">Comunidad y Partidas</h6>
-                    <div class="d-flex flex-column gap-3">
-                        <div class="d-flex align-items-center justify-content-between bg-dark bg-opacity-30 p-2 rounded">
-                            <div class="d-flex align-items-center">
-                                <div class="user-avatar me-2 rounded-circle bg-secondary"></div>
-                                <div>
-                                    <span class="d-block text-white small fw-bold">LUCAS</span>
-                                    <small class="text-success text-xs"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> Gestionando tablero</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between bg-dark bg-opacity-30 p-2 rounded">
-                            <div class="d-flex align-items-center">
-                                <div class="user-avatar me-2 rounded-circle bg-secondary"></div>
-                                <div>
-                                    <span class="d-block text-white small fw-bold">VALERIA</span>
-                                    <small class="text-info text-xs"><i class="bi bi-circle-fill" style="font-size: 0.45rem;"></i> En Partida: Truco</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <hr class="my-5 divider-custom">
 
-        <!-- ETAPA 1: CENTRAL DE ASISTENCIA PARA JUEGOS FÍSICOS (Manuales y Funcionales) -->
         <section class="mb-5">
-            <h5 class="text-white text-uppercase fw-bold mb-4 tracking-wide border-start border-3 border-info ps-2" style="font-size: 0.95rem;">Asistencia de Clásicos Físicos</h5>
-            
-            <div class="row g-3">
-                <!-- Herramienta Truco: Anotador -->
-                <div class="col-md-4">
-                    <div class="tool-interactive-card p-3 rounded-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="text-dark fw-bold mb-0 text-uppercase" style="font-size: 0.85rem;">Mesa de Truco</h6>
-                                <small class="text-muted text-size-xs">Anotador manual sin papel</small>
-                            </div>
-                            <i class="bi bi-suit-spade-fill text-dark fs-5"></i>
-                        </div>
-                        <!-- Contador dinámico interactivo -->
-                        <div class="d-flex align-items-center justify-content-around bg-white bg-opacity-50 py-2 rounded-2 my-2">
-                            <div class="text-center">
-                                <span class="d-block text-size-xs fw-bold text-muted">NOS</span>
-                                <span class="fs-4 fw-bold text-dark" id="score-nos">0</span>
-                                <div class="mt-1">
-                                    <button class="btn btn-sm btn-dark py-0 px-2" onclick="changeScore('nos', -1)">-</button>
-                                    <button class="btn btn-sm btn-dark py-0 px-2" onclick="changeScore('nos', 1)">+</button>
-                                </div>
-                            </div>
-                            <div class="vr bg-dark"></div>
-                            <div class="text-center">
-                                <span class="d-block text-size-xs fw-bold text-muted">ELLOS</span>
-                                <span class="fs-4 fw-bold text-dark" id="score-ellos">0</span>
-                                <div class="mt-1">
-                                    <button class="btn btn-sm btn-dark py-0 px-2" onclick="changeScore('ellos', -1)">-</button>
-                                    <button class="btn btn-sm btn-dark py-0 px-2" onclick="changeScore('ellos', 1)">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Herramienta Dados: Contador / Historial -->
-                <div class="col-md-4">
-                    <div class="tool-interactive-card p-3 rounded-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="text-dark fw-bold mb-0 text-uppercase" style="font-size: 0.85rem;">Generala / Dados</h6>
-                                <small class="text-muted text-size-xs">Simulador de apoyo de mesa</small>
-                            </div>
-                            <i class="bi bi-dice-5-fill text-dark fs-5"></i>
-                        </div>
-                        <div class="text-center my-2">
-                            <span class="display-6 text-dark d-block fw-bold" id="dice-result">-</span>
-                            <button class="btn btn-sm btn-dark text-uppercase fw-bold mt-2 px-3" onclick="rollDiceTable()">Lanzar Dado</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Herramienta Tiempo: Cronómetro de Disputas / Turnos -->
-                <div class="col-md-4">
-                    <div class="tool-interactive-card p-3 rounded-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <h6 class="text-dark fw-bold mb-0 text-uppercase" style="font-size: 0.85rem;">Reloj de Turno Universal</h6>
-                                <small class="text-muted text-size-xs">Control de análisis o jugadas</small>
-                            </div>
-                            <i class="bi bi-hourglass-split text-dark fs-5"></i>
-                        </div>
-                        <div class="text-center my-2">
-                            <span class="fs-3 fw-bold text-dark d-block" id="timer-box" style="font-variant-numeric: tabular-nums;">15:00</span>
-                            <div class="d-flex justify-content-center gap-1 mt-2">
-                                <button class="btn btn-xs btn-dark py-0 px-2 small" onclick="toggleTimer()">Play/Pausa</button>
-                                <button class="btn btn-xs btn-outline-dark py-0 px-2 small" onclick="resetTimer()">Reset</button>
-                            </div>
-                        </div>
-                    </div>
+            <div class="d-flex justify-content-between align-items-end mb-4">
+                <div>
+                    <h2 class="h4 mb-1"><i class="bi bi-bag-heart-fill text-accent me-2"></i>Componentes Premium Alma Casera</h2>
+                    <p class="text-muted small mb-0">Adquirí kits físicos táctiles de alta calidad vinculados directamente a Sinapsis</p>
                 </div>
             </div>
-        </section>
 
-        <!-- ETAPA 2: APARTADO HÍBRIDO (EL FUTURO DEL RUMMI EN TU FINAL) -->
-        <section class="mb-4">
-            <div class="panel-card p-4 border-neon-active">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div>
-                        <span class="badge bg-info text-dark text-uppercase mb-1 fw-bold" style="font-size: 0.6rem;">Próxima Integración Híbrida</span>
-                        <h5 class="text-white fw-bold mb-0 tracking-wide">Ecosistema Rummi Híbrido</h5>
-                    </div>
-                    <div class="spinner-grow text-info spinner-grow-sm" role="status"></div>
-                </div>
-                <p class="text-muted small">Módulo para la lectura y validación del paño inteligente mediante escaneo NFC/Óptico enlazado al portal de Sinapsis.</p>
-                
-                <div class="bg-dark bg-opacity-40 p-3 rounded-3 d-flex align-items-center justify-content-between border border-secondary border-opacity-10 mt-3">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-broadcast text-info fs-4 me-3"></i>
-                        <div>
-                            <span class="text-white small d-block fw-semibold">Línea de Conexión del Paño Físico</span>
-                            <small class="text-muted text-size-xs">Fase de sincronización para la entrega del examen final.</small>
+            <div id="carouselHardware" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="row g-4 justify-content-center px-4">
+                            <div class="col-lg-8">
+                                <div class="card card-carousel-premium shadow-sm">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-md-5 bg-card-placeholder text-center py-5">
+                                            <i class="bi bi-nfc display-1 text-accent opacity-50"></i>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="card-body p-4">
+                                                <span class="badge bg-dark mb-2">Exclusivo El Quinto Jinete</span>
+                                                <h4 class="card-title fw-bold">Kit Premium Cartas NFC</h4>
+                                                <p class="card-text text-muted small">
+                                                    Cartulinas premium de alta densidad con microchips ocultos. Acercá la carta física al teléfono para validar tu rol oculto en 1 segundo de forma secreta.
+                                                </p>
+                                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                                    <span class="h5 font-monospace mb-0 text-accent fw-bold">$24.500</span>
+                                                    <a href="#" class="btn btn-sm btn-primary-custom text-white">Comprar Kit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-outline-info btn-sm text-uppercase disabled font-medium" style="font-size: 0.7rem;">Sincronizar</button>
+                    <div class="carousel-item">
+                        <div class="row g-4 justify-content-center px-4">
+                            <div class="col-lg-8">
+                                <div class="card card-carousel-premium shadow-sm">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-md-5 bg-card-placeholder text-center py-5">
+                                            <i class="bi bi-dice-5 display-1 text-accent opacity-50"></i>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="card-body p-4">
+                                                <span class="badge bg-dark mb-2">Diseño de Autor</span>
+                                                <h4 class="card-title fw-bold">Fichas de Resina Premium</h4>
+                                                <p class="card-text text-muted small">
+                                                    Set artesanal de fichas pulidas a mano para conteo y marcación analógica. Hechas para durar generaciones, con estuche de cuero de Alma Casera.
+                                                </p>
+                                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                                    <span class="h5 font-monospace mb-0 text-accent fw-bold">$18.900</span>
+                                                    <a href="#" class="btn btn-sm btn-primary-custom text-white">Comprar Kit</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselHardware" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Anterior</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselHardware" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Siguiente</span>
+                </button>
             </div>
         </section>
+    </div>
 
-    </main>
+    <div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="modalUsuarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 450px;">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalUsuarioLabel">Cambiar de Jugador Activo</h5>
+                    <button type="button" class="btn-close" data-bs-submit="modal" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <p class="text-muted small mb-3">Selecciona un perfil local para registrar los puntajes:</p>
+                    
+                    <div class="d-flex justify-content-between gap-2 mb-4" id="userSelectionGrid">
+                        <button class="btn btn-user-select flex-fill text-center p-3 active" onclick="seleccionarUsuario('Lucas')">
+                            <div class="avatar-circle mx-auto mb-2 bg-success text-white">L</div>
+                            <span class="d-block small fw-bold">Lucas</span>
+                            <span class="badge bg-success-soft text-success super-small">Online</span>
+                        </button>
+                        <button class="btn btn-user-select flex-fill text-center p-3" onclick="seleccionarUsuario('Valeria')">
+                            <div class="avatar-circle mx-auto mb-2 bg-info text-white">V</div>
+                            <span class="d-block small fw-bold">Valeria</span>
+                            <span class="badge bg-info-soft text-info super-small">Online</span>
+                        </button>
+                        <button class="btn btn-user-select flex-fill text-center p-3" onclick="seleccionarUsuario('Lautaro')">
+                            <div class="avatar-circle mx-auto mb-2 bg-warning text-white">L</div>
+                            <span class="d-block small fw-bold">Lautaro</span>
+                            <span class="badge bg-warning-soft text-warning super-small">Online</span>
+                        </button>
+                    </div>
 
-    <script>
-        // Lógica Básica del Anotador del Truco
-        let nos = 0, ellos = 0;
-        function changeScore(team, val) {
-            if(team === 'nos') {
-                nos = Math.max(0, nos + val);
-                document.getElementById('score-nos').innerText = nos;
-            } else {
-                ellos = Math.max(0, ellos + val);
-                document.getElementById('score-ellos').innerText = ellos;
-            }
-        }
+                    <p class="text-muted small mb-2">O añade un nuevo jugador temporal a la mesa:</p>
+                    <form id="formAddGuest" onsubmit="agregarInvitado(event)" class="d-flex gap-2">
+                        <input type="text" id="guestNameInput" class="form-control" placeholder="Escribe nombre..." required max="12">
+                        <button class="btn btn-primary-custom text-white text-nowrap" type="submit"><i class="bi bi-plus-lg"></i> Agregar</button>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light w-100" data-bs-dismiss="modal">Listo</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        // Lógica del Lanzamiento de Dados
-        function rollDiceTable() {
-            const resultBox = document.getElementById('dice-result');
-            let count = 0;
-            const interval = setInterval(() => {
-                resultBox.innerText = Math.floor(Math.random() * 6) + 1;
-                count++;
-                if(count > 8) {
-                    clearInterval(interval);
-                }
-            }, 60);
-        }
-
-        // Lógica del Cronómetro de Turno
-        let timeLeft = 900; // 15 minutos
-        let timerInterval = null;
-        function updateTimerDisplay() {
-            const min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
-            const sec = String(timeLeft % 60).padStart(2, '0');
-            document.getElementById('timer-box').innerText = `${min}:${sec}`;
-        }
-        function toggleTimer() {
-            if(timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            } else {
-                timerInterval = setInterval(() => {
-                    if(timeLeft > 0) {
-                        timeLeft--;
-                        updateTimerDisplay();
-                    } else {
-                        clearInterval(timerInterval);
-                    }
-                }, 1000);
-            }
-        }
-        function resetTimer() {
-            clearInterval(timerInterval);
-            timerInterval = null;
-            timeLeft = 900;
-            updateTimerDisplay();
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
