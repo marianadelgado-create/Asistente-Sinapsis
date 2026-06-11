@@ -1,112 +1,138 @@
 /**
- * SINAPSIS - LOGIC & PERSISTENCE CORE
- * Arquitectura modular preparada para repositorio de producción.
+ * SINAPSIS ENGINE CORE - 2026
+ * Controlador unificado para interacción One-Page.
  */
 
-// --- ENGINE DE ALMACENAMIENTO DE CAMPEONATOS ---
-const CampeonatoStorage = {
-    getTorneos() {
-        return JSON.parse(localStorage.getItem('sinapsis_campeonatos')) || [];
+// --- PERSISTENCIA LOCAL DE CAMPEONATOS ---
+const SistemaCampeonatos = {
+    obtenerTodos() {
+        return JSON.parse(localStorage.getItem('sinapsis_v2_torneos')) || [];
     },
-    saveTorneos(torneos) {
-        localStorage.setItem('sinapsis_campeonatos', JSON.stringify(torneos));
+    guardarTodos(lista) {
+        localStorage.setItem('sinapsis_v2_torneos', JSON.stringify(lista));
     }
 };
 
-// --- ESTADOS DE CONTROL DE JUEGO ---
-let torneoActivoId = null;
-let modoActual = 'individual'; // 'individual' (Truco/Abierto) o 'campeonato' (Rummy)
-let jugadorRegistrador = 'Lucas';
+// --- DICCIONARIO LOCAL (SIMULACIÓN REAL PARA TP MULTIMEDIAL) ---
+const LEXICO_VALIDO = ["CASA", "MESA", "JUEGO", "SINAPSIS", "RUMMY", "TRUCO", "AJEDREZ", "XILOFON", "ZORRO", "REGLA", "VALOR", "HISTORIA", "DISEÑO"];
 
-// Variables del Reloj
-let clockInterval = null;
-let activePlayer = 1;
-let timePlayer1 = 300;
-let timePlayer2 = 300;
+// --- ESTADOS VOLÁTILES ---
+let torneoSeleccionadoId = null;
+let usuarioActivo = "Mariana";
 
-// --- DICCIONARIO OFICIAL (ARRAY REAL EN CLIENTE PARA EL TRABAJO PRÁCTICO) ---
-// Compilado con términos clave para validación inmediata sin APIs externas lentas
-const DICCIONARIO_SOWPODS = [
-    "CASA", "MESA", "JUEGO", "SINAPSIS", "ROBOT", "ALMA", "FOCO", "RUMMY", 
-    "TRUCO", "AJEDREZ", "FICHA", "NAIPE", "MESA", "VALOR", "HISTORIA", "DISEÑO"
-];
+// Variables Reloj Fischer
+let intervalReloj = null;
+let jugadorActivo = 1; 
+let relojP1 = 300;
+let relojP2 = 300;
 
 document.addEventListener("DOMContentLoaded", () => {
-    actualizarListaCampeonatosModal();
-    // Cargar perfil por defecto
-    document.getElementById('navAvatarName').innerText = jugadorRegistrador;
+    actualizarListaModals();
+    document.getElementById('lblActiveUser').innerText = usuarioActivo;
 });
 
-// --- NAVEGACIÓN Y FLUJO DE PANTALLAS (WELCOME STATE INTERACTION) ---
-function irAInicio() {
-    document.getElementById('pantalla-juego').classList.add('none-display', 'd-none');
-    document.getElementById('pantalla-inicio').classList.remove('d-none');
-    pausarReloj();
-}
+// --- INTERRUPTOR DE ASISTENTES (INYECCIÓN DE UI AL CANVAS) ---
+function cargarHerramienta(tipo, idTorneo = null) {
+    const canvas = document.getElementById('canvas-dinamico-juego');
+    const titulo = document.getElementById('lblGameTitle');
+    const subtitulo = document.getElementById('lblGameSubtitle');
 
-function iniciarModo(modo, torneoId = null) {
-    modoActual = modo;
-    document.getElementById('pantalla-inicio').classList.add('d-none');
-    document.getElementById('pantalla-juego').classList.remove('d-none');
-    
-    const contenedor = document.getElementById('contenedor-dinamico-izq');
-
-    if (modo === 'individual') {
-        document.getElementById('txtTipoSesion').innerText = "Herramientas Rápidas";
-        document.getElementById('titleNombreSesion').innerText = "Truco Argentino";
+    if (tipo === 'truco') {
+        titulo.innerText = "Anotador Táctil: Truco Argentino";
+        subtitulo.innerText = "Control rápido de tantos de 0 a 30 puntos.";
         
-        // Inyectar UI limpia del Anotador de Truco
-        contenedor.innerHTML = `
-            <div class="card game-card p-4 text-center animate-fade-in">
-                <h4 class="fw-bold mb-4">Anotador Bipartito Táctil</h4>
-                <div class="row">
-                    <div class="col-6 border-end">
-                        <h5 class="text-muted small">NOSOTROS</h5>
-                        <div class="display-3 fw-bold my-2" id="valNosotros">0</div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-action btn-light border rounded-circle" onclick="sumarTruco('nosotros', -1)">-1</button>
-                            <button class="btn btn-action btn-primary-custom text-white rounded-circle" onclick="sumarTruco('nosotros', 1)">+1</button>
-                        </div>
+        let puntos = JSON.parse(localStorage.getItem('quick_truco_v2')) || { nos: 0, ellos: 0 };
+
+        canvas.innerHTML = `
+            <div class="row text-center align-items-center g-3 animate-fade-in py-3">
+                <div class="col-6 border-end border-secondary">
+                    <h5 class="text-muted-custom small tracking-wider">NOSOTROS</h5>
+                    <div class="display-2 fw-bold text-white my-2" id="ptsNos">${puntos.nos}</div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="modificarTruco('nos', -1)">-1</button>
+                        <button class="btn btn-sm btn-premium-cyan rounded-circle px-3" onclick="modificarTruco('nos', 1)">+1</button>
                     </div>
-                    <div class="col-6">
-                        <h5 class="text-muted small">ELLOS</h5>
-                        <div class="display-3 fw-bold my-2" id="valEllos">0</div>
-                        <div class="d-flex justify-content-center gap-2">
-                            <button class="btn btn-action btn-light border rounded-circle" onclick="sumarTruco('ellos', -1)">-1</button>
-                            <button class="btn btn-action btn-primary-custom text-white rounded-circle" onclick="sumarTruco('ellos', 1)">+1</button>
-                        </div>
+                </div>
+                <div class="col-6">
+                    <h5 class="text-muted-custom small tracking-wider">ELLOS</h5>
+                    <div class="display-2 fw-bold text-white my-2" id="ptsEllos">${puntos.ellos}</div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-outline-secondary rounded-circle" onclick="modificarTruco('ellos', -1)">-1</button>
+                        <button class="btn btn-sm btn-premium-cyan rounded-circle px-3" onclick="modificarTruco('ellos', 1)">+1</button>
                     </div>
                 </div>
             </div>
         `;
-        // Recuperar si hay historial guardado del truco rápido
-        let tr = JSON.parse(localStorage.getItem('quick_truco')) || {n:0, e:0};
-        document.getElementById('valNosotros').innerText = tr.n;
-        document.getElementById('valEllos').innerText = tr.e;
-
-    } else if (modo === 'campeonato') {
-        torneoActivoId = torneoId;
-        const torneo = CampeonatoStorage.getTorneos().find(t => t.id === torneoId);
-        document.getElementById('txtTipoSesion').innerText = `Campeonato Activo • Creado el ${torneo.fecha}`;
-        document.getElementById('titleNombreSesion').innerText = torneo.nombre;
+    } 
+    else if (tipo === 'rummy') {
+        torneoSeleccionadoId = idTorneo;
+        const torneo = SistemaCampeonatos.obtenerTodos().find(t => t.id === idTorneo);
         
-        renderizarTablaCampeonato(torneo);
+        titulo.innerText = `Campeonato: ${torneo.nombre}`;
+        subtitulo.innerText = `Torneo oficial iniciado el ${torneo.fecha}`;
+
+        // Renderizar encabezados de los jugadores convocados
+        const headers = torneo.jugadores.map(j => `<th class="text-center text-white">${j}</th>`).join('');
+        
+        // Renderizar las rondas completadas acumuladas
+        let filas = torneo.rondas.map((r, index) => {
+            const celdas = torneo.jugadores.map(j => `<td class="text-center text-muted-custom font-monospace">${r[j] || 0}</td>`).join('');
+            return `<tr><td class="text-center text-cyan small fw-bold">Ronda ${index + 1}</td>${celdas}</tr>`;
+        }).join('');
+
+        // Calcular Score Final Acumulado
+        const totales = torneo.jugadores.reduce((acc, j) => {
+            acc[j] = torneo.rondas.reduce((sum, ronda) => sum + (Number(ronda[j]) || 0), 0);
+            return acc;
+        }, {});
+
+        const filaTotales = torneo.jugadores.map(j => `<td class="text-center text-gradient-blue fw-bold font-monospace h5">${totales[j]}</td>`).join('');
+        
+        // Input dinámico para anexar la ronda entrante
+        const inputsEntrada = torneo.jugadores.map(j => `
+            <td><input type="number" class="form-control form-control-sm text-center input-ronda-puntos" data-player="${j}" placeholder="0" style="background:#050911; border:1px solid #2D3748; color:white;"></td>
+        `).join('');
+
+        canvas.innerHTML = `
+            <div class="animate-fade-in">
+                <div class="table-responsive">
+                    <table class="table table-dark table-bordered align-middle table-dark-custom mb-3">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width:110px;">Etapa</th>
+                                ${headers}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${filas}
+                            <tr class="table-active">
+                                <td class="text-center small fw-bold">TOTAL ACUM.</td>
+                                ${filaTotales}
+                            </tr>
+                            <tr style="background-color: rgba(0,242,254,0.02)">
+                                <td class="text-center text-coral small fw-bold">Cargar Nueva</td>
+                                ${inputsEntrada}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-sm btn-premium-cyan" onclick="compilarNuevaRondaRummy()">Registrar Puntos de Ronda</button>
+                </div>
+            </div>
+        `;
     }
 }
 
-// ==========================================
-// MÓDULO: GESTIÓN DE CAMPEONATOS (RUMMY)
-// ==========================================
-function crearCampeonato(event) {
+// --- MANEJO DE CAMPEONATOS (RUMMY) ---
+function procesarCreacionTorneo(event) {
     event.preventDefault();
-    const nombre = document.getElementById('campNombre').value.trim();
-    const jugadoresRaw = document.getElementById('campJugadores').value;
-    
-    // Convertir string de jugadores en array limpio
-    const listaJugadores = jugadoresRaw.split(',').map(j => j.trim()).filter(j => j.length > 0);
-    
-    if(listaJugadores.length < 2) {
-        alert("Por favor, ingresá al menos dos jugadores para el torneo.");
+    const nombre = document.getElementById('inNombreTorneo').value.trim();
+    const jugadoresRaw = document.getElementById('inJugadoresTorneo').value;
+    const lista = jugadoresRaw.split(',').map(j => j.trim()).filter(j => j.length > 0);
+
+    if (lista.length < 2) {
+        alert("El campeonato requiere un mínimo de 2 competidores en la mesa.");
         return;
     }
 
@@ -114,195 +140,160 @@ function crearCampeonato(event) {
         id: 'torneo_' + Date.now(),
         nombre: nombre,
         fecha: new Date().toLocaleDateString(),
-        jugadores: listaJugadores,
+        jugadores: lista,
         rondas: [
-            // Inicializamos la Ronda 1 con 0 puntos para todos
-            listaJugadores.reduce((acc, j) => ({ ...acc, [j]: 0 }), {})
+            lista.reduce((obj, j) => ({ ...obj, [j]: 0 }), {}) // Ronda inicial en 0
         ]
     };
 
-    const torneos = CampeonatoStorage.getTorneos();
-    torneos.push(nuevoTorneo);
-    CampeonatoStorage.saveTorneos(torneos);
+    const existentes = SistemaCampeonatos.obtenerTodos();
+    existentes.push(nuevoTorneo);
+    SistemaCampeonatos.guardarTodos(existentes);
 
-    // Limpiar formulario y cerrar modal de Bootstrap de forma nativa
-    document.getElementById('formNuevoCampeonato').reset();
-    const modalEl = document.getElementById('modalCampeonato');
-    const modalInstance = bootstrap.Modal.getInstance(modalEl);
-    if(modalInstance) modalInstance.hide();
+    document.getElementById('frmNuevoTorneo').reset();
+    
+    // Ocultar modal mediante la instancia nativa de Bootstrap
+    const mEl = document.getElementById('modalTorneoRummy');
+    const instance = bootstrap.Modal.getInstance(mEl);
+    if(instance) instance.hide();
 
-    actualizarListaCampeonatosModal();
-    iniciarModo('campeonato', nuevoTorneo.id);
+    actualizarListaModals();
+    cargarHerramienta('rummy', nuevoTorneo.id);
 }
 
-function actualizarListaCampeonatosModal() {
-    const lista = document.getElementById('listaCampeonatos');
-    const torneos = CampeonatoStorage.getTorneos();
-    
+function actualizarListaModals() {
+    const contenedor = document.getElementById('contenedorListaTorneos');
+    const torneos = SistemaCampeonatos.obtenerTodos();
+
     if(torneos.length === 0) {
-        lista.innerHTML = `<p class="text-muted small text-center my-2">No hay campeonatos guardados en este dispositivo.</p>`;
+        contenedor.innerHTML = `<p class="text-muted-custom small text-center my-2">No registrás campeonatos activos en este navegador.</p>`;
         return;
     }
 
-    lista.innerHTML = torneos.map(t => `
-        <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" onclick="cargarTorneoDesdeModal('${t.id}')">
+    contenedor.innerHTML = torneos.map(t => `
+        <button class="list-group-item list-group-item-action bg-dark text-white border-secondary d-flex justify-content-between align-items-center" onclick="ejecutarCargaDesdeLista('${t.id}')">
             <div>
-                <strong class="text-accent">${t.nombre}</strong>
-                <span class="d-block super-small text-muted">${t.jugadores.length} Competidores • ${t.fecha}</span>
+                <span class="text-cyan fw-bold d-block">${t.nombre}</span>
+                <small class="text-muted-custom">${t.jugadores.length} Integrantes • Registrado el ${t.fecha}</small>
             </div>
-            <i class="bi bi-chevron-right text-muted"></i>
+            <i class="bi bi-play-circle text-cyan"></i>
         </button>
     `).join('');
 }
 
-function cargarTorneoDesdeModal(id) {
-    const modalEl = document.getElementById('modalCampeonato');
-    const modalInstance = bootstrap.Modal.getInstance(modalEl);
-    if(modalInstance) modalInstance.hide();
-    iniciarModo('campeonato', id);
+function ejecutarCargaDesdeLista(id) {
+    const mEl = document.getElementById('modalTorneoRummy');
+    const instance = bootstrap.Modal.getInstance(mEl);
+    if(instance) instance.hide();
+    cargarHerramienta('rummy', id);
 }
 
-function renderizarTablaCampeonato(torneo) {
-    const contenedor = document.getElementById('contenedor-dinamico-izq');
-    
-    // Generar cabeceras de tabla para cada jugador
-    const ths = torneo.jugadores.map(j => `<th class="text-center">${j}</th>`).join('');
-    
-    // Procesar las filas de las rondas jugadas
-    let filasRondas = torneo.rondas.map((ronda, index) => {
-        const celdas = torneo.jugadores.map(j => `<td class="text-center font-monospace">${ronda[j] || 0}</td>`).join('');
-        return `<tr><td class="fw-bold text-muted small text-center">Ronda ${index + 1}</td>${celdas}</tr>`;
-    }).join('');
+function compilarNuevaRondaRummy() {
+    const torneos = SistemaCampeonatos.obtenerTodos();
+    const tIdx = torneos.findIndex(t => t.id === torneoSeleccionadoId);
+    const inputs = document.querySelectorAll('.input-ronda-puntos');
 
-    // Calcular Totales Acumulados
-    const totales = torneo.jugadores.reduce((acc, j) => {
-        acc[j] = torneo.rondas.reduce((suma, ronda) => suma + (Number(ronda[j]) || 0), 0);
-        return acc;
-    }, {});
-
-    const filaTotales = torneo.jugadores.map(j => `<td class="text-center fw-bold text-accent font-monospace h5">${totales[j]}</td>`).join('');
-
-    // Input dinámico de carga para la siguiente ronda de Rummy
-    const inputsCarga = torneo.jugadores.map(j => `
-        <td>
-            <input type="number" class="form-control form-control-sm text-center input-score-ronda" data-player="${j}" placeholder="Pts" style="min-width:70px;">
-        </td>
-    `).join('');
-
-    contenedor.innerHTML = `
-        <div class="card game-card p-3 animate-fade-in">
-            <h4 class="h5 fw-bold mb-3"><i class="bi bi-table text-earth me-2"></i>Planilla de Posiciones</h4>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover align-middle table-rummy mb-3">
-                    <thead>
-                        <tr>
-                            <th style="width: 100px;" class="text-center">Etapa</th>
-                            ${ths}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filasRondas}
-                        <tr class="table-active border-top-2">
-                            <td class="fw-bold text-center small">TOTAL</td>
-                            ${filaTotales}
-                        </tr>
-                        <tr class="bg-soft-earth">
-                            <td class="fw-bold text-center text-earth small">Nueva Ronda</td>
-                            ${inputsCarga}
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <button class="btn btn-earth-custom text-white btn-sm ms-auto" onclick="guardarRondaCampeonato()">
-                <i class="bi bi-floppy-fill me-1"></i> Cerrar Ronda de Puntos
-            </button>
-        </div>
-    `;
-}
-
-function guardarRondaCampeonato() {
-    const torneos = CampeonatoStorage.getTorneos();
-    const torneo = torneos.find(t => t.id === torneoActivoId);
-    const inputs = document.querySelectorAll('.input-score-ronda');
-    
-    let nuevaRonda = {};
-    inputs.forEach(input => {
-        const jugador = input.getAttribute('data-player');
-        const puntos = Number(input.value) || 0;
-        nuevaRonda[jugador] = puntos;
+    let mapeoRonda = {};
+    inputs.forEach(inp => {
+        const pName = inp.getAttribute('data-player');
+        const pValue = Number(inp.value) || 0;
+        mapeoRonda[pName] = pValue;
     });
 
-    torneo.rondas.push(nuevaRonda);
-    CampeonatoStorage.saveTorneos(torneos);
-    
-    // Volver a renderizar la planilla actualizada
-    renderizarTablaCampeonato(torneo);
+    torneos[tIdx].rondas.push(mapeoRonda);
+    SistemaCampeonatos.guardarTodos(torneos);
+    cargarHerramienta('rummy', torneoSeleccionadoId);
 }
 
-// ==========================================
-// MÓDULO: VALIDACIÓN LÉXICA REAL (SCRABBLE)
-// ==========================================
-function validarPalabraReal(event) {
+// --- LÓGICA DE TRUCO INDIVIDUAL ---
+function modificarTruco(bando, valor) {
+    let puntos = JSON.parse(localStorage.getItem('quick_truco_v2')) || { nos: 0, ellos: 0 };
+    if (bando === 'nos') puntos.nos = Math.max(0, Math.min(30, puntos.nos + valor));
+    else puntos.ellos = Math.max(0, Math.min(30, puntos.ellos + valor));
+
+    localStorage.setItem('quick_truco_v2', JSON.stringify(puntos));
+    document.getElementById('ptsNos').innerText = puntos.nos;
+    document.getElementById('ptsEllos').innerText = puntos.ellos;
+}
+
+// --- REFERATO LÉXICO (SCRABBLE) ---
+function ejecutarValidacionDiccionario(event) {
     event.preventDefault();
-    const input = document.getElementById('inputPalabra');
-    const palabra = input.value.trim().toUpperCase();
-    const box = document.getElementById('scrabbleAlert');
-    
+    const box = document.getElementById('feedbackDiccionario');
+    const texto = document.getElementById('txtPalabraScrabble').value.trim().toUpperCase();
+
     box.style.display = "block";
     box.classList.remove('alert-success', 'alert-danger');
 
-    // Validación algorítmica sobre la estructura de datos local
-    if(DICCIONARIO_SOWPODS.includes(palabra)) {
-        box.className = "alert alert-success py-2 text-center small animate-fade-in";
-        box.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i> Éxito: <strong>${palabra}</strong> es una palabra aprobada por el réferi.`;
+    if (LEXICO_VALIDO.includes(texto)) {
+        box.className = "alert alert-success mt-3 py-2 animate-fade-in small";
+        box.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i><strong>${texto}</strong> es válida en el referato local oficial.`;
     } else {
-        box.className = "alert alert-danger py-2 text-center small animate-fade-in";
-        box.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i> Error: <strong>${palabra}</strong> no existe en el léxico oficial local.`;
+        box.className = "alert alert-danger mt-3 py-2 animate-fade-in small";
+        box.innerHTML = `<i class="bi bi-exclamation-octagon-fill me-2"></i><strong>${texto}</strong> no se encuentra en el índice local.`;
     }
 }
 
-// ==========================================
-// MÓDULO: CONTROL DE TRUCO INDIVIDUAL RÁPIDO
-// ==========================================
-function sumarTruco(equipo, valor) {
-    let tr = JSON.parse(localStorage.getItem('quick_truco')) || {n:0, e:0};
-    if (equipo === 'nosotros') tr.n = Math.max(0, Math.min(30, tr.n + valor));
-    else tr.e = Math.max(0, Math.min(30, tr.e + valor));
+// --- RELOJ FISCHER PROFESIONAL ---
+function conmutarTurnoReloj(origen) {
+    if (intervalReloj && jugadorActivo !== origen) return;
     
-    localStorage.setItem('quick_truco', JSON.stringify(tr));
-    document.getElementById('valNosotros').innerText = tr.n;
-    document.getElementById('valEllos').innerText = tr.e;
+    if (intervalReloj) {
+        if (jugadorActivo === 1) relojP1 += 3;
+        else relojP2 += 3;
+    }
+
+    jugadorActivo = (origen === 1) ? 2 : 1;
+    document.getElementById('timerBox1').classList.toggle('active', jugadorActivo === 1);
+    document.getElementById('timerBox2').classList.toggle('active', jugadorActivo === 2);
+    
+    renderizarContadores();
+
+    if(!intervalReloj) {
+        intervalReloj = setInterval(() => {
+            if (jugadorActivo === 1) {
+                relojP1--;
+                renderizarContadores();
+                analizarAlertaTiempo(1, relojP1);
+            } else {
+                relojP2--;
+                renderizarContadores();
+                analizarAlertaTiempo(2, relojP2);
+            }
+        }, 1000);
+    }
 }
 
-// ==========================================
-// MÓDULO: RELOJ FISCHER (MANTENIDO Y REFINADO)
-// ==========================================
-function cambiarTurnoReloj(player) {
-    if (clockInterval && activePlayer !== player) return;
-    if (clockInterval) {
-        if (activePlayer === 1) timePlayer1 += 3;
-        else timePlayer2 += 3;
+function analizarAlertaTiempo(p, t) {
+    const box = document.getElementById(`timerBox${p}`);
+    if (t <= 20) box.classList.add('warning-critical');
+    if (t <= 0) {
+        pausarContador();
+        alert(`¡Tiempo agotado para Jugador ${p}!`);
+        reiniciarContador();
     }
-    activePlayer = player === 1 ? 2 : 1;
-    document.getElementById('btnTimer1').classList.toggle('active', activePlayer === 1);
-    document.getElementById('btnTimer2').classList.toggle('active', activePlayer === 2);
-    renderClock(1); renderClock(2);
-    if (!clockInterval) clockInterval = setInterval(() => {
-        if (activePlayer === 1) { timePlayer1--; renderClock(1); checkTime(1, timePlayer1); }
-        else { timePlayer2--; renderClock(2); checkTime(2, timePlayer2); }
-    }, 1000);
 }
-function checkTime(p, t) {
-    const btn = document.getElementById(`btnTimer${p}`);
-    if (t <= 30) btn.classList.add('warning-active');
-    if (t <= 0) { pausarReloj(); alert(`Tiempo cumplido para jugador ${p}`); reiniciarReloj(); }
+
+function renderizarContadores() {
+    const format = (t) => {
+        const m = String(Math.floor(t / 60)).padStart(2, '0');
+        const s = String(t % 60).padStart(2, '0');
+        return `${m}:${s}`;
+    };
+    document.getElementById('valClock1').innerText = format(relojP1);
+    document.getElementById('valClock2').innerText = format(relojP2);
 }
-function renderClock(p) {
-    const t = p === 1 ? timePlayer1 : timePlayer2;
-    const m = String(Math.floor(t / 60)).padStart(2, '0');
-    const s = String(t % 60).padStart(2, '0');
-    document.getElementById(`clock${p}`).innerText = `${m}:${s}`;
+
+function pausarContador() { clearInterval(intervalReloj); intervalReloj = null; }
+function reiniciarContador() {
+    pausarContador();
+    relojP1 = 300; relojP2 = 300;
+    document.getElementById('timerBox1').classList.remove('warning-critical', 'active');
+    document.getElementById('timerBox2').classList.remove('warning-critical', 'active');
+    renderizarContadores();
 }
-function pausarReloj() { clearInterval(clockInterval); clockInterval = null; }
-function reiniciarReloj() { pausarReloj(); timePlayer1 = 300; timePlayer2 = 300; renderClock(1); renderClock(2); }
-function seleccionarUsuario(n) { jugadorRegistrador = n; document.getElementById('navAvatarName').innerText = n; document.getElementById('navAvatarInitials').innerText = n.charAt(0); }
+
+function modificarUsuarioActivo(nombre) {
+    usuarioActivo = nombre;
+    document.getElementById('lblActiveUser').innerText = nombre;
+}
