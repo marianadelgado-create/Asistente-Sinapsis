@@ -1,164 +1,121 @@
 /* ==========================================================================
-   1. BASES Y CONFIGURACIÓN RETRO-MODERNA
+   ESTRETEGIA ESTÉTICA: AZUL NOCHE + TOQUE RETRO OCHENTERO (SYNTH-NEON)
    ========================================================================== */
-   body {
+body {
     font-family: 'Poppins', sans-serif;
-    background-color: #090d16; /* Negro cibernético */
+    background-color: #0b111e; /* El fondo oscuro característico de tu universo */
     color: #f8fafc;
-    scroll-behavior: smooth;
 }
 
-/* ==========================================================================
-   2. NAVBAR COMPONENT: SOLUCIÓN VISUAL Y REDISEÑO DE LOGO
-   ========================================================================== */
-.navbar-custom {
-    background-color: rgba(9, 13, 22, 0.95) !important; /* Fondo sólido oscuro refractario */
-    backdrop-filter: blur(10px);
-    border-bottom: 2px solid #ff007f; /* Línea de luz fucsia ochentera */
-    z-index: 1050 !important;
-    padding: 12px 0;
-}
+.text-size-xs { font-size: 0.7rem; }
+.text-xs { font-size: 0.75rem; }
 
-/* Rediseño del Logo de Sinapsis */
-.logo-text-neon {
-    font-size: 1.75rem; /* Aumento de tamaño sustancial */
-    font-weight: 800;
-    letter-spacing: 3px;
-    background: linear-gradient(to right, #ffffff, #00f0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.6); /* Brillo cian */
+/* NAVBAR LIMPIA CON BORDE INFERIOR NEÓN */
+.navbar-sinapsis {
+    background-color: #0e1626;
+    border-bottom: 2px solid rgba(34, 211, 238, 0.15); /* Sutil destello cian */
 }
-
-.logo-icon-neon {
-    font-size: 2.1rem;
-    color: #00f0ff;
-    filter: drop-shadow(0 0 6px #00f0ff);
-}
-
-/* ==========================================================================
-   3. ESTRUCTURAS, SECCIONES Y TÍTULOS GIGANTES
-   ========================================================================== */
-section {
-    padding: 90px 0;
-    background-color: #090d16;
-    border-bottom: 1px solid rgba(255, 0, 127, 0.1);
-    scroll-margin-top: 80px; /* Margen para que la barra no pise los títulos */
-}
-
-/* Estilo para el título de marca en Header */
-.hero-title-neon {
-    font-size: 4.8rem;
-    letter-spacing: 5px;
-    text-shadow: 0 0 20px rgba(255, 0, 127, 0.7);
+.logo-text {
     font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+.brand-logo-hex {
+    color: #22d3ee;
+    font-size: 1.4rem;
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+}
+.nav-link {
+    color: #94a3b8 !important;
+    transition: color 0.2s ease;
+}
+.nav-link:hover, .nav-link.active {
+    color: #22d3ee !important; /* Resalte en Cian */
 }
 
-.text-info-neon {
-    background: linear-gradient(45deg, #ff007f, #00f0ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
+/* BUSCADOR ESTILO CÁPSULA FLUIDA (Fiel a 1001469845.png) */
+.search-container {
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 8px 20px;
+    display: flex;
+    align-items: center;
 }
-
-.title-section-neon {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-}
-
-/* ==========================================================================
-   4. TARJETAS FLOTANTES (CENTRAL GENERALA & REGLAMENTOS)
-   ========================================================================== */
-.card-herramienta {
-    background-color: #121826 !important;
-    border: 1px solid rgba(0, 240, 255, 0.15) !important;
-    border-radius: 16px;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-}
-
-/* Efecto Hover Arcade */
-.card-herramienta:hover {
-    transform: translateY(-6px) scale(1.02);
-    border-color: #00f0ff !important;
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4), 0 0 30px rgba(255, 0, 127, 0.15);
-}
-
-.icon-floating {
-    font-size: 2.3rem;
-    color: #00f0ff;
-    text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
-    transition: transform 0.3s ease;
-}
-
-.card-herramienta:hover .icon-floating {
-    color: #ff007f;
-    text-shadow: 0 0 12px rgba(255, 0, 127, 0.7);
-    transform: scale(1.08) rotate(4deg);
-}
-
-.card-historia-retro {
-    border-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-/* ==========================================================================
-   5. FORMULARIOS RETRO Y BOTONES DE MARCA
-   ========================================================================== */
-.form-container-box {
-    background-color: #121826;
-    border: 1px solid rgba(255, 0, 127, 0.25) !important;
-    box-shadow: 0 0 20px rgba(255, 0, 127, 0.08);
-}
-
-.form-control, .form-select {
-    background-color: #090d16;
-    border: 1px solid #2d3748;
-    color: #fff !important;
-}
-
-.form-control:focus, .form-select:focus {
-    background-color: #090d16;
-    border-color: #00f0ff;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
-}
-
-/* Botón interactivo Fucsia neón */
-.btn-brand {
-    background: linear-gradient(45deg, #ff007f, #7928ca);
-    color: #fff;
-    font-weight: 600;
+.search-container input {
     border: none;
-    box-shadow: 0 4px 12px rgba(255, 0, 127, 0.25);
-    transition: all 0.2s ease;
+    background: transparent;
+    width: 100%;
+    font-size: 0.85rem;
+    color: #0b111e;
+    outline: none;
 }
 
-.btn-brand:hover {
-    background: linear-gradient(45deg, #7928ca, #ff007f);
-    color: #fff;
-    box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
-    transform: translateY(-1px);
+/* PANELES COMPACTOS DEL DASHBOARD */
+.panel-card {
+    background-color: #121e36;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Ajustes secundarios */
-.text-muted, .text-secondary {
-    color: #64748b !important;
+/* Borde ochentero activo para bloques destacados */
+.border-neon-active {
+    border: 1px solid #ff007f !important;
+    box-shadow: 0 0 15px rgba(255, 0, 127, 0.15);
 }
 
-.list-group-item {
-    background-color: #121826 !important;
-    border-color: rgba(255, 255, 255, 0.05) !important;
+.cover-art-container {
+    background: linear-gradient(145deg, #090f1a, #162542);
+    height: 150px;
+    border: 1px solid rgba(34, 211, 238, 0.3);
+}
+.neon-icon-glow {
+    color: #22d3ee;
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.5);
 }
 
-.text-info-neon-flat {
-    color: #00f0ff;
+/* AVATARES */
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background-color: #1e293b;
 }
 
-.badge-online {
-    background-color: #00ff66 !important;
-    box-shadow: 0 0 8px #00ff66;
-    color: #090d16 !important;
+/* ETAPA 1: ASISTENCIA DE CLÁSICOS (Gris de contraste balanceado, súper limpio) */
+.tool-interactive-card {
+    background-color: #cbd5e1;
+    color: #0f172a;
+    min-height: 140px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: transform 0.2s ease;
+}
+.tool-interactive-card:hover {
+    transform: translateY(-2px);
 }
 
-.text-warning-neon {
-    color: #ffcc00;
-    filter: drop-shadow(0 0 4px rgba(255, 204, 0, 0.4));
+/* BOTONES OCHENTEROS / SINTETIZADOS */
+.btn-neon-pink {
+    background-color: #ff007f; /* Magenta/Rosa vibrante ochentero */
+    color: #ffffff;
+    border: none;
+    transition: opacity 0.2s ease;
+}
+.btn-neon-pink:hover {
+    opacity: 0.9;
+    color: #ffffff;
+}
+.bg-neon-magenta {
+    background-color: rgba(255, 0, 127, 0.2);
+    color: #ff409f;
+    border: 1px solid rgba(255, 0, 127, 0.4);
+}
+
+.btn-secondary-dark {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-secondary-dark:hover {
+    background-color: #334155;
+    color: #ffffff;
 }
