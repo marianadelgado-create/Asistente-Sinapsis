@@ -1,192 +1,326 @@
 /* ==========================================================================
-   SISTEMA DE DISEÑO SINAPSIS - EDICIÓN ETÉREA GENERACIONAL
+   SINAPSIS CORE - PALETA NOSTALGIA VANGUARDISTA (2026)
+   Dirección de Arte: Minimalista, Etérea y Orgánica
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
-
 :root {
-    /* Paleta de Colores Orgánica y de Alto Contraste */
-    --bg-lino: #FBF9F6;          /* Fondo base luminoso y natural */
-    --ink-deep: #1A242D;         /* Texto principal y botones premium */
-    --surface-pure: #FFFFFF;     /* Tarjetas, módulos y superficies */
-    --accent-mist: #8EA4B4;      /* Azul bruma para detalles e íconos */
-    --accent-sage: #728468;      /* Verde oliva lavado para subtítulos y estados */
-    --text-muted: #5A6571;       /* Gris tipográfico para textos secundarios */
+    --bg-crema: #FDFBF7;          /* Fondo papel marfil, cálido y contenedor */
+    --surface-wood: #1E1611;      /* Marrón terroso profundo (cuero/madera) */
+    --surface-card: #FAF6F0;      /* Tarjetas claras de alto contraste analógico */
+    --accent-blue-soft: #7A91A3;  /* Azul suavizado, desgastado y etéreo */
+    --accent-moss: #5F6F52;       /* Verde musgo/oliva cálido para acentos */
+    --text-dark: #2B2520;         /* Texto principal bitono, evita el negro puro */
+    --text-light: #F4EFE6;        /* Texto sobre superficies oscuras */
+    --text-muted: #7C7267;        /* Texto secundario de baja intensidad */
+    --border-organic: rgba(43, 37, 32, 0.12);
+    --border-glow-soft: rgba(122, 145, 163, 0.3);
     
-    /* Sistema de Tipografías */
-    --font-editorial: 'Cormorant Garamond', serif; /* Elegancia para abuelos y padres */
-    --font-clean: 'Plus Jakarta Sans', sans-serif;    /* Fluidez moderna para jóvenes */
+    --font-serif: 'Playfair Display', Georgia, serif; /* Para títulos que evocan historia */
+    --font-base: 'Inter', sans-serif;
 }
 
-/* --- ESTILOS GENERALES --- */
 body {
-    background-color: var(--bg-lino) !important;
-    color: var(--ink-deep) !important;
-    font-family: var(--font-clean) !important;
+    background-color: var(--bg-crema);
+    color: var(--text-dark);
+    font-family: var(--font-base);
+    scroll-behavior: smooth;
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
+    /* Sutil grano fotográfico de fondo para romper la frialdad del píxel */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
 }
 
-/* --- NAVEGACIÓN (NAVBAR) --- */
+/* ELIMINACIÓN DE BRILLOS CIBERNÉTICOS ANTERIORES */
+.space-bg, .glow-blue, .glow-coral {
+    display: none !important;
+}
+
+/* NAVBAR RETRO-MODERNA */
 .navbar {
-    background: rgba(251, 249, 246, 0.85) !important;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(26, 36, 45, 0.06);
-    padding: 18px 0;
+    background: rgba(253, 251, 247, 0.92) !important;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-organic);
+    padding: 20px 0;
 }
-
 .logo-text {
-    font-family: var(--font-editorial) !important;
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--ink-deep) !important;
-    letter-spacing: -0.02em;
+    font-family: var(--font-serif);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: 0.05em;
+    color: var(--text-dark) !important;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
 }
-
 .brand-glow {
-    color: var(--accent-sage) !important;
+    color: var(--accent-blue-soft);
+    filter: none !important;
 }
-
 .nav-link {
     color: var(--text-muted) !important;
-    font-family: var(--font-clean);
-    font-size: 12.5px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
     transition: color 0.3s ease;
 }
-
 .nav-link:hover {
-    color: var(--ink-deep) !important;
+    color: var(--text-dark) !important;
 }
 
-/* --- TARJETAS DE JUEGO PREMIUM (GRILLA) --- */
-.game-card-premium {
-    background: var(--surface-pure) !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(26, 36, 45, 0.05) !important;
-    box-shadow: 0 10px 40px rgba(26, 36, 45, 0.02) !important;
-    height: 380px;
-    perspective: 1000px;
-    cursor: pointer;
+/* BOTÓN PERFIL PILL */
+.btn-profile-pill {
+    background: transparent;
+    border: 1px solid var(--accent-blue-soft);
+    padding: 8px 18px;
+    border-radius: 4px; /* Formas más ortogonales y limpias */
+    transition: all 0.4s ease;
+}
+.btn-profile-pill:hover {
+    border-color: var(--accent-moss);
+    background: rgba(95, 111, 82, 0.05);
+    box-shadow: none;
+}
+.avatar-dot {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent-blue-soft);
+    color: var(--bg-crema); font-size: 11px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; margin-right: 8px;
 }
 
-.game-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
+/* EFECTO DE ENFOQUE FOTOGRÁFICO (REVELADO SUAVE) */
+.header-hero, .game-card-premium, .dashboard-card {
+    animation: effectFocusReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
-
-.game-card-premium.flipped .game-card-inner {
-    transform: rotateY(180deg);
-}
-
-.game-card-front, .game-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 16px;
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background: var(--surface-pure);
-}
-
-.game-card-back {
-    transform: rotateY(180deg);
-    border: 1px solid rgba(26, 36, 45, 0.08) !important;
-}
-
-.game-title {
-    font-family: var(--font-editorial) !important;
-    font-size: 28px;
-    font-weight: 400;
-    color: var(--ink-deep);
-    margin-bottom: 8px;
-}
-
-.floating-icon {
-    font-size: 40px;
-    color: var(--accent-mist);
-    opacity: 0.8;
-}
-
-/* --- DASHBOARD Y ASISTENTE VIRTUAL --- */
-.dashboard-card {
-    background: var(--surface-pure) !important;
-    border-radius: 16px !important;
-    border: 1px solid rgba(26, 36, 45, 0.06) !important;
-    box-shadow: 0 20px 60px rgba(26, 36, 45, 0.03) !important;
-}
-
-.border-light-custom {
-    border-color: rgba(26, 36, 45, 0.08) !important;
-}
-
-.text-muted-custom {
-    color: var(--text-muted) !important;
-}
-
-/* --- ELEMENTOS DE FORMULARIO --- */
-.input-dark {
-    background-color: var(--bg-lino) !important;
-    border: 1px solid rgba(26, 36, 45, 0.08) !important;
-    color: var(--ink-deep) !important;
-    border-radius: 8px !important;
-    padding: 12px 16px !important;
-    font-size: 14.5px !important;
-    transition: border-color 0.3s ease;
-}
-
-.input-dark:focus {
-    border-color: var(--accent-mist) !important;
-    box-shadow: none !important;
-}
-
-/* --- BOTONES PREMIUM --- */
-.btn-coral-premium {
-    background: var(--ink-deep) !important;
-    color: var(--bg-lino) !important;
-    border: none !important;
-    padding: 14px 24px !important;
-    font-family: var(--font-clean);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    border-radius: 40px !important;
-    box-shadow: 0 6px 20px rgba(26, 36, 45, 0.1) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-coral-premium:hover {
-    background: var(--accent-sage) !important;
-    color: var(--surface-pure) !important;
-    transform: translateY(-2px);
-}
-
-/* --- ANIMACIONES DE REVELADO --- */
 @keyframes effectFocusReveal {
-    0% { opacity: 0; transform: translateY(15px); filter: blur(4px); }
-    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    0% {
+        opacity: 0;
+        filter: blur(15px);
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0);
+    }
 }
 
+/* HERO TEXTS */
 .badge-tech {
-    display: inline-block;
-    padding: 4px 12px;
-    background: rgba(114, 132, 104, 0.1);
-    color: var(--accent-sage);
-    font-size: 11px;
-    font-weight: 600;
+    background: rgba(95, 111, 82, 0.08);
+    color: var(--accent-moss);
+    border: 1px solid rgba(95, 111, 82, 0.2);
+    font-family: var(--font-base);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    border-radius: 20px;
+    font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 2px; letter-spacing: 0.1em;
+}
+h1, h2, h3, .font-tech {
+    font-family: var(--font-serif) !important;
+    color: var(--text-dark) !important;
+}
+.text-gradient {
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: var(--accent-blue-soft) !important;
+    font-style: italic;
+}
+.text-muted-custom {
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+/* CENTRAL ORB REEMPLAZADO POR UN CONTENEDOR ANALÓGICO */
+.central-orb {
+    width: 200px; height: 200px; margin: 0 auto; border-radius: 4px;
+    background: var(--surface-card);
+    border: 1px solid var(--border-organic);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 45px; color: var(--accent-blue-soft);
+    box-shadow: 0 15px 35px rgba(43, 37, 32, 0.04);
+}
+
+/* TARJETAS DE MESA: CAMBIO ROTACIÓN POR DESPLAZAMIENTO ELEGANTE */
+.game-card-premium {
+    background: var(--surface-card);
+    height: 260px;
+    border-radius: 4px;
+    border: 1px solid var(--border-organic);
+    box-shadow: 0 10px 30px rgba(43, 37, 32, 0.03);
+    overflow: hidden;
+    perspective: none;
+}
+.game-card-wrapper {
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-style: flat;
+}
+.game-card-premium:hover .game-card-wrapper {
+    transform: translateY(-5px);
+}
+
+/* Frente y dorso ahora se manejan como capas de deslizamiento suave */
+.game-card-front, .game-card-back {
+    position: absolute; width: 100%; height: 100%;
+    backface-visibility: visible; border-radius: 0; border: none; padding: 28px;
+    transition: opacity 0.4s ease;
+}
+.game-card-front {
+    background: var(--surface-card);
+    display: flex; flex-column: reverse;
+    align-items: flex-start; justify-content: flex-end;
+    opacity: 1; z-index: 2;
+}
+.game-card-back {
+    background: var(--surface-card);
+    opacity: 0; z-index: 1;
+    display: flex; flex-column: justify-content: space-between;
+    transform: none;
+}
+.game-card-premium:hover .game-card-front {
+    opacity: 0;
+}
+.game-card-premium:hover .game-card-back {
+    opacity: 1;
+    z-index: 3;
+}
+
+/* Iconos integrados de forma minimalista */
+.floating-icon {
+    position: static; font-size: 32px; opacity: 0.6; color: var(--accent-blue-soft) !important;
+    filter: none !important; margin-bottom: 15px; transition: color 0.3s;
+}
+.game-card-premium:hover .floating-icon { color: var(--accent-moss) !important; transform: none; }
+.game-title {
+    font-size: 22px; font-weight: 600; letter-spacing: 0;
+    color: var(--text-dark); text-shadow: none;
+}
+
+/* Fondos unificados limpios (reemplazan los gradientes ruidosos) */
+.bg-truco, .bg-rummy, .bg-uno, .bg-ajedrez, .bg-damas, .bg-teg, 
+.bg-generala, .bg-naval, .bg-scrabble, .bg-tutti, .bg-ahorcado, .bg-trivial, .bg-pictionary {
+    background: var(--surface-card) !important;
+}
+
+/* SECCIÓN MÓDULO HÍBRIDO VINTAGE */
+.dashboard-card {
+    background: var(--surface-card);
+    border: 1px solid var(--border-organic);
+    border-radius: 4px;
+    box-shadow: 0 20px 50px rgba(43, 37, 32, 0.05);
+}
+.border-glow-hybrid {
+    border-color: var(--accent-moss) !important;
+}
+.badge-prototype {
+    top: 15px; right: 15px;
+    background: var(--accent-moss); color: var(--text-light);
+    font-size: 10px; padding: 4px 12px; border-radius: 2px; font-weight: 500; letter-spacing: 0.05em;
+}
+.hybrid-icon-orb {
+    width: 80px; height: 80px;
+    background: rgba(95, 111, 82, 0.05);
+    border: 1px solid var(--border-organic);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--accent-moss); filter: none;
+}
+
+/* BOTONERAS DE BAJO IMPACTO Y ALTA ELEGANCIA */
+.btn-cyan-premium {
+    background: var(--accent-blue-soft);
+    color: var(--text-light) !important;
+    font-weight: 500; border: none; border-radius: 2px;
+    transition: background 0.3s;
+}
+.btn-cyan-premium:hover {
+    background: #657989;
+}
+.btn-coral-premium {
+    background: var(--accent-moss);
+    color: var(--text-light) !important;
+    font-weight: 500; border: none; border-radius: 2px;
+    transition: background 0.3s;
+}
+.btn-coral-premium:hover {
+    background: #4d5a42;
+}
+.btn-outline-premium {
+    background: transparent; color: var(--text-dark);
+    border: 1px solid var(--text-dark); border-radius: 2px;
+}
+.btn-outline-premium:hover {
+    background: rgba(43, 37, 32, 0.04); color: var(--text-dark);
+}
+
+/* INTERIOR DE LA LIBRETA (DASHBOARD) */
+#workspace-asistente {
+    background: #FAF8F5 !important;
+    border: 1px solid var(--border-organic) !important;
+}
+.style-rules-box {
+    background: #FAF8F5;
+    border: 1px solid var(--border-organic);
+    border-radius: 4px;
+}
+.display-counter {
+    font-family: var(--font-serif);
+    font-size: 3.5rem; font-weight: 700; color: var(--text-dark); text-shadow: none;
+}
+.input-dark {
+    background-color: var(--bg-crema) !important;
+    border: 1px solid var(--border-organic) !important;
+    color: var(--text-dark) !important;
+    border-radius: 2px;
+}
+.input-dark:focus {
+    border-color: var(--accent-blue-soft) !important;
+    box-shadow: none;
+}
+
+/* DADOS UI RETRO */
+.dice-box-ui {
+    width: 45px; height: 45px; background: var(--bg-crema);
+    border: 1px solid var(--text-dark);
+    border-radius: 4px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-weight: bold; font-size: 20px; color: var(--text-dark);
+    box-shadow: none;
+}
+
+/* RELOJ FISCHER */
+.btn-timer-premium {
+    background: var(--bg-crema); border: 1px solid var(--border-organic); color: var(--text-dark);
+    border-radius: 2px;
+}
+.btn-timer-premium.active {
+    border-color: var(--accent-blue-soft);
+    background: rgba(122, 145, 163, 0.05);
+}
+
+/* MODAL & ASISTENTE FLOTANTE */
+.modal-custom {
+    background: var(--bg-crema);
+    border: 1px solid var(--border-organic);
+    border-radius: 4px;
+}
+.chatbot-trigger {
+    background: var(--surface-wood);
+    color: var(--text-light);
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(30, 22, 17, 0.2);
+}
+.chatbot-pulse {
+    display: none; /* Quitamos animaciones parpadeantes */
+}
+
+/* FOOTER */
+.footer-premium {
+    background: var(--surface-wood);
+    border-top: none;
+}
+.footer-premium h4, .footer-premium span, .footer-premium p, .footer-premium label {
+    color: var(--text-light) !important;
+}
+.footer-premium .text-muted-custom {
+    color: #A3988E !important;
+}
+.social-icon-link {
+    color: #A3988E;
+}
+.social-icon-link:hover {
+    color: var(--text-light);
 }
