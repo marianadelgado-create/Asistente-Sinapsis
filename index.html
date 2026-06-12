@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinapsis - Universo Fígital</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
-    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -18,7 +15,6 @@
     <div class="glow-blue"></div>
     <div class="glow-coral"></div>
 
-    <!-- NAVBAR PREMIUM WITH LOGOUT -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -32,6 +28,7 @@
                 <ul class="navbar-nav ms-auto gap-2">
                     <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
                     <li class="nav-item"><a class="nav-link" href="#galeria">Mesa de Juegos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratorio Híbrido</a></li>
                     <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta Virtual</a></li>
                 </ul>
                 <div class="ms-lg-4 d-flex align-items-center gap-2 mt-2 mt-lg-0">
@@ -45,7 +42,6 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
     <header id="comunidad" class="container py-5 text-center text-lg-start header-hero">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
@@ -56,7 +52,7 @@
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                     <a href="#galeria" class="btn btn-cyan-premium px-4 py-3">Mesa de Juegos</a>
-                    <a href="#dashboard-seccion" class="btn btn-outline-premium px-4 py-3">Herramientas de Asistencia</a>
+                    <a href="#laboratorio" class="btn btn-outline-premium px-4 py-3">Prototipos Híbridos</a>
                 </div>
             </div>
             <div class="col-lg-5 text-center d-none d-lg-block">
@@ -65,18 +61,15 @@
         </div>
     </header>
 
-    <!-- SECCIÓN: MESA DE JUEGOS CATEGORIZADA -->
     <section id="galeria" class="container py-5">
         <div class="text-center mb-5">
             <h2 class="h1 text-white fw-bold">Mesa de Asistencia Interactiva</h2>
             <p class="text-muted-custom">Explorá nuestro catálogo extendido organizado por categorías tácticas.</p>
         </div>
 
-        <!-- CATEGORÍA: CLÁSICOS DE CARTAS -->
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-suit-spade-fill me-2"></i> Clásicos de Cartas y Fichas</h3>
             <div class="row g-4">
-                <!-- TRUCO -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -97,7 +90,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- RUMMY -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -118,7 +110,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- UNO -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -142,11 +133,9 @@
             </div>
         </div>
 
-        <!-- CATEGORÍA: TABLEROS DE TABLERO MUNDIAL -->
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-grid-3x3-gap-fill me-2"></i> Tableros de Estrategia</h3>
             <div class="row g-4">
-                <!-- AJEDREZ -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -167,7 +156,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- DAMAS -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -188,7 +176,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- T.E.G. -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -212,11 +199,9 @@
             </div>
         </div>
 
-        <!-- CATEGORÍA: DADOS Y AZAR -->
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-dice-5-fill me-2"></i> Dados y Destreza Numérica</h3>
             <div class="row g-4">
-                <!-- GENERALA -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -237,7 +222,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- BATALLA NAVAL -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -261,11 +245,9 @@
             </div>
         </div>
 
-        <!-- CATEGORÍA: PALABRAS Y MENTE -->
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-translate me-2"></i> Palabras, Ingenio y Léxico</h3>
             <div class="row g-4">
-                <!-- SCRABBLE -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -286,7 +268,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- TUTTI FRUTTI -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -307,7 +288,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- AHORCADO -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -331,11 +311,9 @@
             </div>
         </div>
 
-        <!-- CATEGORÍA: TRIVIA Y FIESTA -->
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-patch-question-fill me-2"></i> Trivias y Dinámicas de Grupo</h3>
             <div class="row g-4">
-                <!-- TRIVIAL -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -356,7 +334,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- PICTIONARY -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
                         <div class="game-card-wrapper">
@@ -381,7 +358,6 @@
         </div>
     </section>
 
-    <!-- EXPANSION REGLAMENTO -->
     <div id="visor-reglas" class="container my-4 d-none">
         <div class="dashboard-card p-4 border-glow-cyan">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -392,7 +368,41 @@
         </div>
     </div>
 
-    <!-- DASHBOARD CENTRAL -->
+    <section id="laboratorio" class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-white fw-bold"><span class="text-gradient">Laboratorio</span> de Híbridos</h2>
+            <p class="text-muted-custom">Próximas experiencias del Universo Sinapsis: Reversiones clásicas y despliegue de hardware inteligente.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="dashboard-card p-4 border-glow-hybrid position-relative overflow-hidden">
+                    <div class="badge-prototype position-absolute">PROTOTIPO V.01</div>
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            <div class="hybrid-icon-orb"><i class="bi bi-rocket-takeoff-fill"></i></div>
+                        </div>
+                        <div class="col-md-7">
+                            <h3 class="font-tech text-cyan mb-2">EL 5TO JINETE</h3>
+                            <span class="badge badge-tech mb-3">Estrategia Galáctica Híbrida</span>
+                            <p class="small text-muted-custom">
+                                Un lienzo central inteligente diseñado para **4 a 8 jugadores**. Cada participante monta su tableta o celular en los soportes perimetrales integrados, conectándose mediante Bluetooth o cable de datos directamente a la plataforma.
+                            </p>
+                            <ul class="small text-muted-custom ps-3 mb-4">
+                                <li><strong>Lienzo Inteligente:</strong> Superficie física sensitiva que reconoce la posición de las flotas espaciales.</li>
+                                <li><strong>Consola Táctica Periférica:</strong> Tu pantalla gestiona los recursos secretos y las cartas de traición.</li>
+                            </ul>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-cyan-premium" onclick="alert('Proyecto en fase de simulación para entrega final. ¡Lienzo fígital configurado!')">Ver Diagrama de Lienzo</button>
+                                <button class="btn btn-sm btn-outline-premium" onclick="verReglas('jinete')">Reglas Base</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="dashboard-seccion" class="container py-5 d-none">
         <div class="dashboard-card p-4 mb-4">
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
@@ -406,7 +416,6 @@
                 </div>
             </div>
 
-            <!-- WORKSPACE PANEL DINÁMICO -->
             <div id="workspace-asistente" class="p-3 mb-4 rounded-3 border border-secondary border-dashed" style="background: #040812;">
                 <div class="text-center py-5 text-muted-custom">
                     <i class="bi bi-cpu display-4 mb-2 d-block opacity-40"></i>
@@ -414,12 +423,10 @@
                 </div>
             </div>
 
-            <!-- SECCIÓN EXTRA: MOTOR LÉXICO Y DADOS -->
             <div class="row g-4">
-                <!-- VALIDACIÓN SCRABBLE CON DEFINICIONES -->
                 <div class="col-12 col-lg-6">
                     <div class="p-4 rounded-3 style-rules-box h-100">
-                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Validador de Léxico Oficial (Académico)</h4>
+                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Validador de Léxico Oficial (Sinapsis Core)</h4>
                         <form onsubmit="validarDiccionario(event)">
                             <div class="input-group">
                                 <input type="text" id="inputPalabra" class="form-control input-dark text-uppercase" placeholder="Ingresá palabra para validar..." required>
@@ -433,7 +440,6 @@
                     </div>
                 </div>
 
-                <!-- HERRAMIENTA EXTRA: LANZADOR DE DADOS 3D -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
                         <h5 class="text-white mb-2"><i class="bi bi-dice-3 text-cyan me-2"></i>Lanzador de Dados</h5>
@@ -445,7 +451,6 @@
                     </div>
                 </div>
 
-                <!-- RELOJ FISCHER -->
                 <div class="col-12 col-md-6 col-lg-3">
                     <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
                         <h5 class="text-white mb-2"><i class="bi bi-hourglass-split text-cyan me-2"></i>Reloj Fischer</h5>
@@ -469,7 +474,6 @@
         </div>
     </section>
 
-    <!-- ESTADO ADVERTENCIA BLOQUEO -->
     <section id="estado-bloqueado" class="container py-5 text-center">
         <div class="dashboard-card p-5 max-width-md mx-auto" style="max-width: 550px;">
             <i class="bi bi-lock-fill display-4 text-coral mb-3 d-block"></i>
@@ -481,7 +485,6 @@
         </div>
     </section>
 
-    <!-- AUTH MODAL -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content modal-custom border-0">
