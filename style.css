@@ -1,200 +1,192 @@
 /* ==========================================================================
-   SINAPSIS CORE - EDICIÓN NOSTALGIA VANGUARDISTA (REVISIÓN DE CONTRASTE 2026)
-   Dirección de Arte: Minimalismo Cálido, Alto Contraste Editorial
+   SISTEMA DE DISEÑO SINAPSIS - EDICIÓN ETÉREA GENERACIONAL
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
+
 :root {
-    --bg-crema: #F7F4EE;          /* Crema base con un tono más de cuerpo */
-    --surface-wood: #1E1611;      /* Marrón terroso profundo (cuero/madera) */
-    --surface-card: #FFFFFF;      /* Tarjetas blanco puro para máximo contraste de lectura */
-    --accent-blue-soft: #4A6375;  /* Azul suavizado pero oscurecido para garantizar legibilidad */
-    --accent-moss: #3B4A32;       /* Verde musgo oscuro para textos legibles y acentos */
-    --text-dark: #1A1512;         /* Marrón casi negro súper sólido para lectura fluida */
-    --text-light: #FDFBF7;        /* Texto sobre fondo oscuro */
-    --text-muted: #595047;        /* Gris terroso oscuro (antiguo secundario que ahora es legible) */
-    --border-organic: #2B2520;    /* Líneas sólidas de separación en lugar de transparencias */
+    /* Paleta de Colores Orgánica y de Alto Contraste */
+    --bg-lino: #FBF9F6;          /* Fondo base luminoso y natural */
+    --ink-deep: #1A242D;         /* Texto principal y botones premium */
+    --surface-pure: #FFFFFF;     /* Tarjetas, módulos y superficies */
+    --accent-mist: #8EA4B4;      /* Azul bruma para detalles e íconos */
+    --accent-sage: #728468;      /* Verde oliva lavado para subtítulos y estados */
+    --text-muted: #5A6571;       /* Gris tipográfico para textos secundarios */
     
-    --font-serif: 'Playfair Display', Georgia, serif;
-    --font-base: 'Inter', sans-serif;
+    /* Sistema de Tipografías */
+    --font-editorial: 'Cormorant Garamond', serif; /* Elegancia para abuelos y padres */
+    --font-clean: 'Plus Jakarta Sans', sans-serif;    /* Fluidez moderna para jóvenes */
 }
 
+/* --- ESTILOS GENERALES --- */
 body {
-    background-color: var(--bg-crema);
-    color: var(--text-dark);
-    font-family: var(--font-base);
-    font-weight: 500; /* Un toque más de grosor base para las fuentes */
-    scroll-behavior: smooth;
+    background-color: var(--bg-lino) !important;
+    color: var(--ink-deep) !important;
+    font-family: var(--font-clean) !important;
     overflow-x: hidden;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+    -webkit-font-smoothing: antialiased;
 }
 
-/* NAVBAR ALTO IMPACTO */
+/* --- NAVEGACIÓN (NAVBAR) --- */
 .navbar {
-    background: var(--surface-wood) !important; /* Pasamos la barra a oscura para enmarcar el sitio */
-    border-bottom: 2px solid var(--text-dark);
-    padding: 15px 0;
+    background: rgba(251, 249, 246, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(26, 36, 45, 0.06);
+    padding: 18px 0;
 }
+
 .logo-text {
-    font-family: var(--font-serif);
-    font-weight: 700;
-    font-style: italic;
-    font-size: 24px;
-    letter-spacing: 0.05em;
-    color: var(--text-light) !important;
+    font-family: var(--font-editorial) !important;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink-deep) !important;
+    letter-spacing: -0.02em;
 }
+
 .brand-glow {
-    color: #A9C2D6; /* Azul pastel claro para que resalte sobre el fondo oscuro de la barra */
+    color: var(--accent-sage) !important;
 }
+
 .nav-link {
-    color: #E2DACF !important; /* Texto claro legible en navbar */
-    font-size: 15px;
+    color: var(--text-muted) !important;
+    font-family: var(--font-clean);
+    font-size: 12.5px;
     font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
 }
+
 .nav-link:hover {
-    color: var(--text-light) !important;
+    color: var(--ink-deep) !important;
 }
 
-/* BOTÓN PERFIL LEGINLE */
-.btn-profile-pill {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #E2DACF;
-    padding: 8px 18px;
-    border-radius: 4px;
-}
-.avatar-dot {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: #A9C2D6;
-    color: var(--surface-wood); font-size: 12px; font-weight: 700;
-    display: flex; align-items: center; justify-content: center; margin-right: 8px;
-}
-
-/* TEXTOS DEL HERO */
-.badge-tech {
-    background: var(--surface-wood);
-    color: var(--text-light);
-    font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 4px; letter-spacing: 0.1em;
-    display: inline-block;
-}
-h1, h2, h3 {
-    font-family: var(--font-serif) !important;
-    color: var(--text-dark) !important;
-    font-weight: 800 !important;
-}
-.text-gradient {
-    color: var(--accent-blue-soft) !important;
-    font-style: italic;
-}
-.text-muted-custom {
-    color: var(--text-dark); /* Forzamos a que las descripciones usen color oscuro base */
-    font-weight: 500;
-    line-height: 1.6;
-}
-
-/* TARJETAS DE JUEGOS (ALTO CONTRASTE) */
+/* --- TARJETAS DE JUEGO PREMIUM (GRILLA) --- */
 .game-card-premium {
-    background: var(--surface-card) !important;
-    height: 260px;
-    border-radius: 6px;
-    border: 2px solid var(--text-dark) !important; /* Contorno sólido estilo imprenta antigua */
-    box-shadow: 4px 4px 0px var(--text-dark); /* Sombra sólida, limpia y con carácter */
+    background: var(--surface-pure) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(26, 36, 45, 0.05) !important;
+    box-shadow: 0 10px 40px rgba(26, 36, 45, 0.02) !important;
+    height: 380px;
+    perspective: 1000px;
+    cursor: pointer;
 }
+
+.game-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-style: preserve-3d;
+}
+
+.game-card-premium.flipped .game-card-inner {
+    transform: rotateY(180deg);
+}
+
 .game-card-front, .game-card-back {
-    background: var(--surface-card) !important;
-    padding: 24px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: var(--surface-pure);
 }
+
+.game-card-back {
+    transform: rotateY(180deg);
+    border: 1px solid rgba(26, 36, 45, 0.08) !important;
+}
+
 .game-title {
-    font-size: 24px; 
-    font-weight: 700; 
-    color: var(--text-dark) !important;
-    font-family: var(--font-serif) !important;
+    font-family: var(--font-editorial) !important;
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--ink-deep);
+    margin-bottom: 8px;
 }
+
 .floating-icon {
-    font-size: 36px; 
-    color: var(--text-dark) !important; /* Íconos negros/oscuros para que se recontra noten */
-    opacity: 1 !important;
+    font-size: 40px;
+    color: var(--accent-mist);
+    opacity: 0.8;
 }
 
-/* TEXTO DE REGLAS Y SUBTÍTULOS DENTRO DE TARJETAS */
-.game-card-back p, .game-card-back span {
-    color: var(--text-dark) !important;
-    font-weight: 600;
-}
-
-/* SECCIÓN MÓDULO HÍBRIDO (DASHBOARD) */
+/* --- DASHBOARD Y ASISTENTE VIRTUAL --- */
 .dashboard-card {
-    background: var(--surface-card) !important;
-    border: 2px solid var(--text-dark) !important;
-    border-radius: 6px;
-    box-shadow: 6px 6px 0px var(--text-dark);
-}
-.hybrid-icon-orb {
-    width: 70px; height: 70px;
-    background: var(--bg-crema);
-    border: 2px solid var(--text-dark);
-    color: var(--text-dark);
-    font-size: 30px;
+    background: var(--surface-pure) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(26, 36, 45, 0.06) !important;
+    box-shadow: 0 20px 60px rgba(26, 36, 45, 0.03) !important;
 }
 
-/* BOTONES DE ACCIÓN TOTALMENTE VISIBLES */
-.btn-cyan-premium {
-    background: var(--accent-blue-soft) !important;
-    color: var(--text-light) !important;
-    font-weight: 700; border: 2px solid var(--text-dark); border-radius: 4px;
-    box-shadow: 2px 2px 0px var(--text-dark);
+.border-light-custom {
+    border-color: rgba(26, 36, 45, 0.08) !important;
 }
-.btn-cyan-premium:hover { background: #384C5B !important; }
 
-.btn-coral-premium {
-    background: var(--accent-moss) !important;
-    color: var(--text-light) !important;
-    font-weight: 700; border: 2px solid var(--text-dark); border-radius: 4px;
-    box-shadow: 2px 2px 0px var(--text-dark);
+.text-muted-custom {
+    color: var(--text-muted) !important;
 }
-.btn-coral-premium:hover { background: #273121 !important; }
 
-.btn-outline-premium {
-    background: transparent; color: var(--text-dark) !important;
-    border: 2px solid var(--text-dark) !important; font-weight: 700; border-radius: 4px;
-}
-.btn-outline-premium:hover { background: rgba(43, 37, 32, 0.08); }
-
-/* INTERIOR DE LA LIBRETA DE ANOTACIÓN */
-#workspace-asistente {
-    background: var(--bg-crema) !important;
-    border: 2px solid var(--text-dark) !important;
-    border-radius: 4px;
-}
-.display-counter {
-    font-family: var(--font-serif);
-     Río de la plata style contador */
-    font-size: 4rem; font-weight: 800; color: var(--text-dark) !important;
-}
+/* --- ELEMENTOS DE FORMULARIO --- */
 .input-dark {
-    background-color: var(--surface-card) !important;
-    border: 2px solid var(--text-dark) !important;
-    color: var(--text-dark) !important;
+    background-color: var(--bg-lino) !important;
+    border: 1px solid rgba(26, 36, 45, 0.08) !important;
+    color: var(--ink-deep) !important;
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    font-size: 14.5px !important;
+    transition: border-color 0.3s ease;
+}
+
+.input-dark:focus {
+    border-color: var(--accent-mist) !important;
+    box-shadow: none !important;
+}
+
+/* --- BOTONES PREMIUM --- */
+.btn-coral-premium {
+    background: var(--ink-deep) !important;
+    color: var(--bg-lino) !important;
+    border: none !important;
+    padding: 14px 24px !important;
+    font-family: var(--font-clean);
+    font-size: 13px;
     font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 40px !important;
+    box-shadow: 0 6px 20px rgba(26, 36, 45, 0.1) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* DADOS Y COMPONENTES */
-.dice-box-ui {
-    width: 50px; height: 50px; background: var(--surface-card);
-    border: 2px solid var(--text-dark);
-    font-family: var(--font-serif); font-weight: 800; font-size: 24px; color: var(--text-dark);
-}
-.btn-timer-premium {
-    background: var(--surface-card); border: 2px solid var(--text-dark); color: var(--text-dark);
-    font-weight: 700;
-}
-.btn-timer-premium.active {
-    background: var(--accent-blue-soft) !important;
-    color: var(--text-light) !important;
+.btn-coral-premium:hover {
+    background: var(--accent-sage) !important;
+    color: var(--surface-pure) !important;
+    transform: translateY(-2px);
 }
 
-/* SECCIÓN ASISTENTE FLOTANTE */
-.chatbot-trigger {
-    background: var(--text-dark);
-    color: var(--text-light);
-    border: 2px solid var(--text-light);
-    border-radius: 50%;
+/* --- ANIMACIONES DE REVELADO --- */
+@keyframes effectFocusReveal {
+    0% { opacity: 0; transform: translateY(15px); filter: blur(4px); }
+    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.badge-tech {
+    display: inline-block;
+    padding: 4px 12px;
+    background: rgba(114, 132, 104, 0.1);
+    color: var(--accent-sage);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 20px;
 }
