@@ -4,9 +4,10 @@
 
 :root {
     --bg-deep: #03060f;
-    --surface-glass: rgba(13, 22, 41, 0.88); /* Menos transparente para mejor lectura */
+    --surface-glass: rgba(13, 22, 41, 0.88);
     --accent-cyan: #00F2FE;
     --accent-coral: #FF6868;
+    --accent-hybrid: #a855f7;
     --text-pure: #F9FAFB;
     --text-muted: #9CA3AF;
     --border-glass: rgba(255, 255, 255, 0.08);
@@ -99,7 +100,7 @@ body {
 .game-card-premium:hover .game-card-front { border-color: var(--border-glow); }
 .game-card-back { background: #070d1a; transform: rotateY(180deg); }
 
-/* RESALTE AGRESIVO DE ICONOS DE JUEGO */
+/* RESALTE DE ICONOS DE JUEGO */
 .floating-icon {
     position: absolute; font-size: 65px; z-index: 1; filter: drop-shadow(0 0 12px currentColor); opacity: 0.85; transition: all 0.3s ease;
 }
@@ -110,7 +111,7 @@ body {
 
 .game-title { font-family: var(--font-tech); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: var(--text-pure); z-index: 2; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
 
-/* COLORES ESPECÍFICOS DE MESA */
+/* COLORES DE CAPAS EN LA MESA */
 .bg-truco    { background: linear-gradient(135deg, rgba(40, 20, 20, 0.95) 0%, #0d1629 100%); }
 .bg-rummy    { background: linear-gradient(135deg, rgba(20, 35, 60, 0.95) 0%, #0d1629 100%); }
 .bg-uno      { background: linear-gradient(135deg, rgba(45, 15, 15, 0.95) 0%, #0d1629 100%); }
@@ -125,6 +126,11 @@ body {
 .bg-trivial  { background: linear-gradient(135deg, rgba(35, 15, 45, 0.95) 0%, #0d1629 100%); }
 .bg-pictionary{ background: linear-gradient(135deg, rgba(20, 45, 35, 0.95) 0%, #0d1629 100%); }
 
+/* SECCIÓN MÓDULO HÍBRIDO */
+.border-glow-hybrid { border-color: rgba(168, 85, 247, 0.3) !important; box-shadow: 0 0 25px rgba(168, 85, 247, 0.1); }
+.badge-prototype { top: 12px; right: 12px; background: var(--accent-hybrid); color: white; font-family: var(--font-tech); font-size: 9px; padding: 4px 10px; border-radius: 4px; font-weight: bold; }
+.hybrid-icon-orb { width: 90px; height: 90px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--accent-hybrid); margin: 0 auto; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3)); }
+
 /* BOTONERAS */
 .btn-cyan-premium { background: linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%); color: #03060f !important; font-weight: 600; border: none; border-radius: 8px; }
 .btn-coral-premium { background: linear-gradient(135deg, var(--accent-coral) 0%, #dc2626 100%); color: white !important; font-weight: 600; border: none; border-radius: 8px; }
@@ -138,7 +144,7 @@ body {
 .display-counter { font-family: var(--font-tech); font-size: 3.8rem; font-weight: 700; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 .input-dark { background-color: rgba(3, 6, 15, 0.7) !important; border: 1px solid var(--border-glass) !important; color: white !important; }
 
-/* DADOS INTERACTIVOS UI */
+/* DADOS UI ANIMATION */
 .dice-box-ui {
     width: 45px; height: 45px; background: #1a263e; border: 2px solid var(--accent-cyan);
     border-radius: 8px; display: flex; align-items: center; justify-content: center;
