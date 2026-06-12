@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sinapsis - Universo Fígital</title>
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,6 +18,7 @@
     <div class="glow-blue"></div>
     <div class="glow-coral"></div>
 
+    <!-- NAVBAR PREMIUM CON LOGIN INTUITIVO -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
@@ -28,103 +32,348 @@
                 <ul class="navbar-nav ms-auto gap-2">
                     <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
                     <li class="nav-item"><a class="nav-link" href="#galeria">Mesa de Juegos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratorio Híbrido</a></li>
                     <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta Virtual</a></li>
                 </ul>
-                <div class="ms-lg-4 mt-2 mt-lg-0">
+                <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
+                    <!-- El botón de login o el pill de usuario activo se inyecta dinámicamente aquí para evitar errores de estado -->
                     <button class="btn-profile-pill d-flex align-items-center" onclick="abrirAuthModal()">
-                        <div class="avatar-dot" id="navAvatar">?</div>
-                        <span id="navUserName" class="small text-white">Iniciar Sesión</span>
+                        <div class="avatar-dot">?</div>
+                        <span class="small text-white">Iniciar Sesión</span>
                     </button>
                 </div>
             </div>
         </div>
     </nav>
 
+    <!-- HERO SECTION -->
     <header id="comunidad" class="container py-5 text-center text-lg-start header-hero">
         <div class="row align-items-center g-5">
             <div class="col-lg-7">
                 <span class="badge badge-tech mb-3">RED DE JUEGOS DE MESA</span>
                 <h1 class="display-4 fw-bold text-white mb-3">Conectá, jugá y registrá en <span class="text-gradient">Comunidad.</span></h1>
                 <p class="text-muted-custom lead mb-4">
-                    Sinapsis nace para unir a los apasionados de los juegos de mesa. Creá tu perfil para armar tardes o noches de juego, desafiar a otros jugadores y registrar cada punto en tu libreta virtual.
+                    Sinapsis nace para unir a los apasionados de los juegos de mesa. Creá tu perfil para armar tardes de juego, desafiar a otros jugadores y registrar cada punto en tu libreta virtual.
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
-                    <a href="#galeria" class="btn btn-cyan-premium px-4 py-3">Explorar Juegos</a>
-                    <button class="btn btn-outline-premium px-4 py-3" onclick="abrirAuthModal()">Unirse a la Comunidad</button>
+                    <a href="#galeria" class="btn btn-cyan-premium px-4 py-3">Mesa de Juegos</a>
+                    <a href="#laboratorio" class="btn btn-outline-premium px-4 py-3">Prototipos Híbridos</a>
                 </div>
             </div>
             <div class="col-lg-5 text-center d-none d-lg-block">
-                <div class="central-orb"><i class="bi bi-brightness-high"></i></div>
+                <div class="central-orb"><i class="bi bi-dice-6"></i></div>
             </div>
         </div>
     </header>
 
+    <!-- SECCIÓN: MESA DE JUEGOS CATEGORIZADA -->
     <section id="galeria" class="container py-5">
         <div class="text-center mb-5">
             <h2 class="h1 text-white fw-bold">Mesa de Asistencia Interactiva</h2>
-            <p class="text-muted-custom">Pasá el mouse para revelar la explicación visual y acceder a las herramientas.</p>
+            <p class="text-muted-custom">Explorá nuestro catálogo extendido organizado por categorías tácticas.</p>
         </div>
 
-        <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="game-card-premium">
-                    <div class="game-card-wrapper">
-                        <div class="game-card-front bg-generala">
-                            <div class="floating-icon f-1"><i class="bi bi-dice-5"></i></div>
-                            <div class="floating-icon f-2"><i class="bi bi-dice-3"></i></div>
-                            <span class="game-title">GENERALA</span>
-                        </div>
-                        <div class="game-card-back p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-cyan font-tech mb-2">GENERALA</h4>
-                                <p class="small text-light opacity-75">Competencia táctica de dados. Consigue combinaciones como Full, Póker o Generala para dominar la tabla.</p>
+        <!-- CATEGORÍA: CLÁSICOS DE CARTAS -->
+        <div class="mb-5">
+            <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-suit-spade-fill me-2"></i> Clásicos de Cartas y Fichas</h3>
+            <div class="row g-4">
+                <!-- TRUCO -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-truco">
+                                <div class="floating-icon f-1 text-coral"><i class="bi bi-suit-club-fill"></i></div>
+                                <span class="game-title">TRUCO</span>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('generala')">Reglas</button>
-                                <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('generala')">Anotador</button>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">TRUCO</h4>
+                                    <p class="small text-light opacity-75">Estrategia, mentiras y picardía criolla. Administrá los tantos de las malas y las buenas de forma ágil.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('truco')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('truco')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- RUMMY -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-rummy">
+                                <div class="floating-icon f-2 text-cyan"><i class="bi bi-layers-half"></i></div>
+                                <span class="game-title">RUMMY</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">RUMMY</h4>
+                                    <p class="small text-light opacity-75">Combina piernas y escaleras numéricas. Descargá tus fichas antes que tus oponentes en el campeonato.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('rummy')">Campeonato</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- UNO -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-uno">
+                                <div class="floating-icon f-3 text-coral"><i class="bi bi-plus-circle-fill"></i></div>
+                                <span class="game-title">UNO</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">UNO</h4>
+                                    <p class="small text-light opacity-75">Deshacete de tus cartas haciendo coincidir colores o números. ¡No te olvides de gritar UNO!</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('uno')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('uno')">Anotador</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="game-card-premium">
-                    <div class="game-card-wrapper">
-                        <div class="game-card-front bg-rummy">
-                            <div class="floating-icon f-1"><i class="bi bi-suit-spade-fill"></i></div>
-                            <div class="floating-icon f-3"><i class="bi bi-layers-half"></i></div>
-                            <span class="game-title">RUMMY</span>
-                        </div>
-                        <div class="game-card-back p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-cyan font-tech mb-2">RUMMY</h4>
-                                <p class="small text-light opacity-75">Combina piernas y escaleras numéricas. Descargá tus fichas antes que tus oponentes en el campeonato.</p>
+        <!-- CATEGORÍA: TABLEROS DE ESTRATEGIA -->
+        <div class="mb-5">
+            <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-grid-3x3-gap-fill me-2"></i> Tableros de Estrategia</h3>
+            <div class="row g-4">
+                <!-- AJEDREZ -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-ajedrez">
+                                <div class="floating-icon f-1 text-cyan"><i class="bi bi-person-workspace"></i></div>
+                                <span class="game-title">AJEDREZ</span>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
-                                <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('rummy')">Campeonato</button>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">AJEDREZ</h4>
+                                    <p class="small text-light opacity-75">El juego de reyes. Desplegá tus aperturas tácticas y controlá el tiempo de juego con el reloj Fischer.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('ajedrez')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('ajedrez')">Campeonato</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- DAMAS -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-damas">
+                                <div class="floating-icon f-2 text-coral"><i class="bi bi-circle-fill"></i></div>
+                                <span class="game-title">DAMAS</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">DAMAS</h4>
+                                    <p class="small text-light opacity-75">Capturá todas las piezas de tu rival saltando en diagonal. Coroná tus fichas para moverte libremente.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('damas')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('damas')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- T.E.G. -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-teg">
+                                <div class="floating-icon f-3 text-cyan"><i class="bi bi-globe2"></i></div>
+                                <span class="game-title">T.E.G.</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">T.E.G.</h4>
+                                    <p class="small text-light opacity-75">Planificación y Plan de Estrategia Global. Conquistá continents y defendé tus fronteras territoriales.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('teg')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('teg')">Campeonato</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="game-card-premium">
-                    <div class="game-card-wrapper">
-                        <div class="game-card-front bg-truco">
-                            <div class="floating-icon f-2"><i class="bi bi-suit-club-fill"></i></div>
-                            <span class="game-title">TRUCO</span>
-                        </div>
-                        <div class="game-card-back p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-coral font-tech mb-2">TRUCO</h4>
-                                <p class="small text-light opacity-75">Estrategia, mentiras y picardía criolla. Administrá los tantos de las malas y las buenas de forma ágil.</p>
+        <!-- CATEGORÍA: DADOS Y AZAR -->
+        <div class="mb-5">
+            <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-dice-5-fill me-2"></i> Dados y Destreza Numérica</h3>
+            <div class="row g-4">
+                <!-- GENERALA -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-generala">
+                                <div class="floating-icon f-1 text-cyan"><i class="bi bi-dice-5"></i></div>
+                                <span class="game-title">GENERALA</span>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('truco')">Reglas</button>
-                                <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('truco')">Tantos</button>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">GENERALA</h4>
+                                    <p class="small text-light opacity-75">Competencia táctica de dados. Consigue combinaciones como Full, Póker o Generala para dominar la tabla.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('generala')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('generala')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- BATALLA NAVAL -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-naval">
+                                <div class="floating-icon f-2 text-coral"><i class="bi bi-crosshair"></i></div>
+                                <span class="game-title">BATALLA NAVAL</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">BATALLA NAVAL</h4>
+                                    <p class="small text-light opacity-75">Agua, Tocado o Hundido. Localizá la flota de coordenadas enemigas en la grilla antes de que derriben tus naves.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('batalla_naval')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('batalla_naval')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORÍA: PALABRAS Y MENTE -->
+        <div class="mb-5">
+            <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-translate me-2"></i> Palabras, Ingenio y Léxico</h3>
+            <div class="row g-4">
+                <!-- SCRABBLE -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-scrabble">
+                                <div class="floating-icon f-1 text-cyan"><i class="bi bi-sort-alpha-down"></i></div>
+                                <span class="game-title">SCRABBLE</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">SCRABBLE</h4>
+                                    <p class="small text-light opacity-75">Cruzá letras y armá términos de alto valor. Validá palabras complejas con nuestro motor léxico integrado.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('scrabble')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('scrabble')">Campeonato</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- TUTTI FRUTTI -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-tutti">
+                                <div class="floating-icon f-2 text-coral"><i class="bi bi-lightning-charge-fill"></i></div>
+                                <span class="game-title">TUTTI FRUTTI</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">TUTTI FRUTTI</h4>
+                                    <p class="small text-light opacity-75">¡Basta para mí, basta para todos! Completá casilleros de categorías con la letra del turno a máxima velocidad.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('tutti_frutti')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('tutti_frutti')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- AHORCADO -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-ahorcado">
+                                <div class="floating-icon f-3 text-cyan"><i class="bi bi-type"></i></div>
+                                <span class="game-title">AHORCADO</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">AHORCADO</h4>
+                                    <p class="small text-light opacity-75">Adiviná la palabra oculta letra por letra antes de completar los 6 errores del verdugo gráfico.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('ahorcado')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('ahorcado')">Anotador</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORÍA: TRIVIA Y FIESTA -->
+        <div class="mb-5">
+            <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-patch-question-fill me-2"></i> Trivias y Dinámicas de Grupo</h3>
+            <div class="row g-4">
+                <!-- TRIVIAL -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-trivial">
+                                <div class="floating-icon f-1 text-coral"><i class="bi bi-trophy-fill"></i></div>
+                                <span class="game-title">TRIVIAL</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-coral font-tech mb-2">TRIVIAL PURSUIT</h4>
+                                    <p class="small text-light opacity-75">Respondé preguntas sobre Arte, Ciencia, Historia y Espectáculos para llenar tus casilleros de quesitos.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('trivial')">Reglas</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('trivial')">Campeonato</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- PICTIONARY -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-pictionary">
+                                <div class="floating-icon f-2 text-cyan"><i class="bi bi-palette-fill"></i></div>
+                                <span class="game-title">PICTIONARY</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">PICTIONARY</h4>
+                                    <p class="small text-light opacity-75">El arte de la comunicación visual rápida. Dibujá conceptos abstractos para que tu equipo adivine a tiempo.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('pictionary')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('pictionary')">Anotador</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -133,65 +382,124 @@
         </div>
     </section>
 
+    <!-- EXPANSION REGLAMENTO -->
     <div id="visor-reglas" class="container my-4 d-none">
         <div class="dashboard-card p-4 border-glow-cyan">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h3 class="h4 text-white font-tech mb-0" id="reglasTitulo">Reglamento Oficial</h3>
-                <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cerrarVisorReglas()">Cerrar Verificación</button>
+                <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cerrarVisorReglas()">Cerrar Lector</button>
             </div>
-            <div class="p-3 rounded style-rules-box" id="reglasCuerpo"></div>
+            <div class="p-4 rounded style-rules-box" id="reglasCuerpo"></div>
         </div>
     </div>
 
+    <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS (NOVEDADES Y FUTURO FÍGITAL) -->
+    <section id="laboratorio" class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="h1 text-white fw-bold"><span class="text-gradient">Laboratorio</span> de Híbridos</h2>
+            <p class="text-muted-custom">Próximas experiencias del Universo Sinapsis: Reversiones clásicas y despliegue de hardware inteligente.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- PROTOTIPO: EL 5TO JINETE -->
+            <div class="col-12 col-lg-8">
+                <div class="dashboard-card p-4 border-glow-hybrid position-relative overflow-hidden">
+                    <div class="badge-prototype position-absolute">PROTOTIPO V.01</div>
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-5 text-center">
+                            <div class="hybrid-icon-orb"><i class="bi bi-rocket-takeoff-fill"></i></div>
+                        </div>
+                        <div class="col-md-7">
+                            <h3 class="font-tech text-cyan mb-2">EL 5TO JINETE</h3>
+                            <span class="badge badge-tech mb-3">Estrategia Galáctica Híbrida</span>
+                            <p class="small text-muted-custom">
+                                Un lienzo central inteligente diseñado para **4 a 8 jugadores**. Cada participante monta su tableta o celular en los soportes perimetrales integrados, conectándose mediante Bluetooth o cable de datos directamente a la plataforma.
+                            </p>
+                            <ul class="small text-muted-custom ps-3 mb-4">
+                                <li><strong>Lienzo Inteligente:</strong> Superficie física sensitiva que reconoce la posición de las flotas espaciales.</li>
+                                <li><strong>Consola Táctica Periférica:</strong> Tu pantalla gestiona los recursos secretos y las cartas de traición.</li>
+                            </ul>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-cyan-premium" onclick="alert('Proyecto en fase de simulación para entrega final. ¡Lienzo fígital configurado!')">Ver Diagrama de Lienzo</button>
+                                <button class="btn btn-sm btn-outline-premium" onclick="verReglas('jinete')">Reglas Base</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD CENTRAL / LIBRETA VIRTUAL -->
     <section id="dashboard-seccion" class="container py-5 d-none">
         <div class="dashboard-card p-4 mb-4">
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                 <div>
                     <span class="badge badge-tech mb-1">LIBRETA VIRTUAL</span>
-                    <h2 class="h3 text-white fw-bold mb-0" id="txtBienvenidaLibreta">Panel de Control de Mariana</h2>
+                    <h2 class="h3 text-white fw-bold mb-0" id="txtBienvenidaLibreta">Panel de Control</h2>
                 </div>
-                <div id="modulo-ranking-mini" class="text-end">
-                    <span class="small text-muted-custom d-block">Tu Récord Global</span>
+                <div class="text-end">
+                    <span class="small text-muted-custom d-block">Historial Consolidado</span>
                     <span class="text-cyan fw-bold font-tech" id="lblRecordPts">0 Puntos Guardados</span>
                 </div>
             </div>
 
-            <div id="workspace-asistente" class="p-3 mb-4 rounded-3 border border-secondary border-dashed" style="background: #060a12;">
+            <!-- WORKSPACE PANEL DINÁMICO -->
+            <div id="workspace-asistente" class="p-3 mb-4 rounded-3 border border-secondary border-dashed" style="background: #040812;">
                 <div class="text-center py-5 text-muted-custom">
                     <i class="bi bi-cpu display-4 mb-2 d-block opacity-40"></i>
-                    <p>Seleccioná "Anotador" o "Campeonato" en la mesa de juegos de arriba para activar los paneles aritméticos.</p>
+                    <p>Seleccioná el asistente aritmético de cualquier juego en la mesa de arriba para iniciar la carga.</p>
                 </div>
             </div>
 
+            <!-- SECCIÓN EXTRA: MOTOR LÉXICO, DADOS Y RELOJ -->
             <div class="row g-4">
-                <div class="col-12 col-lg-7">
-                    <div class="p-4 rounded-3 style-rules-box">
-                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Motor de Búsqueda Léxica (Diccionario)</h4>
+                <!-- VALIDACIÓN SCRABBLE CON DEFINICIONES -->
+                <div class="col-12 col-lg-6">
+                    <div class="p-4 rounded-3 style-rules-box h-100">
+                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Validador de Léxico Oficial (Sinapsis Core)</h4>
                         <form onsubmit="validarDiccionario(event)">
                             <div class="input-group">
                                 <input type="text" id="inputPalabra" class="form-control input-dark text-uppercase" placeholder="Ingresá palabra para validar..." required>
-                                <button class="btn btn-cyan-premium px-4" type="submit">Verificar palabra</button>
+                                <button class="btn btn-cyan-premium px-4" type="submit">Validar</button>
                             </div>
                         </form>
-                        <div id="alertDiccionario" class="alert mt-3 text-center small" style="display: none;"></div>
+                        <div id="alertDiccionario" class="mt-3 p-3 rounded" style="display: none; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
+                            <div class="fw-bold id-status-word mb-1"></div>
+                            <div class="small text-muted id-def-word"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-12 col-lg-5">
-                    <div class="p-4 rounded-3 style-rules-box border border-secondary text-center">
-                        <h5 class="text-white mb-3"><i class="bi bi-hourglass-split text-cyan me-2"></i>Reloj de Control Fischer (+3s)</h5>
-                        <div class="d-flex gap-2 mb-3">
-                            <button class="btn btn-timer-premium active w-50" id="cBox1" onclick="invertirReloj(1)">
-                                <small class="d-block opacity-60 text-uppercase">Blancas</small>
-                                <span class="h3 font-tech" id="txtC1">05:00</span>
+
+                <!-- HERRAMIENTA EXTRA: LANZADOR DE DADOS -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
+                        <h5 class="text-white mb-2"><i class="bi bi-dice-3 text-cyan me-2"></i>Lanzador de Dados</h5>
+                        <div class="d-flex justify-content-center gap-3 my-3">
+                            <div class="dice-box-ui" id="uiDado1">1</div>
+                            <div class="dice-box-ui" id="uiDado2">6</div>
+                        </div>
+                        <button class="btn btn-cyan-premium w-100 py-2" onclick="lanzarDadosEngine()">Tirar Dados</button>
+                    </div>
+                </div>
+
+                <!-- RELOJ FISCHER -->
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
+                        <h5 class="text-white mb-2"><i class="bi bi-hourglass-split text-cyan me-2"></i>Reloj Fischer</h5>
+                        <div class="d-flex gap-2 mb-2">
+                            <button class="btn btn-timer-premium active w-50 py-2" id="cBox1" onclick="invertirReloj(1)">
+                                <small class="d-block opacity-60 font-tech" style="font-size:9px">P1</small>
+                                <span class="h4 font-tech" id="txtC1">05:00</span>
                             </button>
-                            <button class="btn btn-timer-premium w-50" id="cBox2" onclick="invertirReloj(2)">
-                                <small class="d-block opacity-60 text-uppercase">Negras</small>
-                                <span class="h3 font-tech" id="txtC2">05:00</span>
+                            <button class="btn btn-timer-premium w-50 py-2" id="cBox2" onclick="invertirReloj(2)">
+                                <small class="d-block opacity-60 font-tech" style="font-size:9px">P2</small>
+                                <span class="h4 font-tech" id="txtC2">05:00</span>
                             </button>
                         </div>
-                        <div class="d-flex gap-2 justify-content-center">
-                            <button class="btn btn-xs btn-outline-secondary rounded-pill" onclick="pausarReloj()"><i class="bi bi-pause"></i> Pausar</button>
-                            <button class="btn btn-xs btn-outline-danger rounded-pill" onclick="resetReloj()"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                        <div class="d-flex gap-1 justify-content-center">
+                            <button class="btn btn-xs btn-outline-secondary" onclick="pausarReloj()">Pausa</button>
+                            <button class="btn btn-xs btn-outline-danger" onclick="resetReloj()">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -199,17 +507,56 @@
         </div>
     </section>
 
+    <!-- ESTADO ADVERTENCIA BLOQUEO / INVITE ACCESIBLE -->
     <section id="estado-bloqueado" class="container py-5 text-center">
-        <div class="dashboard-card p-5 max-width-md mx-auto" style="max-width: 550px;">
-            <i class="bi bi-lock-fill display-4 text-coral mb-3 d-block"></i>
-            <h3 class="text-white fw-bold">Libreta Virtual Bloqueada</h3>
-            <p class="text-muted-custom small">
-                Para registrar tus puntajes, iniciar campeonatos personalizados de Rummy y competir en el ranking de la comunidad, necesitas estar registrado.
+        <div class="dashboard-card p-5 max-width-md mx-auto" style="max-width: 580px;">
+            <i class="bi bi-shield-lock-fill display-4 text-coral mb-3 d-block"></i>
+            <h3 class="text-white fw-bold mb-3 font-tech">¿Querés ser parte de la comunidad más grande de juegos de mesa?</h3>
+            <p class="text-muted-custom small mb-4">
+                Registrate en segundos para desbloquear tu <strong>Libreta Virtual</strong>. Vas a poder computar tus partidas en tiempo real, sincronizar coeficientes de juego y resguardar tu historial de victorias de forma completamente intuitiva.
             </p>
-            <button class="btn btn-cyan-premium mt-2" onclick="abrirAuthModal()">Registrarme o Ingresar Ahora</button>
+            <button class="btn btn-lg btn-cyan-premium px-5" onclick="abrirAuthModal()"><i class="bi bi-person-plus-fill me-2"></i>Ingresar a la Red</button>
         </div>
     </section>
 
+    <!-- ACCESO CHATBOT FLOTANTE ASISTENTE -->
+    <div class="chatbot-trigger" onclick="alert('Iniciando Sinapsis Bot v1.0. Conexión neuronal directa simulada para soporte fígital.')">
+        <i class="bi bi-chat-left-dots-fill"></i>
+        <span class="chatbot-pulse"></span>
+    </div>
+
+    <!-- SECCIÓN FOOTER EXPANDIDA CON SISTEMA DE CAPTURA DE LEADS -->
+    <footer class="footer-premium mt-5">
+        <div class="container py-5">
+            <div class="row g-4 align-items-center mb-4">
+                <div class="col-12 col-lg-6 text-center text-lg-start">
+                    <h4 class="text-white font-tech mb-2">Comunidad Exclusiva Sinapsis</h4>
+                    <p class="small text-muted-custom mb-0">Unite para recibir alertas de pruebas de prototipos híbridos, accesos anticipados y beneficios en tiendas asociadas.</p>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <form onsubmit="alert('¡Email registrado con éxito! Tu acceso a la base de datos exclusiva de Sinapsis ha sido procesado.'); this.reset(); return false;">
+                        <div class="input-group">
+                            <input type="email" class="form-control input-dark" placeholder="Dejá tu mail para enterarte de novedades..." required>
+                            <button class="btn btn-cyan-premium px-4" type="submit">Unirme</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr class="border-secondary border-opacity-25 my-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 text-center text-md-start">
+                <div>
+                    <span class="small text-muted-custom">&copy; 2026 SINAPSIS. Todos los derechos reservados. Desarrollado en la órbita de experiencias fígitales.</span>
+                </div>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="#" class="social-icon-link" onclick="alert('Enlace simulado a @sinapsis.games')"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="social-icon-link" onclick="alert('Enlace simulado a Discord Comunidad')"><i class="bi bi-discord"></i></a>
+                    <a href="#" class="social-icon-link" onclick="alert('Enlace simulado a nuestro canal de Desarrollo')"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AUTH MODAL -->
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content modal-custom border-0">
@@ -221,7 +568,6 @@
                         <button class="btn btn-xs btn-outline-light active" id="tabLogin" onclick="cambiarFrenteAuth('login')">Ingresar</button>
                         <button class="btn btn-xs btn-outline-light" id="tabRegistro" onclick="cambiarFrenteAuth('registro')">Registrarse</button>
                     </div>
-
                     <form id="authForm" onsubmit="procesarAutenticacion(event)">
                         <div class="mb-3">
                             <label class="text-muted-custom small mb-1">Nombre de Usuario</label>
