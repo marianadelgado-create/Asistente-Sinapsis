@@ -1,21 +1,20 @@
 /* ==========================================================================
-   SINAPSIS CORE - PALETA NOSTALGIA VANGUARDISTA (2026)
-   Dirección de Arte: Minimalista, Etérea y Orgánica
+   SINAPSIS CORE - EDICIÓN NOSTALGIA VANGUARDISTA (REVISIÓN DE CONTRASTE 2026)
+   Dirección de Arte: Minimalismo Cálido, Alto Contraste Editorial
    ========================================================================== */
 
 :root {
-    --bg-crema: #FDFBF7;          /* Fondo papel marfil, cálido y contenedor */
+    --bg-crema: #F7F4EE;          /* Crema base con un tono más de cuerpo */
     --surface-wood: #1E1611;      /* Marrón terroso profundo (cuero/madera) */
-    --surface-card: #FAF6F0;      /* Tarjetas claras de alto contraste analógico */
-    --accent-blue-soft: #7A91A3;  /* Azul suavizado, desgastado y etéreo */
-    --accent-moss: #5F6F52;       /* Verde musgo/oliva cálido para acentos */
-    --text-dark: #2B2520;         /* Texto principal bitono, evita el negro puro */
-    --text-light: #F4EFE6;        /* Texto sobre superficies oscuras */
-    --text-muted: #7C7267;        /* Texto secundario de baja intensidad */
-    --border-organic: rgba(43, 37, 32, 0.12);
-    --border-glow-soft: rgba(122, 145, 163, 0.3);
+    --surface-card: #FFFFFF;      /* Tarjetas blanco puro para máximo contraste de lectura */
+    --accent-blue-soft: #4A6375;  /* Azul suavizado pero oscurecido para garantizar legibilidad */
+    --accent-moss: #3B4A32;       /* Verde musgo oscuro para textos legibles y acentos */
+    --text-dark: #1A1512;         /* Marrón casi negro súper sólido para lectura fluida */
+    --text-light: #FDFBF7;        /* Texto sobre fondo oscuro */
+    --text-muted: #595047;        /* Gris terroso oscuro (antiguo secundario que ahora es legible) */
+    --border-organic: #2B2520;    /* Líneas sólidas de separación en lugar de transparencias */
     
-    --font-serif: 'Playfair Display', Georgia, serif; /* Para títulos que evocan historia */
+    --font-serif: 'Playfair Display', Georgia, serif;
     --font-base: 'Inter', sans-serif;
 }
 
@@ -23,304 +22,179 @@ body {
     background-color: var(--bg-crema);
     color: var(--text-dark);
     font-family: var(--font-base);
+    font-weight: 500; /* Un toque más de grosor base para las fuentes */
     scroll-behavior: smooth;
     overflow-x: hidden;
-    /* Sutil grano fotográfico de fondo para romper la frialdad del píxel */
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.015'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
 }
 
-/* ELIMINACIÓN DE BRILLOS CIBERNÉTICOS ANTERIORES */
-.space-bg, .glow-blue, .glow-coral {
-    display: none !important;
-}
-
-/* NAVBAR RETRO-MODERNA */
+/* NAVBAR ALTO IMPACTO */
 .navbar {
-    background: rgba(253, 251, 247, 0.92) !important;
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-organic);
-    padding: 20px 0;
+    background: var(--surface-wood) !important; /* Pasamos la barra a oscura para enmarcar el sitio */
+    border-bottom: 2px solid var(--text-dark);
+    padding: 15px 0;
 }
 .logo-text {
     font-family: var(--font-serif);
     font-weight: 700;
     font-style: italic;
+    font-size: 24px;
     letter-spacing: 0.05em;
-    color: var(--text-dark) !important;
-    background: none !important;
-    -webkit-text-fill-color: initial !important;
+    color: var(--text-light) !important;
 }
 .brand-glow {
-    color: var(--accent-blue-soft);
-    filter: none !important;
+    color: #A9C2D6; /* Azul pastel claro para que resalte sobre el fondo oscuro de la barra */
 }
 .nav-link {
-    color: var(--text-muted) !important;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.3s ease;
+    color: #E2DACF !important; /* Texto claro legible en navbar */
+    font-size: 15px;
+    font-weight: 600;
 }
 .nav-link:hover {
-    color: var(--text-dark) !important;
+    color: var(--text-light) !important;
 }
 
-/* BOTÓN PERFIL PILL */
+/* BOTÓN PERFIL LEGINLE */
 .btn-profile-pill {
-    background: transparent;
-    border: 1px solid var(--accent-blue-soft);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #E2DACF;
     padding: 8px 18px;
-    border-radius: 4px; /* Formas más ortogonales y limpias */
-    transition: all 0.4s ease;
-}
-.btn-profile-pill:hover {
-    border-color: var(--accent-moss);
-    background: rgba(95, 111, 82, 0.05);
-    box-shadow: none;
+    border-radius: 4px;
 }
 .avatar-dot {
-    width: 22px; height: 22px; border-radius: 50%;
-    background: var(--accent-blue-soft);
-    color: var(--bg-crema); font-size: 11px; font-weight: 600;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: #A9C2D6;
+    color: var(--surface-wood); font-size: 12px; font-weight: 700;
     display: flex; align-items: center; justify-content: center; margin-right: 8px;
 }
 
-/* EFECTO DE ENFOQUE FOTOGRÁFICO (REVELADO SUAVE) */
-.header-hero, .game-card-premium, .dashboard-card {
-    animation: effectFocusReveal 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-@keyframes effectFocusReveal {
-    0% {
-        opacity: 0;
-        filter: blur(15px);
-        transform: translateY(10px);
-    }
-    100% {
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateY(0);
-    }
-}
-
-/* HERO TEXTS */
+/* TEXTOS DEL HERO */
 .badge-tech {
-    background: rgba(95, 111, 82, 0.08);
-    color: var(--accent-moss);
-    border: 1px solid rgba(95, 111, 82, 0.2);
-    font-family: var(--font-base);
-    text-transform: uppercase;
-    font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 2px; letter-spacing: 0.1em;
+    background: var(--surface-wood);
+    color: var(--text-light);
+    font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 4px; letter-spacing: 0.1em;
+    display: inline-block;
 }
-h1, h2, h3, .font-tech {
+h1, h2, h3 {
     font-family: var(--font-serif) !important;
     color: var(--text-dark) !important;
+    font-weight: 800 !important;
 }
 .text-gradient {
-    background: none !important;
-    -webkit-text-fill-color: initial !important;
     color: var(--accent-blue-soft) !important;
     font-style: italic;
 }
 .text-muted-custom {
-    color: var(--text-muted);
-    line-height: 1.7;
+    color: var(--text-dark); /* Forzamos a que las descripciones usen color oscuro base */
+    font-weight: 500;
+    line-height: 1.6;
 }
 
-/* CENTRAL ORB REEMPLAZADO POR UN CONTENEDOR ANALÓGICO */
-.central-orb {
-    width: 200px; height: 200px; margin: 0 auto; border-radius: 4px;
-    background: var(--surface-card);
-    border: 1px solid var(--border-organic);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 45px; color: var(--accent-blue-soft);
-    box-shadow: 0 15px 35px rgba(43, 37, 32, 0.04);
-}
-
-/* TARJETAS DE MESA: CAMBIO ROTACIÓN POR DESPLAZAMIENTO ELEGANTE */
+/* TARJETAS DE JUEGOS (ALTO CONTRASTE) */
 .game-card-premium {
-    background: var(--surface-card);
-    height: 260px;
-    border-radius: 4px;
-    border: 1px solid var(--border-organic);
-    box-shadow: 0 10px 30px rgba(43, 37, 32, 0.03);
-    overflow: hidden;
-    perspective: none;
-}
-.game-card-wrapper {
-    position: relative; width: 100%; height: 100%;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    transform-style: flat;
-}
-.game-card-premium:hover .game-card-wrapper {
-    transform: translateY(-5px);
-}
-
-/* Frente y dorso ahora se manejan como capas de deslizamiento suave */
-.game-card-front, .game-card-back {
-    position: absolute; width: 100%; height: 100%;
-    backface-visibility: visible; border-radius: 0; border: none; padding: 28px;
-    transition: opacity 0.4s ease;
-}
-.game-card-front {
-    background: var(--surface-card);
-    display: flex; flex-column: reverse;
-    align-items: flex-start; justify-content: flex-end;
-    opacity: 1; z-index: 2;
-}
-.game-card-back {
-    background: var(--surface-card);
-    opacity: 0; z-index: 1;
-    display: flex; flex-column: justify-content: space-between;
-    transform: none;
-}
-.game-card-premium:hover .game-card-front {
-    opacity: 0;
-}
-.game-card-premium:hover .game-card-back {
-    opacity: 1;
-    z-index: 3;
-}
-
-/* Iconos integrados de forma minimalista */
-.floating-icon {
-    position: static; font-size: 32px; opacity: 0.6; color: var(--accent-blue-soft) !important;
-    filter: none !important; margin-bottom: 15px; transition: color 0.3s;
-}
-.game-card-premium:hover .floating-icon { color: var(--accent-moss) !important; transform: none; }
-.game-title {
-    font-size: 22px; font-weight: 600; letter-spacing: 0;
-    color: var(--text-dark); text-shadow: none;
-}
-
-/* Fondos unificados limpios (reemplazan los gradientes ruidosos) */
-.bg-truco, .bg-rummy, .bg-uno, .bg-ajedrez, .bg-damas, .bg-teg, 
-.bg-generala, .bg-naval, .bg-scrabble, .bg-tutti, .bg-ahorcado, .bg-trivial, .bg-pictionary {
     background: var(--surface-card) !important;
+    height: 260px;
+    border-radius: 6px;
+    border: 2px solid var(--text-dark) !important; /* Contorno sólido estilo imprenta antigua */
+    box-shadow: 4px 4px 0px var(--text-dark); /* Sombra sólida, limpia y con carácter */
+}
+.game-card-front, .game-card-back {
+    background: var(--surface-card) !important;
+    padding: 24px;
+}
+.game-title {
+    font-size: 24px; 
+    font-weight: 700; 
+    color: var(--text-dark) !important;
+    font-family: var(--font-serif) !important;
+}
+.floating-icon {
+    font-size: 36px; 
+    color: var(--text-dark) !important; /* Íconos negros/oscuros para que se recontra noten */
+    opacity: 1 !important;
 }
 
-/* SECCIÓN MÓDULO HÍBRIDO VINTAGE */
+/* TEXTO DE REGLAS Y SUBTÍTULOS DENTRO DE TARJETAS */
+.game-card-back p, .game-card-back span {
+    color: var(--text-dark) !important;
+    font-weight: 600;
+}
+
+/* SECCIÓN MÓDULO HÍBRIDO (DASHBOARD) */
 .dashboard-card {
-    background: var(--surface-card);
-    border: 1px solid var(--border-organic);
-    border-radius: 4px;
-    box-shadow: 0 20px 50px rgba(43, 37, 32, 0.05);
-}
-.border-glow-hybrid {
-    border-color: var(--accent-moss) !important;
-}
-.badge-prototype {
-    top: 15px; right: 15px;
-    background: var(--accent-moss); color: var(--text-light);
-    font-size: 10px; padding: 4px 12px; border-radius: 2px; font-weight: 500; letter-spacing: 0.05em;
+    background: var(--surface-card) !important;
+    border: 2px solid var(--text-dark) !important;
+    border-radius: 6px;
+    box-shadow: 6px 6px 0px var(--text-dark);
 }
 .hybrid-icon-orb {
-    width: 80px; height: 80px;
-    background: rgba(95, 111, 82, 0.05);
-    border: 1px solid var(--border-organic);
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 28px; color: var(--accent-moss); filter: none;
+    width: 70px; height: 70px;
+    background: var(--bg-crema);
+    border: 2px solid var(--text-dark);
+    color: var(--text-dark);
+    font-size: 30px;
 }
 
-/* BOTONERAS DE BAJO IMPACTO Y ALTA ELEGANCIA */
+/* BOTONES DE ACCIÓN TOTALMENTE VISIBLES */
 .btn-cyan-premium {
-    background: var(--accent-blue-soft);
+    background: var(--accent-blue-soft) !important;
     color: var(--text-light) !important;
-    font-weight: 500; border: none; border-radius: 2px;
-    transition: background 0.3s;
+    font-weight: 700; border: 2px solid var(--text-dark); border-radius: 4px;
+    box-shadow: 2px 2px 0px var(--text-dark);
 }
-.btn-cyan-premium:hover {
-    background: #657989;
-}
-.btn-coral-premium {
-    background: var(--accent-moss);
-    color: var(--text-light) !important;
-    font-weight: 500; border: none; border-radius: 2px;
-    transition: background 0.3s;
-}
-.btn-coral-premium:hover {
-    background: #4d5a42;
-}
-.btn-outline-premium {
-    background: transparent; color: var(--text-dark);
-    border: 1px solid var(--text-dark); border-radius: 2px;
-}
-.btn-outline-premium:hover {
-    background: rgba(43, 37, 32, 0.04); color: var(--text-dark);
-}
+.btn-cyan-premium:hover { background: #384C5B !important; }
 
-/* INTERIOR DE LA LIBRETA (DASHBOARD) */
-#workspace-asistente {
-    background: #FAF8F5 !important;
-    border: 1px solid var(--border-organic) !important;
+.btn-coral-premium {
+    background: var(--accent-moss) !important;
+    color: var(--text-light) !important;
+    font-weight: 700; border: 2px solid var(--text-dark); border-radius: 4px;
+    box-shadow: 2px 2px 0px var(--text-dark);
 }
-.style-rules-box {
-    background: #FAF8F5;
-    border: 1px solid var(--border-organic);
+.btn-coral-premium:hover { background: #273121 !important; }
+
+.btn-outline-premium {
+    background: transparent; color: var(--text-dark) !important;
+    border: 2px solid var(--text-dark) !important; font-weight: 700; border-radius: 4px;
+}
+.btn-outline-premium:hover { background: rgba(43, 37, 32, 0.08); }
+
+/* INTERIOR DE LA LIBRETA DE ANOTACIÓN */
+#workspace-asistente {
+    background: var(--bg-crema) !important;
+    border: 2px solid var(--text-dark) !important;
     border-radius: 4px;
 }
 .display-counter {
     font-family: var(--font-serif);
-    font-size: 3.5rem; font-weight: 700; color: var(--text-dark); text-shadow: none;
+     Río de la plata style contador */
+    font-size: 4rem; font-weight: 800; color: var(--text-dark) !important;
 }
 .input-dark {
-    background-color: var(--bg-crema) !important;
-    border: 1px solid var(--border-organic) !important;
+    background-color: var(--surface-card) !important;
+    border: 2px solid var(--text-dark) !important;
     color: var(--text-dark) !important;
-    border-radius: 2px;
-}
-.input-dark:focus {
-    border-color: var(--accent-blue-soft) !important;
-    box-shadow: none;
+    font-weight: 600;
 }
 
-/* DADOS UI RETRO */
+/* DADOS Y COMPONENTES */
 .dice-box-ui {
-    width: 45px; height: 45px; background: var(--bg-crema);
-    border: 1px solid var(--text-dark);
-    border-radius: 4px; display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-serif); font-weight: bold; font-size: 20px; color: var(--text-dark);
-    box-shadow: none;
+    width: 50px; height: 50px; background: var(--surface-card);
+    border: 2px solid var(--text-dark);
+    font-family: var(--font-serif); font-weight: 800; font-size: 24px; color: var(--text-dark);
 }
-
-/* RELOJ FISCHER */
 .btn-timer-premium {
-    background: var(--bg-crema); border: 1px solid var(--border-organic); color: var(--text-dark);
-    border-radius: 2px;
+    background: var(--surface-card); border: 2px solid var(--text-dark); color: var(--text-dark);
+    font-weight: 700;
 }
 .btn-timer-premium.active {
-    border-color: var(--accent-blue-soft);
-    background: rgba(122, 145, 163, 0.05);
-}
-
-/* MODAL & ASISTENTE FLOTANTE */
-.modal-custom {
-    background: var(--bg-crema);
-    border: 1px solid var(--border-organic);
-    border-radius: 4px;
-}
-.chatbot-trigger {
-    background: var(--surface-wood);
-    color: var(--text-light);
-    border-radius: 4px;
-    box-shadow: 0 10px 30px rgba(30, 22, 17, 0.2);
-}
-.chatbot-pulse {
-    display: none; /* Quitamos animaciones parpadeantes */
-}
-
-/* FOOTER */
-.footer-premium {
-    background: var(--surface-wood);
-    border-top: none;
-}
-.footer-premium h4, .footer-premium span, .footer-premium p, .footer-premium label {
+    background: var(--accent-blue-soft) !important;
     color: var(--text-light) !important;
 }
-.footer-premium .text-muted-custom {
-    color: #A3988E !important;
-}
-.social-icon-link {
-    color: #A3988E;
-}
-.social-icon-link:hover {
+
+/* SECCIÓN ASISTENTE FLOTANTE */
+.chatbot-trigger {
+    background: var(--text-dark);
     color: var(--text-light);
+    border: 2px solid var(--text-light);
+    border-radius: 50%;
 }
