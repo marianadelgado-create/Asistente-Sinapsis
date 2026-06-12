@@ -1,228 +1,193 @@
 /* ==========================================================================
-   DIRECCIÓN DE ARTE ADAPTATIVA - SINAPSIS 2026
+   SISTEMA DE DISEÑO SINAPSIS - EDICIÓN INTERFAZ ORGÁNICA PROFUNDA
    ========================================================================== */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap');
+
 :root {
-    --bg-deep: #060911;
-    --surface-card: #0c1220;
-    --accent-cyan: #00F2FE;
-    --accent-coral: #FF6868;
-    --text-pure: #F3F4F6;
-    --text-muted: #9CA3AF;
-    --border-dark: #1F2937;
-    --font-tech: 'Orbitron', sans-serif;
-    --font-base: 'Inter', sans-serif;
+    /* Nueva Paleta Orgánica de Alto Contraste */
+    --bg-esmeralda: #143236;       /* Fondo dominante profundo */
+    --surface-areia: #F3EFE0;     /* Fondo de tarjetas (Bege Areia/Lino Claro) */
+    --ink-deep: #1A242D;          /* Texto principal dentro de tarjetas */
+    --accent-terracota: #BD6942;  /* Botón principal de acción */
+    --accent-rust: #863A18;       /* Hovers de botones */
+    --text-light: #FBF9F6;         /* Títulos y textos sobre fondo oscuro */
+    --border-soft: rgba(26, 36, 45, 0.08);
+
+    /* Tipografías Híbridas */
+    --font-editorial: 'Cormorant Garamond', serif;
+    --font-clean: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* --- ESTILOS BASE --- */
 body {
-    background-color: var(--bg-deep);
-    color: var(--text-pure);
-    font-family: var(--font-base);
-    scroll-behavior: smooth;
+    background-color: var(--bg-esmeralda) !important;
+    color: var(--text-light) !important;
+    font-family: var(--font-clean) !important;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
-/* FONDOS AMBIENTALES NEURONALES */
-.space-bg {
-    position: fixed;
-    width: 100vw; height: 100vh;
-    top:0; left:0; z-index: -3;
-    background: radial-gradient(circle at 50% 50%, #0d1726 0%, #060911 100%);
-}
-.glow-blue {
-    position: absolute;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.05) 0%, rgba(0,0,0,0) 70%);
-    top: -150px; right: -50px; z-index: -2;
-}
-.glow-coral {
-    position: absolute;
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(255, 104, 104, 0.03) 0%, rgba(0,0,0,0) 70%);
-    bottom: 20%; left: -150px; z-index: -2;
-}
-
-/* NAVBAR */
+/* --- MENÚ DE NAVEGACIÓN (NAVBAR) --- */
 .navbar {
-    background-color: rgba(6, 9, 17, 0.85) !important;
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border-dark);
+    background: rgba(20, 50, 54, 0.92) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(251, 249, 246, 0.1);
+    padding: 16px 0;
 }
-.logo-text {
-    font-family: var(--font-tech);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    background: linear-gradient(90deg, #FFFFFF 0%, var(--accent-cyan) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+.navbar-brand, .logo-text {
+    font-family: var(--font-editorial) !important;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text-light) !important;
+    letter-spacing: -0.01em;
 }
-.brand-glow {
-    color: var(--accent-cyan);
-    filter: drop-shadow(0 0 6px var(--accent-cyan));
+
+/* Apagamos el neón viejo del subtítulo o logo */
+.brand-glow, .text-neon {
+    color: var(--accent-terracota) !important;
+    text-shadow: none !important;
 }
+
 .nav-link {
-    color: var(--text-muted) !important;
-    font-size: 14px;
-    transition: color 0.25s ease;
-}
-.nav-link:hover { color: var(--accent-cyan) !important; }
-
-/* BOTÓN DE PERFIL */
-.btn-profile-pill {
-    background: #111a2e;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 6px 14px;
-    border-radius: 50px;
-    transition: all 0.2s ease;
-}
-.btn-profile-pill:hover {
-    border-color: var(--accent-cyan);
-}
-.avatar-dot {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    background: var(--accent-cyan);
-    color: #060911;
-    font-size: 11px; font-weight: bold;
-    display: flex; align-items: center; justify-content: center;
-    margin-right: 8px;
+    color: rgba(251, 249, 246, 0.7) !important;
+    font-family: var(--font-clean);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
 }
 
-/* HERO */
-.header-hero { padding: 70px 0; }
-.badge-tech {
-    background-color: rgba(0, 242, 254, 0.07);
-    color: var(--accent-cyan);
-    border: 1px solid rgba(0, 242, 254, 0.2);
-    font-family: var(--font-tech);
-    font-size: 10px; letter-spacing: 0.08em;
-}
-.text-gradient {
-    background: linear-gradient(90deg, var(--accent-cyan) 0%, #3B82F6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.text-muted-custom { color: var(--text-muted); }
-
-.central-orb {
-    width: 240px; height: 240px;
-    margin: 0 auto;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, rgba(12, 18, 32, 0.5) 80%);
-    border: 1px solid rgba(0, 242, 254, 0.15);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 60px; color: var(--accent-cyan);
-    box-shadow: 0 0 40px rgba(0, 242, 254, 0.03);
+.nav-link:hover {
+    color: var(--text-light) !important;
 }
 
-/* GRILLA INTERACTIVA REVELADORA (EFECTO HOVER EXPLICACIÓN VISUAL) */
-.game-card-premium {
-    background: transparent;
-    height: 250px;
-    perspective: 1000px; /* Base estructural 3D */
-}
-.game-card-wrapper {
-    position: relative;
-    width: 100%; height: 100%;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
-}
-.game-card-premium:hover .game-card-wrapper {
-    transform: rotateX(180deg);
+/* --- BARRA DE BÚSQUEDA SUPERIOR --- */
+.form-control, .input-dark, input[type="text"] {
+    background-color: var(--surface-areia) !important;
+    border: 1px solid var(--border-soft) !important;
+    color: var(--ink-deep) !important;
+    border-radius: 30px !important; /* Forma de píldora */
+    padding: 12px 24px !important;
+    font-size: 14px !important;
 }
 
-.game-card-front, .game-card-back {
-    position: absolute;
-    width: 100%; height: 100%;
-    backface-visibility: hidden;
-    border-radius: 16px;
-    border: 1px solid var(--border-dark);
+.form-control::placeholder, input::placeholder {
+    color: rgba(26, 36, 45, 0.5) !important;
 }
 
-.game-card-front {
-    background: #0c1220;
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-}
-.game-card-back {
-    background: #080d1a;
-    transform: rotateX(180deg);
-}
-
-.game-title {
-    font-family: var(--font-tech);
-    font-size: 22px; font-weight: 700;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.85);
-    z-index: 2;
+/* --- ENTRADA DEL JUEGO ESTRELLA (EL 5TO JINETE) --- */
+/* Forzamos a que el bloque superior oscuro se vuelva una tarjeta clara premium */
+.jumbotron, .hero-section, .card.bg-dark.text-white.mb-4, #seccion-principal {
+    background: var(--surface-areia) !important;
+    color: var(--ink-deep) !important;
+    border-radius: 16px !important;
+    border: none !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2) !important;
+    padding: 35px !important;
 }
 
-/* GRADIENTES INDIVIDUALES DE LA TARJETA */
-.bg-generala { background: radial-gradient(circle, #152238 0%, #0c1220 100%); }
-.bg-rummy    { background: radial-gradient(circle, #241a15 0%, #0c1220 100%); }
-.bg-truco    { background: radial-gradient(circle, #291515 0%, #0c1220 100%); }
-
-/* ICONOS FLOTANTES */
-.floating-icon {
-    position: absolute;
-    color: rgba(0, 242, 254, 0.12);
-    font-size: 40px;
-    z-index: 1;
-}
-.f-1 { top: 20px; left: 30px; animation: floatEngine 4s infinite ease-in-out; }
-.f-2 { bottom: 20px; right: 30px; animation: floatEngine 5s infinite ease-in-out 0.5s; }
-.f-3 { top: 20px; right: 30px; animation: floatEngine 4.5s infinite ease-in-out 1s; }
-
-@keyframes floatEngine {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(6deg); }
+/* Forzamos a que los textos dentro del bloque estrella sean oscuros para contrastar */
+.jumbotron h1, .jumbotron h2, .jumbotron p, 
+.hero-section h1, .hero-section p,
+#seccion-principal h2, #seccion-principal p {
+    color: var(--ink-deep) !important;
 }
 
-/* BOTONERAS PREMIUM */
-.btn-cyan-premium {
-    background: linear-gradient(135deg, var(--accent-cyan) 0%, #00bce4 100%);
-    color: #060911 !important; font-weight: 600; border: none; border-radius: 8px;
+/* --- GRILLA DE TARJETAS (ASISTENCIA DE CLÁSICOS) --- */
+.card, .game-card, .game-card-premium {
+    background: var(--surface-areia) !important;
+    border-radius: 14px !important;
+    border: none !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+    color: var(--ink-deep) !important;
+    transition: transform 0.3s ease;
 }
-.btn-coral-premium {
-    background: linear-gradient(135deg, var(--accent-coral) 0%, #e05353 100%);
-    border: none; border-radius: 8px;
-}
-.btn-outline-premium {
-    background: transparent; color: white; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
-}
-.btn-outline-premium:hover { background: rgba(255,255,255,0.05); }
 
-/* DASHBOARD CARDS Y MODALES */
-.dashboard-card {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-dark);
-    border-radius: 16px;
+/* Si usás el efecto 3D de girar tarjeta (flipper) */
+.game-card-inner, .card-inner {
+    background: var(--surface-areia) !important;
+    color: var(--ink-deep) !important;
 }
-.style-rules-box {
-    background-color: #060a12;
-    border: 1px solid var(--border-dark);
-}
-.border-glow-cyan {
-    border-color: rgba(0, 242, 254, 0.3) !important;
-    box-shadow: 0 0 20px rgba(0,242,254,0.04);
-}
-.input-dark {
-    background-color: #060a12 !important;
-    border: 1px solid var(--border-dark) !important;
-    color: white !important;
-}
-.input-dark:focus { border-color: var(--accent-cyan) !important; box-shadow: none !important; }
 
-.modal-custom {
-    background-color: var(--surface-card);
-    border: 1px solid var(--border-dark);
+.game-card-front, .game-card-back, .card-body {
+    background: var(--surface-areia) !important;
+    color: var(--ink-deep) !important;
 }
-.border-bottom-dark { border-bottom: 1px solid var(--border-dark); }
-.btn-timer-premium {
-    background-color: #060a12; border: 2px solid var(--border-dark);
-    padding: 14px; border-radius: 10px; color: white;
-}
-.btn-timer-premium.active { border-color: var(--accent-cyan); background-color: #0a1424; }
 
-.font-tech { font-family: var(--font-tech); }
-.btn-xs { padding: 4px 12px; font-size: 12px; border-radius: 20px; }
+.card-title, .game-title {
+    font-family: var(--font-editorial) !important;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink-deep) !important;
+}
+
+/* --- BOTONES (TERRACOTA Y OUTLINE) --- */
+/* El botón principal (el coral viejo) pasa a ser Terracota */
+.btn-primary, .btn-coral, .btn-coral-premium, button[class*="btn-coral"] {
+    background: var(--accent-terracota) !important;
+    color: var(--text-light) !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    font-family: var(--font-clean);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-radius: 30px !important;
+    box-shadow: 0 4px 15px rgba(189, 105, 66, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover, .btn-coral:hover, .btn-coral-premium:hover {
+    background: var(--accent-rust) !important;
+    transform: translateY(-1px);
+}
+
+/* Los otros botones del bloque pasan a ser secundarios con borde sutil */
+.btn-secondary, .btn-outline-light, .btn-outline-secondary {
+    background: transparent !important;
+    color: var(--ink-deep) !important;
+    border: 1px solid var(--ink-deep) !important;
+    padding: 10px 24px !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    border-radius: 30px !important;
+}
+
+.btn-secondary:hover, .btn-outline-light:hover {
+    background: rgba(26, 36, 45, 0.05) !important;
+}
+
+/* --- CENTRAL DE HERRAMIENTAS, CRONÓMETRO Y CONTADORES --- */
+#herramientas .card, #cronometro, #dados-seccion {
+    background: var(--surface-areia) !important;
+    color: var(--ink-deep) !important;
+}
+
+/* Pantalla del cronómetro (Fondo verde oliva mate de la imagen) */
+.display-cronometro, #time, .timer-digits, #contador {
+    font-family: var(--font-clean);
+    background: #475842 !important; 
+    color: #E2E8DD !important;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* Títulos generales de secciones sobre el fondo verde de la app */
+h1, h2, h3, .section-title, main h2 {
+    font-family: var(--font-editorial) !important;
+    color: var(--text-light) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.02em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+/* Ajustes de íconos */
+.bi, .fas, .far, .floating-icon {
+    color: var(--ink-deep) !important;
+}
