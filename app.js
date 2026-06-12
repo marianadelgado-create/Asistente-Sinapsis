@@ -1,5 +1,5 @@
 /**
- * SINAPSIS ENGINE CORE - 2026 EXTENDED V3.5
+ * SINAPSIS ENGINE CORE - 2026 EXTENDED V3
  */
 
 // --- BASE DE DATOS DE REGLAMENTOS COMPLETOS ---
@@ -16,25 +16,30 @@ const REGLAS_DICCIONARIO = {
     tutti_frutti: "<h5>Reglas Oficiales: Tutti Frutti</h5><p>Se sortea una letra de juego. Todos los competidores rellenan categorías (Nombres, Colores, Marcas, Animales) a máxima velocidad. El primero en terminar grita '¡Basta para mí!' deteniendo la ronda. Palabras únicas suman 10 pts, repetidas 5 pts.</p>",
     ahorcado: "<h5>Reglas Oficiales: Ahorcado</h5><p>Un jugador piensa una palabra y dibuja guiones vacíos. El oponente arriesga letras por turno. Si la letra es correcta, se rellena el espacio; si es incorrecta, se dibuja una parte del verdugo. Se pierde al llegar a 6 errores visuales.</p>",
     trivial: "<h5>Reglas Oficiales: Trivial Pursuit</h5><p>Los jugadores avanzan por el tablero respondiendo preguntas divididas en categorías cromáticas (Geografía, Historia, Espectáculos, Ciencia, Arte y Deportes). Se gana al obtener los 6 'quesitos' temáticos correspondientes.</p>",
-    pictionary: "<h5>Reglas Oficiales: Pictionary</h5><p>Juego de mesa de dibujo en equipo. Un miembro toma una tarjeta con una palabra secreta y debe dibujarla en un papel o pizarra sin usar letras, números ni gestos. Su equipo debe adivinar el concept antes de que acabe el tiempo del reloj de arena.</p>",
+    pictionary: "<h5>Reglas Oficiales: Pictionary</h5><p>Juego de mesa de dibujo en equipo. Un miembro toma una tarjeta con una palabra secreta y debe dibujarla en un papel o pizarra sin usar letras, números ni gestos. Su equipo debe adivinar el concepto antes de que acabe el tiempo del reloj de arena.</p>",
     jinete: "<h5>Lienzo de Desarrollo: El 5to Jinete</h5><p>Estructura de despliegue fígital para lienzos multilaterales de 4 a 8 puestos. El reglamento unifica el avance táctico de flotas mediante lecturas de inducción física de fichas en superficie en paralelo con directivas enviadas desde los mandos de las tabletas sincronizadas por Bluetooth.</p>"
 };
 
-// --- DICCIONARIO MATRIZ ABIERTO ---
+// --- DICCIONARIO MATRIZ ABIERTO (AGREGÁ LAS PALABRAS QUE DESEES) ---
 const DICCIONARIO_MASTER = {
     "MESA": "Mueble compuesto por una tabla horizontal sostenida por patas, usado para disputar partidas.",
-    "JUEGO": "Actividad recreativa o de competición de acuerdo a ciertas reglas fijas.",
-    "TRUCO": "Juego criollo de cartas altamente competitivo basado en el engaño y picardía.",
+    "JUEGO": "Actividad recreativa o de competición sometida a reglas fijas donde se gana o pierde.",
+    "TRUCO": "Juego criollo de cartas altamente competitivo basado en el engaño, cálculo de envidos y picardía.",
     "SCRABBLE": "Competición léxica de tablero donde se construyen palabras cruzadas con valores diferenciados.",
-    "PICTIONARY": "Dinámica grupal basada en la decodificación de conceptos abstractos a través de trazos rápidos.",
-    "AJEDREZ": "Estrategia milenaria abstracta de confrontación simulada sobre un damero de 64 casilleros.",
+    "PICTIONARY": "Dinámica grupal basada en la decodificación de conceptos abstractos a través de trazos y dibujos rápidos.",
+    "AJEDREZ": "Estrategia milenaria abstracta de confrontación simulada sobre un damero de sesenta y cuatro escaques.",
+    "TUTTI": "Voz italiana constitutiva del juego de velocidad mental y categorización léxica por turnos.",
+    "FRUTTI": "Segmento complementario de la denominación del juego de palabras rápidas de descarga escrita.",
     "SINAPSIS": "Estructura de red interactiva e interconexión funcional; núcleo conceptual de este universo.",
+    "CARTA": "Naipe o tarjeta ilustrada componente de barajas asignadas a juegos de mesa tácticos.",
+    "DADO": "Cuerpo cúbico regular cuyas caras contienen marcas de puntos del uno al seis para cómputos de azar.",
+    "TABLERO": "Superficie rígida grabada con diagramas o mapas operativos para albergar piezas dinámicas.",
     "LIENZO": "Soporte base de juego fígital diseñado con sensores de inducción electrónica para mapeos globales.",
     "HIBRIDO": "Sistema combinado que fusiona elementos físicos analógicos con despliegues de software digital.",
     "BLUETOOTH": "Especificación tecnológica de radiocomunicación de corto alcance para vincular periféricos inalámbricos."
 };
 
-// --- ESTADOS CORE ---
+// --- PERSISTENCIA Y ESTADOS ---
 let usuarioLogueado = null; 
 let authModoActual = 'login';
 
@@ -48,9 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarSesionExistente();
 });
 
-// --- ENGINES DE CONTROL DE ACCESO ---
+// --- SISTEMA DE LOGOUT Y SESIONES ---
 function abrirAuthModal() {
-    // Si ya hay sesión iniciada, abrir el modal no hace falta
     if(usuarioLogueado) return;
     const modal = new bootstrap.Modal(document.getElementById('authModal'));
     modal.show();
@@ -58,7 +62,6 @@ function abrirAuthModal() {
 
 function cerrarSesion() {
     localStorage.removeItem('sinapsis_sesion_activa');
-    usuarioLogueado = null;
     verificarSesionExistente();
 }
 
@@ -98,7 +101,6 @@ function procesarAutenticacion(event) {
     }
 
     localStorage.setItem('sinapsis_sesion_activa', username);
-    usuarioLogueado = username;
     
     const mEl = document.getElementById('authModal');
     const instance = bootstrap.Modal.getInstance(mEl);
@@ -110,22 +112,16 @@ function procesarAutenticacion(event) {
 function verificarSesionExistente() {
     const panelBloqueado = document.getElementById('estado-bloqueado');
     const panelDashboard = document.getElementById('dashboard-seccion');
-    const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
+    const lblUser = document.getElementById('navUserName');
+    const avatar = document.getElementById('navAvatar');
+    const btnOut = document.getElementById('btnLogOut');
     const sesion = localStorage.getItem('sinapsis_sesion_activa');
 
     if (sesion) {
         usuarioLogueado = sesion;
-        
-        // Inyectar el pill del perfil activo junto al botón salir de forma segura
-        containerPerfilNav.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-                <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
-                    <div class="avatar-dot">${sesion.charAt(0).toUpperCase()}</div>
-                    <span class="small text-white">${sesion}</span>
-                </div>
-                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Salir</button>
-            </div>
-        `;
+        lblUser.innerText = sesion;
+        avatar.innerText = sesion.charAt(0).toUpperCase();
+        btnOut.classList.remove('d-none');
 
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
@@ -134,15 +130,9 @@ function verificarSesionExistente() {
         cargarHistorialUsuario();
     } else {
         usuarioLogueado = null;
-        
-        // Inyectar el disparador limpio de Login
-        containerPerfilNav.innerHTML = `
-            <button class="btn-profile-pill d-flex align-items-center" onclick="abrirAuthModal()">
-                <div class="avatar-dot">?</div>
-                <span class="small text-white">Iniciar Sesión</span>
-            </button>
-        `;
-
+        lblUser.innerText = "Iniciar Sesión";
+        avatar.innerText = "?";
+        btnOut.classList.add('d-none');
         panelBloqueado.classList.remove('d-none');
         panelDashboard.classList.add('d-none');
     }
@@ -151,7 +141,7 @@ function verificarSesionExistente() {
 function cargarHistorialUsuario() {
     const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
     let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { puntos: 0 };
-    document.getElementById('lblRecordPts').innerText = `${datosUser.puntos} Puntos Guardados`;
+    document.getElementById('lblRecordPts').innerText = `${datosUser.puntos} Pts Guardados`;
 }
 
 // --- CONTROLES DE ARITMÉTICA DINÁMICA ---
