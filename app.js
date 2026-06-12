@@ -1,22 +1,47 @@
 /**
- * SINAPSIS ENGINE CORE - 2026
- * Arquitectura unificada de Autenticación y Libreta Virtual Local
+ * SINAPSIS ENGINE CORE - 2026 EXTENDED V2
  */
 
-// --- BASE DE DATOS DE REGLAMENTOS ---
+// --- BASE DE DATOS DE REGLAMENTOS COMPLETOS ---
 const REGLAS_DICCIONARIO = {
-    generala: "<h5>Reglas Generala</h5><p>Se tiran 5 dados en un vaso táctil. Disponés de 3 tiros para apartar dados y formar Escalera (20 pts), Full (30 pts), Póker (40 pts) o Generala (50 pts). Si sacás Generala de un tiro ganas de forma Servida.</p>",
-    rummy: "<h5>Reglas Rummy</h5><p>Para abrir juego y bajar tus fichas a la mesa por primera vez, tus series de tercetos, cuartetos o escaleras consecutivas deben sumar una base mínima obligatoria de **30 puntos**.</p>",
-    truco: "<h5>Reglas Truco</h5><p>Juego de engaño criollo disputado a 30 puntos. Las cartas dominantes son el Ancho de Espada (1) y el Ancho de Bastos (1). El Envido se canta únicamente durante la primera mano.</p>"
+    generala: "<h5>Reglas Oficiales: Generala</h5><p>Se juega con 5 dados y un vaso. Cada jugador dispone de hasta 3 tiros por turno. Se pueden apartar dados entre tiros para buscar combinaciones: Escalera (20 pts), Full (30 pts), Póker (40 pts) o Generala (50 pts). Si se logra Generala en el primer tiro del turno, es 'Servida' y se gana el partido.</p>",
+    truco: "<h5>Reglas Oficiales: Truco</h5><p>Juego de naipes españoles de 2 a 4 jugadores. Se disputa a 30 puntos (divididos en 15 'malas' y 15 'buenas'). Se compite en tres bazas por el truco, y se suman puntos ocultos por el Envido o Flor durante la primera mano.</p>",
+    rummy: "<h5>Reglas Oficiales: Rummy</h5><p>El objetivo es descartar todas las fichas del atril formando series (mismo número, distinto color) o escaleras (mismo color). Para la apertura inicial en la mesa, las combinaciones deben sumar una base mínima obligatoria de **30 puntos**.</p>",
+    uno: "<h5>Reglas Oficiales: UNO</h5><p>Cada jugador recibe 7 cartas. Se debe descartar una carta por turno que coincida en color, número o símbolo con la de la mesa. Las cartas especiales agregan robos (+2, +4) o cambios de sentido. Al quedar una sola carta, se debe gritar obligatoriamente 'UNO'.</p>",
+    ajedrez: "<h5>Reglas Oficiales: Ajedrez</h5><p>Juego de estrategia pura sobre tablero de 8x8. Cada bando controla 16 piezas con movimientos únicos (Peón, Torre, Caballo, Alfil, Dama y Rey). El objetivo absoluto es acorralar al Rey contrario hasta lograr el Jaque Mate.</p>",
+    damas: "<h5>Reglas Oficiales: Damas</h5><p>Se juega sobre las casillas oscuras del tablero. Las fichas avanzan un casillero en diagonal hacia adelante. Si saltan sobre una pieza rival, la capturan. Al llegar a la última fila enemiga, la ficha se corona 'Dama' y obtiene movimientos libres en diagonal.</p>",
+    teg: "<h5>Reglas Oficiales: T.E.G.</h5><p>Tradicional juego de Planificación de Estrategia Global. Los jugadores atacan y defienden fronteras territoriales lanzando dados según la cantidad de ejércitos. Se gana al completar el Objetivo Secreto asignado o el Objetivo General (30 países).</p>",
+    batalla_naval: "<h5>Reglas Oficiales: Batalla Naval</h5><p>Cada jugador posiciona su flota de barcos en una grilla oculta de 10x10. Por turnos, se cantan coordenadas (Ej: 'F4'). El rival debe responder si el tiro dio en 'Agua', resulta 'Tocado' o si la nave ha sido completamente 'Hundida'.</p>",
+    scrabble: "<h5>Reglas Oficiales: Scrabble</h5><p>Cada jugador roba 7 letras de la bolsa. Se deben formar palabras sobre el tablero cruzándose con términos existentes. Cada letra tiene un valor individual y las casillas especiales multiplican los puntos del término o de la letra.</p>",
+    tutti_frutti: "<h5>Reglas Oficiales: Tutti Frutti</h5><p>Se sortease una letra de juego. Todos los competidores rellenan categorías (Nombres, Colores, Marcas, Animales) a máxima velocidad. El primero en terminar grita '¡Basta para mí!' deteniendo la ronda. Palabras únicas suman 10 pts, repetidas 5 pts.</p>",
+    ahorcado: "<h5>Reglas Oficiales: Ahorcado</h5><p>Un jugador piensa una palabra y dibuja guiones vacíos. El oponente arriesga letras por turno. Si la letra es correcta, se rellena el espacio; si es incorrecta, se dibuja una parte del verdugo. Se pierde al llegar a 6 errores visuales.</p>",
+    trivial: "<h5>Reglas Oficiales: Trivial Pursuit</h5><p>Los jugadores avanzan por el tablero respondiendo preguntas divididas en categorías cromáticas (Geografía, Historia, Espectáculos, Ciencia, Arte y Deportes). Se gana al obtener los 6 'quesitos' temáticos correspondientes.</p>",
+    pictionary: "<h5>Reglas Oficiales: Pictionary</h5><p>Juego de mesa de dibujo en equipo. Un miembro toma una tarjeta con una palabra secreta y debe dibujarla en un papel o pizarra sin usar letras, números ni gestos. Su equipo debe adivinar el concepto antes de que acabe el tiempo del reloj de arena.</p>"
 };
 
-const DICCIONARIO_VALIDO = ["MESA", "JUEGO", "RUMMY", "TRUCO", "SINAPSIS", "DADOS", "ALMA", "FOCO", "LETRAS"];
+// --- DICCIONARIO ACADÉMICO EXTENDIDO CON DEFINICIONES ---
+const DICCIONARIO_INTERNO = {
+    "MESA": "Mueble compuesto por una tabla horizontal sostenida por un armazón, usado para jugar.",
+    "JUEGO": "Actividad recreativa sometida a reglas, en el que se gana o se pierde.",
+    "RUMMY": "Juego de mesa de origen internacional basado en combinaciones de fichas numéricas.",
+    "TRUCO": "Juego de naipes de origen criollo altamente competitivo basado en el engaño y la picardía.",
+    "SINAPSIS": "Conexión interactiva entre neuronas; concepto de red que inspira esta plataforma.",
+    "DADOS": "Cueros cúbicos marcados con puntos de uno a seis empleados en juegos de azar.",
+    "ALMA": "Parte inmaterial o esencia definitoria de las marcas de diseño con propósito.",
+    "FOCO": "Punto de convergencia, nitidez y claridad visual en fotografía y diseño.",
+    "DISEÑO": "Proceso de prefiguración mental y maquetación para crear soluciones visuales.",
+    "DIGITAL": "Sistemas o interfaces que operan mediante la codificación de datos binarios.",
+    "TEG": "Acrónimo de Táctica y Estrategia Global, clásico juego de tablero argentino.",
+    "UNO": "Popular juego de cartas de colores y penalizaciones numéricas.",
+    "CARTAS": "Tarjetas o naipes rectangulares ilustrados usados para juegos de mesa.",
+    "TABLERO": "Superficie compacta dividida en casillas para desplegar piezas de juego."
+};
 
-// --- PERSISTENCIA DE USUARIOS ---
+// --- PERSISTENCIA Y ESTADOS ---
 let usuarioLogueado = null; 
-let authModoActual = 'login'; // 'login' o 'registro'
+let authModoActual = 'login';
 
-// Variables Reloj Fischer
+// Reloj Fischer
 let FischerInterval = null;
 let activeClock = 1;
 let timeP1 = 300;
@@ -26,10 +51,16 @@ document.addEventListener("DOMContentLoaded", () => {
     verificarSesionExistente();
 });
 
-// --- SISTEMA DE AUTENTICACIÓN LOCAL ---
+// --- SISTEMA DE LOGOUT Y SESIONES ---
 function abrirAuthModal() {
+    if(usuarioLogueado) return; // Si ya está logueado no hace falta abrirlo
     const modal = new bootstrap.Modal(document.getElementById('authModal'));
     modal.show();
+}
+
+function cerrarSesion() {
+    localStorage.removeItem('sinapsis_sesion_activa');
+    verificarSesionExistente();
 }
 
 function cambiarFrenteAuth(modo) {
@@ -55,32 +86,20 @@ function cambiarFrenteAuth(modo) {
 function procesarAutenticacion(event) {
     event.preventDefault();
     const username = document.getElementById('authUsername').value.trim();
-
     if (!username) return;
 
     if (authModoActual === 'registro') {
-        // Registrar en la lista global de usuarios ficticios de Sinapsis
         let usuarios = JSON.parse(localStorage.getItem('sinapsis_usuarios')) || [];
         if (usuarios.includes(username)) {
-            alert("Este nombre ya se encuentra en la comunidad. Elegí otro.");
+            alert("Este nombre ya se encuentra registrado.");
             return;
         }
         usuarios.push(username);
         localStorage.setItem('sinapsis_usuarios', JSON.stringify(usuarios));
-        alert("¡Registro exitoso! Iniciando tu sesión.");
-    } else {
-        // Login: Verificamos si existe (o lo creamos de cortesía en el TP)
-        let usuarios = JSON.parse(localStorage.getItem('sinapsis_usuarios')) || ["Mariana", "Lucas"];
-        if (!usuarios.includes(username)) {
-            usuarios.push(username);
-            localStorage.setItem('sinapsis_usuarios', JSON.stringify(usuarios));
-        }
     }
 
-    // Guardar sesión activa en la memoria del navegador
     localStorage.setItem('sinapsis_sesion_activa', username);
     
-    // Cerrar el modal de Bootstrap
     const mEl = document.getElementById('authModal');
     const instance = bootstrap.Modal.getInstance(mEl);
     if (instance) instance.hide();
@@ -90,18 +109,18 @@ function procesarAutenticacion(event) {
 
 function verificarSesionExistente() {
     const sesion = localStorage.getItem('sinapsis_sesion_activa');
-    
     const panelBloqueado = document.getElementById('estado-bloqueado');
     const panelDashboard = document.getElementById('dashboard-seccion');
     const lblUser = document.getElementById('navUserName');
     const avatar = document.getElementById('navAvatar');
+    const btnOut = document.getElementById('btnLogOut');
 
     if (sesion) {
         usuarioLogueado = sesion;
         lblUser.innerText = sesion;
         avatar.innerText = sesion.charAt(0).toUpperCase();
+        btnOut.classList.remove('d-none');
 
-        // Cambiar interfaz visible
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
         document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${sesion}`;
@@ -111,20 +130,19 @@ function verificarSesionExistente() {
         usuarioLogueado = null;
         lblUser.innerText = "Iniciar Sesión";
         avatar.innerText = "?";
+        btnOut.classList.add('d-none');
         panelBloqueado.classList.remove('d-none');
         panelDashboard.classList.add('d-none');
     }
 }
 
-// --- GESTIÓN DE LA LIBRETA VIRTUAL PERSONALIZADA ---
 function cargarHistorialUsuario() {
     const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
-    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
-    
-    document.getElementById('lblRecordPts').innerText = `${datosUser.puntos} Puntos Acumulados`;
+    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { puntos: 0 };
+    document.getElementById('lblRecordPts').innerText = `${datosUser.puntos} Pts Guardados`;
 }
 
-// --- ASISTENTES DINÁMICOS DE MESA ---
+// --- CONTROLES DE ARITMÉTICA DINÁMICA ---
 function activarAsistente(juego) {
     if (!usuarioLogueado) {
         abrirAuthModal();
@@ -134,28 +152,50 @@ function activarAsistente(juego) {
     const workspace = document.getElementById('workspace-asistente');
     window.location.href = "#dashboard-seccion";
 
+    // Si el juego es de tipo Campeonato (Rummy, Ajedrez, TEG, Scrabble, Trivial)
+    const juegosCampeonato = ['rummy', 'ajedrez', 'teg', 'scrabble', 'trivial'];
+    
     if (juego === 'truco') {
         workspace.innerHTML = `
-            <div class="row text-center py-3 g-2">
-                <div class="col-6 border-end border-secondary">
-                    <span class="small text-muted d-block">NOSOTROS</span>
-                    <h4 class="display-3 fw-bold text-white my-1" id="valNos">0</h4>
-                    <button class="btn btn-xs btn-coral-premium text-white px-3" onclick="sumarPuntosLibreta('nos', 1)">+1 Punto</button>
+            <div class="row text-center py-4 g-3 align-items-center">
+                <div class="col-6 border-end border-secondary border-opacity-25">
+                    <span class="badge bg-danger bg-opacity-10 text-coral font-tech mb-2 px-3 py-1">NOSOTROS (ANOTADOR)</span>
+                    <div class="display-counter my-2" id="valNos">0</div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="sumarPuntosLibreta('nos', -1)">-1</button>
+                        <button class="btn btn-sm btn-coral-premium px-4" onclick="sumarPuntosLibreta('nos', 1)">+1 Punto</button>
+                    </div>
                 </div>
                 <div class="col-6">
-                    <span class="small text-muted d-block">ELLOS</span>
-                    <h4 class="display-3 fw-bold text-white my-1" id="valEllos">0</h4>
-                    <button class="btn btn-xs btn-outline-light px-3" onclick="sumarPuntosLibreta('ellos', 1)">+1 Punto</button>
+                    <span class="badge bg-secondary bg-opacity-10 text-muted-custom font-tech mb-2 px-3 py-1">ELLOS (ANOTADOR)</span>
+                    <div class="display-counter my-2" id="valEllos">0</div>
+                    <div class="d-flex justify-content-center gap-2">
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="sumarPuntosLibreta('ellos', -1)">-1</button>
+                        <button class="btn btn-sm btn-outline-premium px-4" onclick="sumarPuntosLibreta('ellos', 1)">+1 Punto</button>
+                    </div>
                 </div>
             </div>
         `;
-    } else if (juego === 'rummy' || juego === 'generala') {
+    } else if (juegosCampeonato.includes(juego)) {
         workspace.innerHTML = `
-            <div class="p-3 text-center">
-                <h5 class="text-white mb-3 text-uppercase font-tech">Carga rápida a la Libreta de ${usuarioLogueado}</h5>
-                <div class="input-group justify-content-center mx-auto" style="max-width:300px;">
-                    <input type="number" id="ptsNuevosJuego" class="form-control input-dark text-center" placeholder="Puntos logrados">
-                    <button class="btn btn-cyan-premium" onclick="guardarRondaGenerica('${juego}')">Guardar en Libreta</button>
+            <div class="p-4 text-center max-width-md mx-auto" style="max-width: 450px;">
+                <span class="badge badge-tech mb-2 text-uppercase">MODULO: CAMPEONATO GENERAL</span>
+                <h5 class="text-white mb-3 font-tech fs-6">Sincronizar puntos de ${juego.toUpperCase()}</h5>
+                <div class="input-group">
+                    <input type="number" id="ptsNuevosJuego" class="form-control input-dark text-center font-tech" placeholder="Cargar puntos ganados..." min="0">
+                    <button class="btn btn-cyan-premium px-4" onclick="guardarRondaGenerica('${juego}')"><i class="bi bi-floppy me-2"></i>Guardar Tabla</button>
+                </div>
+            </div>
+        `;
+    } else {
+        // Para el resto (Uno, Damas, Generala, Batalla Naval, Tutti Frutti, Ahorcado, Pictionary) que usan Anotador estándar
+        workspace.innerHTML = `
+            <div class="p-4 text-center max-width-md mx-auto" style="max-width: 450px;">
+                <span class="badge bg-secondary bg-opacity-10 text-muted-custom font-tech mb-2 px-3 py-1">MODULO: ANOTADOR RÁPIDO</span>
+                <h5 class="text-white mb-3 font-tech fs-6">Computar Ronda de ${juego.toUpperCase()}</h5>
+                <div class="input-group">
+                    <input type="number" id="ptsNuevosJuego" class="form-control input-dark text-center font-tech" placeholder="Puntos logrados" min="0">
+                    <button class="btn btn-coral-premium text-white px-4" onclick="guardarRondaGenerica('${juego}')"><i class="bi bi-plus-circle me-2"></i>Anotar Puntos</button>
                 </div>
             </div>
         `;
@@ -165,12 +205,12 @@ function activarAsistente(juego) {
 function sumarPuntosLibreta(bando, val) {
     const el = bando === 'nos' ? document.getElementById('valNos') : document.getElementById('valEllos');
     let act = Number(el.innerText) + val;
+    if (act < 0) act = 0;
     el.innerText = act;
 
-    // Guardar récord acumulado si suma a "nosotros"
-    if(bando === 'nos') {
+    if(bando === 'nos' && val > 0) {
         const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
-        let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
+        let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { puntos: 0 };
         datosUser.puntos += val;
         localStorage.setItem(llaveDatos, JSON.stringify(datosUser));
         cargarHistorialUsuario();
@@ -179,55 +219,75 @@ function sumarPuntosLibreta(bando, val) {
 
 function guardarRondaGenerica(juego) {
     const input = document.getElementById('ptsNuevosJuego');
-    const pts = Number(input.value) || 0;
+    const pts = Math.abs(Number(input.value)) || 0;
 
     const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
-    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
+    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { puntos: 0 };
     
     datosUser.puntos += pts;
     localStorage.setItem(llaveDatos, JSON.stringify(datosUser));
     
-    alert(`Ronda de ${juego} archivada con éxito en tu libreta virtual.`);
     input.value = "";
     cargarHistorialUsuario();
+    alert(`Puntaje de ${juego.toUpperCase()} archivado en la libreta virtual.`);
 }
 
-// --- MANEJO DE MANUALES Y REGLAS ---
+// --- REGLAMENTOS ---
 function verReglas(juego) {
     const visor = document.getElementById('visor-reglas');
     const titulo = document.getElementById('reglasTitulo');
     const cuerpo = document.getElementById('reglasCuerpo');
 
     if (REGLAS_DICCIONARIO[juego]) {
-        titulo.innerText = `Lector Oficial: ${juego.toUpperCase()}`;
+        titulo.innerHTML = `<i class="bi bi-book text-cyan me-2"></i> REGLAMENTO OFICIAL: ${juego.toUpperCase()}`;
         cuerpo.innerHTML = REGLAS_DICCIONARIO[juego];
         visor.classList.remove('d-none');
         visor.scrollIntoView({ behavior: 'smooth' });
     }
 }
-
 function cerrarVisorReglas() { document.getElementById('visor-reglas').classList.add('d-none'); }
 
-// --- DICCIONARIO ---
+// --- MOTOR LÉXICO POTENCIADO ---
 function validarDiccionario(event) {
     event.preventDefault();
     const input = document.getElementById('inputPalabra');
-    const p = input.value.trim().toUpperCase();
-    const alertBox = document.getElementById('alertDiccionario');
+    const palabra = input.value.trim().toUpperCase();
+    const box = document.getElementById('alertDiccionario');
+    const statusTxt = box.querySelector('.id-status-word');
+    const defTxt = box.querySelector('.id-def-word');
 
-    alertBox.style.display = "block";
-    alertBox.classList.remove('alert-success', 'alert-danger');
+    box.style.display = "block";
 
-    if (DICCIONARIO_VALIDO.includes(p)) {
-        alertBox.className = "alert alert-success mt-3 text-center small animate-fade-in";
-        alertBox.innerHTML = `✓ <strong>${p}</strong> es válida en el léxico oficial local.`;
+    if (DICCIONARIO_INTERNO[palabra]) {
+        statusTxt.innerHTML = `<span class="text-success">✓ PALABRA CORRECTA</span>`;
+        defTxt.innerHTML = `<strong>${palabra}:</strong> ${DICCIONARIO_INTERNO[palabra]}`;
     } else {
-        alertBox.className = "alert alert-danger mt-3 text-center small animate-fade-in";
-        alertBox.innerHTML = `✕ <strong>${p}</strong> no existe en este set referil.`;
+        statusTxt.innerHTML = `<span class="text-danger">✕ PALABRA RECHAZADA O INEXISTENTE</span>`;
+        defTxt.innerHTML = `El término "<strong>${palabra}</strong>" no se encuentra asentado en el set referencial de la mesa local. Probá con palabras clave como MESA, JUEGO, TABLERO, TRUCO o SINAPSIS.`;
     }
 }
 
-// --- RELOJ PROFESSIONAL ---
+// --- EXTRA ENGINE: LANZADOR DE DADOS ---
+function lanzarDadosEngine() {
+    const d1 = document.getElementById('uiDado1');
+    const d2 = document.getElementById('uiDado2');
+
+    d1.classList.add('dice-rolling');
+    d2.classList.add('dice-rolling');
+
+    setTimeout(() => {
+        const val1 = Math.floor(Math.random() * 6) + 1;
+        const val2 = Math.floor(Math.random() * 6) + 1;
+
+        d1.innerText = val1;
+        d2.innerText = val2;
+
+        d1.classList.remove('dice-rolling');
+        d2.classList.remove('dice-rolling');
+    }, 600);
+}
+
+// --- RELOJ PROFESIONAL FISCHER ---
 function invertirReloj(p) {
     if (FischerInterval && activeClock !== p) return;
     if (FischerInterval) {
@@ -245,7 +305,10 @@ function invertirReloj(p) {
     }
 }
 function refrescarClocks() {
-    const f = (t) => `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+    const f = (t) => {
+        if(t < 0) return "00:00";
+        return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+    };
     document.getElementById('txtC1').innerText = f(timeP1);
     document.getElementById('txtC2').innerText = f(timeP2);
 }
