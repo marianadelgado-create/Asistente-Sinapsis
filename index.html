@@ -1,154 +1,295 @@
-<section id="galeria-juegos" class="py-5 block-section">
-    <div class="container">
-        <div class="text-center mb-5 animate-slide-up">
-            <span class="badge badge-accent-tag mb-2">Central de Acceso Inmediato</span>
-            <h2 class="h1 text-white fw-bold">Nuestra Mesa de Juegos</h2>
-            <p class="text-muted-custom mx-auto" style="max-width: 600px;">
-                Pasá el cursor sobre cualquier juego para revelar su ficha técnica, consultar reglamentos oficiales o inicializar los asistentes de puntaje.
-            </p>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinapsis - Plataforma de Juegos Fígitales</title>
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts: Inter para lectura y Orbitron para toques tecnológicos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Redes Neuronales y Destellos Estéticos de Fondo -->
+    <div class="space-background"></div>
+    <div class="neural-glow-blue"></div>
+    <div class="neural-glow-coral"></div>
+
+    <!-- NAVBAR INMERSIVA -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#hero">
+                <i class="bi bi-bezier2 me-2 brand-icon-glow"></i>
+                <span class="logo-text">SINAPSIS</span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto alignment-menu gap-2">
+                    <li class="nav-item"><a class="nav-link" href="#hero">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#biblioteca">Cultura & Universo</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#herramientas">Central de Juego</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reglamentos">Reglamentos</a></li>
+                </ul>
+                <div class="ms-lg-4 d-flex align-items-center mt-3 mt-lg-0">
+                    <div class="user-status-pill d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                        <div class="user-avatar-dot me-2">M</div>
+                        <span id="lblActiveUser" class="small text-white opacity-90">Mariana</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </nav>
 
-        <div class="row g-4 justify-content-center">
-            
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-generala">
-                            <div class="icono-flotante-item pos-1"><i class="bi bi-dice-5-fill"></i></div>
-                            <div class="icono-flotante-item pos-2"><i class="bi bi-dice-3-fill"></i></div>
-                            <span class="titulo-juego-reposo">GENERALA</span>
+    <!-- SECCIÓN 1: HERO (PANTALLA DE INICIO CON ALMA) -->
+    <section id="hero" class="d-flex align-items-center minimal-hero">
+        <div class="container text-center text-lg-start">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-7 animate-slide-up">
+                    <span class="badge badge-accent-tag mb-3">CONECTANDO LO ANÁLOGO Y LO DIGITAL</span>
+                    <h1 class="display-3 fw-extrabold text-white mb-3">Tu puente digital para <span class="text-gradient-blue">juegos de mesa.</span></h1>
+                    <p class="lead text-muted-custom mb-4">
+                        Una experiencia interactiva diseñada para eliminar la fricción matemática, expandir el lore de tus partidas y mantener tu mirada donde pertenece: en tus amigos.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                        <a href="#herramientas" class="btn btn-premium-cyan px-4 py-3">Abrir Panel de Control</a>
+                        <a href="#biblioteca" class="btn btn-outline-premium px-4 py-3">Explorar Historias</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-center animate-fade-in d-none d-lg-block">
+                    <!-- Iconografía central inspirada en el logo de Gemini_Generated_Image_jz9xynjz9xynjz9x.jpg -->
+                    <div class="brand-hero-orb">
+                        <i class="bi bi-brightness-high"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN 2: BIBLIOTECA, HISTORIA Y CURIOSIDADES (CULTURA EN MESA) -->
+    <section id="biblioteca" class="py-5 block-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="h1 text-white fw-bold">Enciclopedia Cultural & Universo Nativo</h2>
+                <p class="text-muted-custom">Historias milenarias y los mundos híbridos desarrollados para Sinapsis.</p>
+            </div>
+
+            <!-- Fila de Historias Reales y Curiosidades -->
+            <div class="row g-4 mb-5">
+                <!-- Tarjeta Curiosidad Rummy -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card culture-card h-100">
+                        <div class="card-body p-4">
+                            <div class="culture-badge mb-3"><i class="bi bi-hourglass-bottom me-2"></i>Curiosidad Histórica</div>
+                            <h4 class="text-white fw-bold mb-2">El Origen del Rummy</h4>
+                            <p class="text-muted-custom small">
+                                ¿Sabías que el Rummy moderno se derivó del juego tradicional chino *Khanhoo* y mutó en América a través del *Conquian* en el siglo XIX? El concepto de "combinar y ligar" estimula de forma directa las sinapsis de reconocimiento de patrones lógicos espaciales.
+                            </p>
                         </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
+                    </div>
+                </div>
+                <!-- Tarjeta Curiosidad Scrabble -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="card culture-card h-100">
+                        <div class="card-body p-4">
+                            <div class="culture-badge mb-3 text-coral"><i class="bi bi-book me-2"></i>Datos Léxicos</div>
+                            <h4 class="text-white fw-bold mb-2">Scrabble: Lucha contra el Olvido</h4>
+                            <p class="text-muted-custom small">
+                                Creado por el arquitecto Alfred Mosher Butts durante la Gran Depresión. Buscaba un juego que uniera la suerte y la habilidad intelectual. Analizó las portadas de *The New York Times* para contar la frecuencia de aparición de cada letra y determinar sus puntos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Lanzamiento Exclusivo Nativo Híbrido -->
+                <div class="col-md-12 col-lg-4">
+                    <div class="card culture-card h-100 special-border-glow">
+                        <div class="card-body p-4 d-flex flex-column justify-content-between">
                             <div>
-                                <h4 class="text-cyan font-tech mb-2">GENERALA</h4>
-                                <p class="small text-light opacity-90">Juego ancestral de dados. Consiste en lograr combinaciones (Escalera, Full, Póker, Generala) anotando la mayor puntuación aritmética.</p>
+                                <span class="badge bg-danger mb-3 px-2 py-1 text-uppercase font-monospace tracking-wider">Juego Original Nativo</span>
+                                <h4 class="text-white fw-bold mb-2">El 5to Jinete</h4>
+                                <p class="text-muted-custom small">
+                                    Nuestra propuesta nativa fígital. Imprimí tus cartas físicas y controlá los estados de infección del tablero con el asistente de voz de Sinapsis. Economía de atención pura en el aula.
+                                </p>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('generala')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-cyan w-50" onclick="inicializarAnotadorRapido('generala')"><i class="bi bi-plus-circle"></i> Puntos</button>
-                            </div>
+                            <button class="btn btn-sm btn-premium-coral w-100 mt-3">Explorar Mecánica Híbrida</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-rummy">
-                            <div class="icono-flotante-item pos-1"><i class="bi bi-suit-club-fill"></i></div>
-                            <div class="icono-flotante-item pos-3"><i class="bi bi-grid-3x3-gap"></i></div>
-                            <span class="titulo-juego-reposo">RUMMY</span>
-                        </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
+    <!-- SECCIÓN 3: CENTRAL DE HERRAMIENTAS INTERACTIVAS (EL CORAZÓN EN ACCIÓN) -->
+    <section id="herramientas" class="py-5 block-section section-dark-canvas">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="h1 text-white fw-bold">Mesa Digital de Operaciones</h2>
+                <p class="text-muted-custom">Activá la utilidad que requiere tu mesa en tiempo real. Los datos se salvan automáticamente.</p>
+            </div>
+
+            <!-- Panel de Control e Interacción -->
+            <div class="row g-4">
+                <!-- Columna Izquierda: Selector de Modos de Juego y Pantalla Dinámica -->
+                <div class="col-lg-8">
+                    <div class="card dashboard-interior-card p-4 mb-4">
+                        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
                             <div>
-                                <h4 class="text-cyan font-tech mb-2">RUMMY</h4>
-                                <p class="small text-light opacity-90">Estrategia de naipes o fichas. Creá piernas o escaleras numéricas consecutivas del mismo palo para descargar tu mano.</p>
+                                <h3 class="h5 text-white mb-1" id="lblGameTitle">Anotador Abierto de Competencia</h3>
+                                <p class="text-muted-custom small mb-0" id="lblGameSubtitle">Elegí la modalidad para inyectar los controles interactivos en el lienzo.</p>
                             </div>
                             <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('rummy')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-cyan w-50" onclick="inicializarAnotadorRapido('rummy')"><i class="bi bi-plus-circle"></i> Torneo</button>
+                                <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cargarHerramienta('truco')">Truco</button>
+                                <button class="btn btn-sm btn-premium-cyan rounded-pill" data-bs-toggle="modal" data-bs-target="#modalTorneoRummy">Campeonato Rummy</button>
                             </div>
+                        </div>
+
+                        <!-- LIENZO INTERACTIVO DONDE SE INYECTA LA MAGIA VIA JAVASCRIPT -->
+                        <div id="canvas-dinamico-juego" class="canvas-workspace p-3">
+                            <!-- Estado por defecto vacío estructurado -->
+                            <div class="text-center py-5">
+                                <i class="bi bi-grid-1x2 display-4 text-muted opacity-50 mb-3 d-block"></i>
+                                <h5 class="text-muted-custom">Ninguna herramienta de registro activa</h5>
+                                <p class="text-muted-custom small">Presioná los selectores de arriba para inicializar el anotador de Truco o armar un Campeonato Completo de Rummy.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BUSCADOR REFINADO DE DICCIONARIO PARA SCRABBLE -->
+                    <div class="card dashboard-interior-card p-4">
+                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Validador Léxico de Scrabble (SOWPODS)</h4>
+                        <form onsubmit="ejecutarValidacionDiccionario(event)">
+                            <div class="input-group">
+                                <input type="text" id="txtPalabraScrabble" class="form-control input-dark-premium text-uppercase" placeholder="Escribí una palabra para analizar..." required>
+                                <button class="btn btn-premium-cyan px-4" type="submit">Verificar Referato</button>
+                            </div>
+                        </form>
+                        <div id="feedbackDiccionario" class="alert mt-3 mb-0 text-center" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Reloj Fischer Profesional Síncrono (Basado en Tus Mockups) -->
+                <div class="col-lg-4">
+                    <div class="card dashboard-interior-card h-100 p-4 border-cyan-glow">
+                        <div class="text-center mb-4">
+                            <h4 class="h5 text-white fw-bold mb-1"><i class="bi bi-hourglass-split text-cyan me-2"></i>Reloj de Precisión</h4>
+                            <span class="badge bg-dark text-cyan border border-cyan font-monospace">Incremento Fischer (+3s)</span>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-3">
+                            <button class="btn btn-fischer-timer w-100 active" id="timerBox1" onclick="conmutarTurnoReloj(1)">
+                                <div class="player-tag">JUGADOR BLANCAS</div>
+                                <div class="time-display" id="valClock1">05:00</div>
+                            </button>
+                            <button class="btn btn-fischer-timer w-100" id="timerBox2" onclick="conmutarTurnoReloj(2)">
+                                <div class="player-tag">JUGADOR NEGRAS</div>
+                                <div class="time-display" id="valClock2">05:00</div>
+                            </button>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-4 justify-content-center">
+                            <button class="btn btn-sm btn-outline-secondary rounded-pill px-3" onclick="pausarContador()"><i class="bi bi-pause-fill me-1"></i> Pausar</button>
+                            <button class="btn btn-sm btn-outline-danger rounded-pill px-3" onclick="reiniciarContador()"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset</button>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-truco">
-                            <div class="icono-flotante-item pos-2"><i class="bi bi-suit-spade-fill"></i></div>
-                            <span class="titulo-juego-reposo">TRUCO</span>
-                        </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-coral font-tech mb-2">TRUCO</h4>
-                                <p class="small text-light opacity-90">El clásico juego de naipes criollo. Engaño, picardía y matemáticas rápidas para gritar el Envido y el Truco.</p>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('truco')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-coral w-50 text-white" onclick="inicializarAnotadorRapido('truco')"><i class="bi bi-plus-circle"></i> Puntos</button>
-                            </div>
-                        </div>
+    <!-- SECCIÓN 4: REGLAMENTOS INTEGRADOS A MANO (ACCESO DIRECTO) -->
+    <section id="reglamentos" class="py-5 block-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="h1 text-white fw-bold">Manual de Reglas a Mano</h2>
+                <p class="text-muted-custom">Consultas rápidas sin salir de la partida para resolver disputas en la mesa de juego.</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Reglas Rummy -->
+                <div class="col-md-6">
+                    <div class="card rule-accordion-card p-4">
+                        <h4 class="text-cyan fw-bold mb-3"><i class="bi bi-file-earmark-text me-2"></i>Código de Rummy (Reglas Clave)</h4>
+                        <ul class="text-muted-custom small ps-3">
+                            <li class="mb-2"><strong>Objetivo:</strong> Deshacerse de todas las cartas formando series de grupos (mismo número, diferente palo) o escaleras (mismo palo en orden consecutivo).</li>
+                            <li class="mb-2"><strong>Apertura Mínima:</strong> Para abrir juego por primera vez en la mesa, tus combinaciones deben sumar un mínimo estricto de 30 puntos.</li>
+                            <li class="mb-2"><strong>Puntuación de Castigo:</strong> Al cerrar la ronda un jugador, los demás suman los puntos de las cartas que les quedaron colgadas en la mano. ¡El As vale 11!</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Reglas Truco -->
+                <div class="col-md-6">
+                    <div class="card rule-accordion-card p-4">
+                        <h4 class="text-coral fw-bold mb-3"><i class="bi bi-suit-spade-fill me-2"></i>Código de Truco Argentino</h4>
+                        <ul class="text-muted-custom small ps-3">
+                            <li class="mb-2"><strong>Jerarquía Suprema:</strong> El ancho de espada es la carta máxima, seguido por el ancho de basto, el siete de espada y el siete de oro.</li>
+                            <li class="mb-2"><strong>El Envido:</strong> Se canta estrictamente en la primera mano. Dos cartas del mismo palo suman su valor facial más 20 puntos de base (las figuras valen 0).</li>
+                            <li class="mb-2"><strong>Meta de Victoria:</strong> Las partidas se disputan a un total de 30 puntos, divididos en la etapa de "malas" (primeros 15) y "buenas" (últimos 15).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-ajedrez">
-                            <div class="icono-flotante-item pos-1"><i class="bi bi-meta"></i></div>
-                            <span class="titulo-juego-reposo">AJEDREZ</span>
-                        </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-cyan font-tech mb-2">AJEDREZ</h4>
-                                <p class="small text-light opacity-90">Combate táctico y simétrico sobre un tablero de 64 casillas. El objetivo final es encerrar al Rey enemigo.</p>
+    <!-- MODAL PREMIUM: CONFIGURACIÓN Y LISTADO DE TORNEOS DE RUMMY -->
+    <div class="modal fade" id="modalTorneoRummy" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-dark-premium border-0">
+                <div class="modal-header border-bottom-dark">
+                    <h5 class="modal-title text-white fw-bold"><i class="bi bi-trophy text-cyan me-2"></i>Campeonatos Guardados</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <label class="text-muted-custom small mb-2 d-block">Seleccioná un campeonato guardado localmente:</label>
+                    <div class="list-group list-group-custom mb-4" id="contenedorListaTorneos">
+                        <!-- Inyección vía JS -->
+                    </div>
+
+                    <div class="border-top-dark pt-3">
+                        <h6 class="text-white fw-bold mb-3">Generar Nuevo Campeonato de Rummy</h6>
+                        <form id="frmNuevoTorneo" onsubmit="procesarCreacionTorneo(event)">
+                            <div class="mb-3">
+                                <input type="text" id="inNombreTorneo" class="form-control input-dark-premium" placeholder="Nombre del Torneo (Ej: Copa Invierno Caballito)" required>
                             </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('ajedrez')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-cyan w-50" onclick="inicializarAnotadorRapido('ajedrez')"><i class="bi bi-clock"></i> Reloj</button>
+                            <div class="mb-3">
+                                <input type="text" id="inJugadoresTorneo" class="form-control input-dark-premium" placeholder="Jugadores separados por coma (Ej: Lucas, Valeria, Gaby)" required>
                             </div>
-                        </div>
+                            <button type="submit" class="btn btn-premium-cyan w-100">Crear y Desplegar Planilla</button>
+                        </form>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-scrabble">
-                            <div class="icono-flotante-item pos-3"><i class="bi bi-type"></i></div>
-                            <span class="titulo-juego-reposo">SCRABBLE</span>
-                        </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-cyan font-tech mb-2">SCRABBLE</h4>
-                                <p class="small text-light opacity-90">Competencia léxica cruzada. Formá palabras válidas sobre el tablero maximizando las casillas de doble y triple puntaje.</p>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('scrabble')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-cyan w-50" onclick="inicializarAnotadorRapido('scrabble')"><i class="bi bi-search"></i> Léxico</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card card-juego-interactivo">
-                    <div class="wrapper-imagen-juego">
-                        <div class="placeholder-imagen-juego bg-pictionary">
-                            <div class="icono-flotante-item pos-2"><i class="bi bi-palette-fill"></i></div>
-                            <span class="titulo-juego-reposo">PICTIONARY</span>
-                        </div>
-                        <div class="overlay-explicacion-visual p-4 d-flex flex-column justify-content-between">
-                            <div>
-                                <h4 class="text-cyan font-tech mb-2">PICTIONARY</h4>
-                                <p class="small text-light opacity-90">El juego de adivinar dibujando contra reloj. Prohibido hablar, gesticular o escribir letras en el lienzo.</p>
-                            </div>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-outline-light w-50" onclick="mostrarReglamentoPantalla('pictionary')"><i class="bi bi-book"></i> Reglas</button>
-                                <button class="btn btn-sm btn-premium-cyan w-50" onclick="inicializarAnotadorRapido('pictionary')"><i class="bi bi-hourglass"></i> Tiempo</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-</section>
 
-<div id="seccion-lector-reglas" class="container my-4 d-none animate-fade-in">
-    <div class="card dashboard-interior-card p-4 border-cyan-glow">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="h4 text-white mb-0" id="txtLectorTitulo">Reglamento Oficial</h3>
-            <button class="btn btn-sm btn-outline-light rounded-pill" onclick="cerrarLectorReglas()">Cerrar Lector</button>
-        </div>
-        <div class="p-3 bg-dark-canvas rounded" id="txtLectorCuerpo" style="color: var(--text-pure); line-height: 1.6;">
+    <!-- MODAL DE USUARIO (MANTENIDO) -->
+    <div class="modal fade" id="modalUsuario" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content modal-dark-premium border-0 text-center">
+                <div class="modal-body p-4">
+                    <h5 class="text-white fw-bold mb-3">Cambiar Registrador</h5>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button class="btn btn-outline-light btn-sm px-3" onclick="modificarUsuarioActivo('Mariana')" data-bs-dismiss="modal">Mariana</button>
+                        <button class="btn btn-outline-light btn-sm px-3" onclick="modificarUsuarioActivo('Gaby')" data-bs-dismiss="modal">Gaby</button>
+                    </div>
+                </div>
             </div>
+        </div>
     </div>
-</div>
+
+    <footer class="text-center py-4 text-muted-custom small border-top-dark">
+        <div class="container">
+            <p class="mb-0">© 2026 SINAPSIS • Diseño Multimedial ISEC. Reconstruyendo las dinámicas de interacción social en la mesa.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3 Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
