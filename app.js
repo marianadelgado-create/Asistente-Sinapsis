@@ -1,5 +1,5 @@
 /**
- * SINAPSIS ENGINE CORE - 2026 EXTENDED V2
+ * SINAPSIS ENGINE CORE - 2026 EXTENDED V3
  */
 
 // --- BASE DE DATOS DE REGLAMENTOS COMPLETOS ---
@@ -13,28 +13,30 @@ const REGLAS_DICCIONARIO = {
     teg: "<h5>Reglas Oficiales: T.E.G.</h5><p>Tradicional juego de Planificación de Estrategia Global. Los jugadores atacan y defienden fronteras territoriales lanzando dados según la cantidad de ejércitos. Se gana al completar el Objetivo Secreto asignado o el Objetivo General (30 países).</p>",
     batalla_naval: "<h5>Reglas Oficiales: Batalla Naval</h5><p>Cada jugador posiciona su flota de barcos en una grilla oculta de 10x10. Por turnos, se cantan coordenadas (Ej: 'F4'). El rival debe responder si el tiro dio en 'Agua', resulta 'Tocado' o si la nave ha sido completamente 'Hundida'.</p>",
     scrabble: "<h5>Reglas Oficiales: Scrabble</h5><p>Cada jugador roba 7 letras de la bolsa. Se deben formar palabras sobre el tablero cruzándose con términos existentes. Cada letra tiene un valor individual y las casillas especiales multiplican los puntos del término o de la letra.</p>",
-    tutti_frutti: "<h5>Reglas Oficiales: Tutti Frutti</h5><p>Se sortease una letra de juego. Todos los competidores rellenan categorías (Nombres, Colores, Marcas, Animales) a máxima velocidad. El primero en terminar grita '¡Basta para mí!' deteniendo la ronda. Palabras únicas suman 10 pts, repetidas 5 pts.</p>",
+    tutti_frutti: "<h5>Reglas Oficiales: Tutti Frutti</h5><p>Se sortea una letra de juego. Todos los competidores rellenan categorías (Nombres, Colores, Marcas, Animales) a máxima velocidad. El primero en terminar grita '¡Basta para mí!' deteniendo la ronda. Palabras únicas suman 10 pts, repetidas 5 pts.</p>",
     ahorcado: "<h5>Reglas Oficiales: Ahorcado</h5><p>Un jugador piensa una palabra y dibuja guiones vacíos. El oponente arriesga letras por turno. Si la letra es correcta, se rellena el espacio; si es incorrecta, se dibuja una parte del verdugo. Se pierde al llegar a 6 errores visuales.</p>",
     trivial: "<h5>Reglas Oficiales: Trivial Pursuit</h5><p>Los jugadores avanzan por el tablero respondiendo preguntas divididas en categorías cromáticas (Geografía, Historia, Espectáculos, Ciencia, Arte y Deportes). Se gana al obtener los 6 'quesitos' temáticos correspondientes.</p>",
-    pictionary: "<h5>Reglas Oficiales: Pictionary</h5><p>Juego de mesa de dibujo en equipo. Un miembro toma una tarjeta con una palabra secreta y debe dibujarla en un papel o pizarra sin usar letras, números ni gestos. Su equipo debe adivinar el concepto antes de que acabe el tiempo del reloj de arena.</p>"
+    pictionary: "<h5>Reglas Oficiales: Pictionary</h5><p>Juego de mesa de dibujo en equipo. Un miembro toma una tarjeta con una palabra secreta y debe dibujarla en un papel o pizarra sin usar letras, números ni gestos. Su equipo debe adivinar el concepto antes de que acabe el tiempo del reloj de arena.</p>",
+    jinete: "<h5>Lienzo de Desarrollo: El 5to Jinete</h5><p>Estructura de despliegue fígital para lienzos multilaterales de 4 a 8 puestos. El reglamento unifica el avance táctico de flotas mediante lecturas de inducción física de fichas en superficie en paralelo con directivas enviadas desde los mandos de las tabletas sincronizadas por Bluetooth.</p>"
 };
 
-// --- DICCIONARIO ACADÉMICO EXTENDIDO CON DEFINICIONES ---
-const DICCIONARIO_INTERNO = {
-    "MESA": "Mueble compuesto por una tabla horizontal sostenida por un armazón, usado para jugar.",
-    "JUEGO": "Actividad recreativa sometida a reglas, en el que se gana o se pierde.",
-    "RUMMY": "Juego de mesa de origen internacional basado en combinaciones de fichas numéricas.",
-    "TRUCO": "Juego de naipes de origen criollo altamente competitivo basado en el engaño y la picardía.",
-    "SINAPSIS": "Conexión interactiva entre neuronas; concepto de red que inspira esta plataforma.",
-    "DADOS": "Cueros cúbicos marcados con puntos de uno a seis empleados en juegos de azar.",
-    "ALMA": "Parte inmaterial o esencia definitoria de las marcas de diseño con propósito.",
-    "FOCO": "Punto de convergencia, nitidez y claridad visual en fotografía y diseño.",
-    "DISEÑO": "Proceso de prefiguración mental y maquetación para crear soluciones visuales.",
-    "DIGITAL": "Sistemas o interfaces que operan mediante la codificación de datos binarios.",
-    "TEG": "Acrónimo de Táctica y Estrategia Global, clásico juego de tablero argentino.",
-    "UNO": "Popular juego de cartas de colores y penalizaciones numéricas.",
-    "CARTAS": "Tarjetas o naipes rectangulares ilustrados usados para juegos de mesa.",
-    "TABLERO": "Superficie compacta dividida en casillas para desplegar piezas de juego."
+// --- DICCIONARIO MATRIZ ABIERTO (AGREGÁ LAS PALABRAS QUE DESEES) ---
+const DICCIONARIO_MASTER = {
+    "MESA": "Mueble compuesto por una tabla horizontal sostenida por patas, usado para disputar partidas.",
+    "JUEGO": "Actividad recreativa o de competición sometida a reglas fijas donde se gana o pierde.",
+    "TRUCO": "Juego criollo de cartas altamente competitivo basado en el engaño, cálculo de envidos y picardía.",
+    "SCRABBLE": "Competición léxica de tablero donde se construyen palabras cruzadas con valores diferenciados.",
+    "PICTIONARY": "Dinámica grupal basada en la decodificación de conceptos abstractos a través de trazos y dibujos rápidos.",
+    "AJEDREZ": "Estrategia milenaria abstracta de confrontación simulada sobre un damero de sesenta y cuatro escaques.",
+    "TUTTI": "Voz italiana constitutiva del juego de velocidad mental y categorización léxica por turnos.",
+    "FRUTTI": "Segmento complementario de la denominación del juego de palabras rápidas de descarga escrita.",
+    "SINAPSIS": "Estructura de red interactiva e interconexión funcional; núcleo conceptual de este universo.",
+    "CARTA": "Naipe o tarjeta ilustrada componente de barajas asignadas a juegos de mesa tácticos.",
+    "DADO": "Cuerpo cúbico regular cuyas caras contienen marcas de puntos del uno al seis para cómputos de azar.",
+    "TABLERO": "Superficie rígida grabada con diagramas o mapas operativos para albergar piezas dinámicas.",
+    "LIENZO": "Soporte base de juego fígital diseñado con sensores de inducción electrónica para mapeos globales.",
+    "HIBRIDO": "Sistema combinado que fusiona elementos físicos analógicos con despliegues de software digital.",
+    "BLUETOOTH": "Especificación tecnológica de radiocomunicación de corto alcance para vincular periféricos inalámbricos."
 };
 
 // --- PERSISTENCIA Y ESTADOS ---
@@ -53,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- SISTEMA DE LOGOUT Y SESIONES ---
 function abrirAuthModal() {
-    if(usuarioLogueado) return; // Si ya está logueado no hace falta abrirlo
+    if(usuarioLogueado) return;
     const modal = new bootstrap.Modal(document.getElementById('authModal'));
     modal.show();
 }
@@ -108,12 +110,12 @@ function procesarAutenticacion(event) {
 }
 
 function verificarSesionExistente() {
-    const sesion = localStorage.getItem('sinapsis_sesion_activa');
     const panelBloqueado = document.getElementById('estado-bloqueado');
     const panelDashboard = document.getElementById('dashboard-seccion');
     const lblUser = document.getElementById('navUserName');
     const avatar = document.getElementById('navAvatar');
     const btnOut = document.getElementById('btnLogOut');
+    const sesion = localStorage.getItem('sinapsis_sesion_activa');
 
     if (sesion) {
         usuarioLogueado = sesion;
@@ -152,7 +154,6 @@ function activarAsistente(juego) {
     const workspace = document.getElementById('workspace-asistente');
     window.location.href = "#dashboard-seccion";
 
-    // Si el juego es de tipo Campeonato (Rummy, Ajedrez, TEG, Scrabble, Trivial)
     const juegosCampeonato = ['rummy', 'ajedrez', 'teg', 'scrabble', 'trivial'];
     
     if (juego === 'truco') {
@@ -188,7 +189,6 @@ function activarAsistente(juego) {
             </div>
         `;
     } else {
-        // Para el resto (Uno, Damas, Generala, Batalla Naval, Tutti Frutti, Ahorcado, Pictionary) que usan Anotador estándar
         workspace.innerHTML = `
             <div class="p-4 text-center max-width-md mx-auto" style="max-width: 450px;">
                 <span class="badge bg-secondary bg-opacity-10 text-muted-custom font-tech mb-2 px-3 py-1">MODULO: ANOTADOR RÁPIDO</span>
@@ -232,7 +232,7 @@ function guardarRondaGenerica(juego) {
     alert(`Puntaje de ${juego.toUpperCase()} archivado en la libreta virtual.`);
 }
 
-// --- REGLAMENTOS ---
+// --- VISOR DE REGLAMENTOS ---
 function verReglas(juego) {
     const visor = document.getElementById('visor-reglas');
     const titulo = document.getElementById('reglasTitulo');
@@ -247,7 +247,7 @@ function verReglas(juego) {
 }
 function cerrarVisorReglas() { document.getElementById('visor-reglas').classList.add('d-none'); }
 
-// --- MOTOR LÉXICO POTENCIADO ---
+// --- ENGINE LÉXICO (VALIDADOR MATRIZ) ---
 function validarDiccionario(event) {
     event.preventDefault();
     const input = document.getElementById('inputPalabra');
@@ -258,12 +258,14 @@ function validarDiccionario(event) {
 
     box.style.display = "block";
 
-    if (DICCIONARIO_INTERNO[palabra]) {
-        statusTxt.innerHTML = `<span class="text-success">✓ PALABRA CORRECTA</span>`;
-        defTxt.innerHTML = `<strong>${palabra}:</strong> ${DICCIONARIO_INTERNO[palabra]}`;
+    if (DICCIONARIO_MASTER[palabra]) {
+        statusTxt.innerHTML = `<span class="text-success"><i class="bi bi-check-circle-fill me-2"></i>✓ PALABRA CORRECTA</span>`;
+        defTxt.innerHTML = `<strong>${palabra}:</strong> ${DICCIONARIO_MASTER[palabra]}`;
+        box.style.background = "rgba(25, 135, 84, 0.05)";
     } else {
-        statusTxt.innerHTML = `<span class="text-danger">✕ PALABRA RECHAZADA O INEXISTENTE</span>`;
-        defTxt.innerHTML = `El término "<strong>${palabra}</strong>" no se encuentra asentado en el set referencial de la mesa local. Probá con palabras clave como MESA, JUEGO, TABLERO, TRUCO o SINAPSIS.`;
+        statusTxt.innerHTML = `<span class="text-danger"><i class="bi bi-x-circle-fill me-2"></i>✕ TÉRMINO NO ENCONTRADO</span>`;
+        defTxt.innerHTML = `La palabra "<strong>${palabra}</strong>" no consta en el set léxico local de Sinapsis Core. Probá con términos del ecosistema (MESA, LIENZO, JUEGO, HIBRIDO, TABLERO, BLUETOOTH).`;
+        box.style.background = "rgba(220, 53, 69, 0.05)";
     }
 }
 
@@ -284,33 +286,4 @@ function lanzarDadosEngine() {
 
         d1.classList.remove('dice-rolling');
         d2.classList.remove('dice-rolling');
-    }, 600);
-}
-
-// --- RELOJ PROFESIONAL FISCHER ---
-function invertirReloj(p) {
-    if (FischerInterval && activeClock !== p) return;
-    if (FischerInterval) {
-        if (activeClock === 1) timeP1 += 3; else timeP2 += 3;
-    }
-    activeClock = p === 1 ? 2 : 1;
-    document.getElementById('cBox1').classList.toggle('active', activeClock === 1);
-    document.getElementById('cBox2').classList.toggle('active', activeClock === 2);
-    
-    if(!FischerInterval) {
-        FischerInterval = setInterval(() => {
-            if(activeClock === 1) { timeP1--; refrescarClocks(); } 
-            else { timeP2--; refrescarClocks(); }
-        }, 1000);
-    }
-}
-function refrescarClocks() {
-    const f = (t) => {
-        if(t < 0) return "00:00";
-        return `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
-    };
-    document.getElementById('txtC1').innerText = f(timeP1);
-    document.getElementById('txtC2').innerText = f(timeP2);
-}
-function pausarReloj() { clearInterval(FischerInterval); FischerInterval = null; }
-function resetReloj() { pausarReloj(); timeP1 = 300; timeP2 = 300; refrescarClocks(); }
+    }, 600
