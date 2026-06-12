@@ -1,63 +1,253 @@
-// --- BASE DE DATOS DE REGLAMENTOS INTEGRADOS ---
-const REGLAMENTOS_MESA = {
-    generala: {
-        titulo: "Manual Completo: La Generala",
-        cuerpo: "<p><strong>Estructura del Juego:</strong> Se juega con 5 dados y un vaso. Cada jugador dispone de tres tiros por ronda. Puede separar los dados que le sirvan y volver a tirar los restantes.</p><p><strong>Categorías de Anotación:</strong><ul><li><strong>Escalera:</strong> 20 puntos (o 25 si es servida). Ej: 1-2-3-4-5.</li><li><strong>Full:</strong> 30 puntos (tres dados iguales y dos iguales).</li><li><strong>Póker:</strong> 40 puntos (cuatro dados iguales).</li><li><strong>Generala:</strong> 50 puntos (cinco dados iguales). Si se logra en el primer tiro de la ronda, ¡ganás el juego automáticamente de forma servida!</li></ul></p>"
-    },
-    rummy: {
-        titulo: "Manual Completo: El Rummy",
-        cuerpo: "<p><strong>Combinaciones Válidas:</strong> Para poder descargar fichas o cartas en la mesa, debés formar series de mínimo 3 elementos.<ul><li><strong>Tercetos/Cuartetos:</strong> Mismo número pero de diferente color o palo.</li><li><strong>Escaleras:</strong> Números consecutivos pertenecientes al mismo color o palo (Ej: 4, 5 y 6 de Corazones).</li></ul></p><p><strong>La Regla de los 30 puntos:</strong> Tu primera descarga en la mesa debe sumar obligatoriamente 30 puntos o más utilizando los valores faciales de tus combinaciones.</p>"
-    },
-    truco: {
-        titulo: "Manual Completo: Truco Argentino",
-        cuerpo: "<p><strong>Puntaje y Estructura:</strong> Se juega a 30 puntos globales. Se divide en dos etapas de 15 tantos conocidos popularmente como 'Malas' y 'Buenas'.</p><p><strong>La Jerarquía de las Cartas (De mayor a menor):</strong><br>1. Ancho de Espada (1 de Espada)<br>2. Ancho de Basto (1 de Basto)<br>3. Siete de Espada<br>4. Siete de Oro<br>5. Los Tres<br>6. Los Dos<br>7. Los Anchos Falsos (Copa y Oro).</p>"
-    },
-    ajedrez: {
-        titulo: "Manual de Disputa: Ajedrez",
-        cuerpo: "<p><strong>Reglas de Oro:</strong> Las blancas abren siempre la partida. El movimiento de las piezas es asimétrico: la Torre avanza en línea recta, el Alfil en diagonal, el Caballo en forma de 'L' saltando piezas, y la Reina tiene libertad absoluta direccional.</p><p><strong>El Enroque:</strong> Movimiento táctico especial de defensa que involucra al Rey y a la Torre, siempre y cuando ninguna de las dos piezas se haya movido previamente y no haya obstáculos en el medio.</p>"
-    },
-    scrabble: {
-        titulo: "Manual de Referato: Scrabble",
-        cuerpo: "<p><strong>Validación Léxica:</strong> Cada competidor extrae 7 fichas de la bolsa. Al armar una palabra en el tablero, sumás los valores de cada letra. Si lográs usar las 7 letras de tu atril en un solo turno, obtenés un bono especial de **50 puntos extras** (Bingo).</p>"
-    },
-    pictionary: {
-        titulo: "Manual Técnico: Pictionary",
-        cuerpo: "<p><strong>Mecánica contra Reloj:</strong> El dibujante toma una tarjeta de categoría y dispone de exactamente 60 segundos (controlados en el Panel del Reloj) para plasmar la idea. Está estrictamente penalizado emitir sonidos, gesticular, o trazar números/letras en la hoja o pizarra.</p>"
-    }
+/**
+ * SINAPSIS ENGINE CORE - 2026
+ * Arquitectura unificada de Autenticación y Libreta Virtual Local
+ */
+
+// --- BASE DE DATOS DE REGLAMENTOS ---
+const REGLAS_DICCIONARIO = {
+    generala: "<h5>Reglas Generala</h5><p>Se tiran 5 dados en un vaso táctil. Disponés de 3 tiros para apartar dados y formar Escalera (20 pts), Full (30 pts), Póker (40 pts) o Generala (50 pts). Si sacás Generala de un tiro ganas de forma Servida.</p>",
+    rummy: "<h5>Reglas Rummy</h5><p>Para abrir juego y bajar tus fichas a la mesa por primera vez, tus series de tercetos, cuartetos o escaleras consecutivas deben sumar una base mínima obligatoria de **30 puntos**.</p>",
+    truco: "<h5>Reglas Truco</h5><p>Juego de engaño criollo disputado a 30 puntos. Las cartas dominantes son el Ancho de Espada (1) y el Ancho de Bastos (1). El Envido se canta únicamente durante la primera mano.</p>"
 };
 
-// --- CONTROLADOR DE CONSULTAS EN PANTALLA ---
-function mostrarReglamentoPantalla(juegoKey) {
-    const lector = document.getElementById('seccion-lector-reglas');
-    const titulo = document.getElementById('txtLectorTitulo');
-    const cuerpo = document.getElementById('txtLectorCuerpo');
+const DICCIONARIO_VALIDO = ["MESA", "JUEGO", "RUMMY", "TRUCO", "SINAPSIS", "DADOS", "ALMA", "FOCO", "LETRAS"];
 
-    if (REGLAMENTOS_MESA[juegoKey]) {
-        titulo.innerText = REGLAMENTOS_MESA[juegoKey].titulo;
-        cuerpo.innerHTML = REGLAMENTOS_MESA[juegoKey].cuerpo;
-        
-        lector.classList.remove('d-none');
-        // Smooth scroll automático para centrar la lectura en móviles y PC
-        lector.scrollIntoView({ behavior: 'smooth' });
-    }
+// --- PERSISTENCIA DE USUARIOS ---
+let usuarioLogueado = null; 
+let authModoActual = 'login'; // 'login' o 'registro'
+
+// Variables Reloj Fischer
+let FischerInterval = null;
+let activeClock = 1;
+let timeP1 = 300;
+let timeP2 = 300;
+
+document.addEventListener("DOMContentLoaded", () => {
+    verificarSesionExistente();
+});
+
+// --- SISTEMA DE AUTENTICACIÓN LOCAL ---
+function abrirAuthModal() {
+    const modal = new bootstrap.Modal(document.getElementById('authModal'));
+    modal.show();
 }
 
-function cerrarLectorReglas() {
-    document.getElementById('seccion-lector-reglas').classList.add('d-none');
-}
+function cambiarFrenteAuth(modo) {
+    authModoActual = modo;
+    const title = document.getElementById('authModalTitle');
+    const btnSubmit = document.getElementById('btnAuthSubmit');
+    const regFields = document.querySelector('.id-registro-only');
 
-// --- REDIRECCIONAMIENTO INTERNO ---
-function inicializarAnotadorRapido(juegoKey) {
-    // Si es truco o rummy, activa automáticamente sus respectivas herramientas en el Dashboard
-    if(juegoKey === 'truco') {
-        window.location.href = "#herramientas";
-        cargarHerramienta('truco');
-    } else if(juegoKey === 'rummy') {
-        window.location.href = "#herramientas";
-        // Dispara el Modal de Campeonato de forma nativa para que inicie la planilla
-        const modalTorneo = new bootstrap.Modal(document.getElementById('modalTorneoRummy'));
-        modalTorneo.show();
+    document.getElementById('tabLogin').classList.toggle('active', modo === 'login');
+    document.getElementById('tabRegistro').classList.toggle('active', modo === 'registro');
+
+    if (modo === 'login') {
+        title.innerText = "UNIRSE A SINAPSIS";
+        btnSubmit.innerText = "Entrar a la Mesa";
+        regFields.classList.add('d-none');
     } else {
-        window.location.href = "#herramientas";
+        title.innerText = "CREAR NUEVA CUENTA";
+        btnSubmit.innerText = "Completar Registro";
+        regFields.classList.remove('d-none');
     }
 }
+
+function procesarAutenticacion(event) {
+    event.preventDefault();
+    const username = document.getElementById('authUsername').value.trim();
+
+    if (!username) return;
+
+    if (authModoActual === 'registro') {
+        // Registrar en la lista global de usuarios ficticios de Sinapsis
+        let usuarios = JSON.parse(localStorage.getItem('sinapsis_usuarios')) || [];
+        if (usuarios.includes(username)) {
+            alert("Este nombre ya se encuentra en la comunidad. Elegí otro.");
+            return;
+        }
+        usuarios.push(username);
+        localStorage.setItem('sinapsis_usuarios', JSON.stringify(usuarios));
+        alert("¡Registro exitoso! Iniciando tu sesión.");
+    } else {
+        // Login: Verificamos si existe (o lo creamos de cortesía en el TP)
+        let usuarios = JSON.parse(localStorage.getItem('sinapsis_usuarios')) || ["Mariana", "Lucas"];
+        if (!usuarios.includes(username)) {
+            usuarios.push(username);
+            localStorage.setItem('sinapsis_usuarios', JSON.stringify(usuarios));
+        }
+    }
+
+    // Guardar sesión activa en la memoria del navegador
+    localStorage.setItem('sinapsis_sesion_activa', username);
+    
+    // Cerrar el modal de Bootstrap
+    const mEl = document.getElementById('authModal');
+    const instance = bootstrap.Modal.getInstance(mEl);
+    if (instance) instance.hide();
+
+    verificarSesionExistente();
+}
+
+function verificarSesionExistente() {
+    const sesion = localStorage.getItem('sinapsis_sesion_activa');
+    
+    const panelBloqueado = document.getElementById('estado-bloqueado');
+    const panelDashboard = document.getElementById('dashboard-seccion');
+    const lblUser = document.getElementById('navUserName');
+    const avatar = document.getElementById('navAvatar');
+
+    if (sesion) {
+        usuarioLogueado = sesion;
+        lblUser.innerText = sesion;
+        avatar.innerText = sesion.charAt(0).toUpperCase();
+
+        // Cambiar interfaz visible
+        panelBloqueado.classList.add('d-none');
+        panelDashboard.classList.remove('d-none');
+        document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${sesion}`;
+        
+        cargarHistorialUsuario();
+    } else {
+        usuarioLogueado = null;
+        lblUser.innerText = "Iniciar Sesión";
+        avatar.innerText = "?";
+        panelBloqueado.classList.remove('d-none');
+        panelDashboard.classList.add('d-none');
+    }
+}
+
+// --- GESTIÓN DE LA LIBRETA VIRTUAL PERSONALIZADA ---
+function cargarHistorialUsuario() {
+    const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
+    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
+    
+    document.getElementById('lblRecordPts').innerText = `${datosUser.puntos} Puntos Acumulados`;
+}
+
+// --- ASISTENTES DINÁMICOS DE MESA ---
+function activarAsistente(juego) {
+    if (!usuarioLogueado) {
+        abrirAuthModal();
+        return;
+    }
+
+    const workspace = document.getElementById('workspace-asistente');
+    window.location.href = "#dashboard-seccion";
+
+    if (juego === 'truco') {
+        workspace.innerHTML = `
+            <div class="row text-center py-3 g-2">
+                <div class="col-6 border-end border-secondary">
+                    <span class="small text-muted d-block">NOSOTROS</span>
+                    <h4 class="display-3 fw-bold text-white my-1" id="valNos">0</h4>
+                    <button class="btn btn-xs btn-coral-premium text-white px-3" onclick="sumarPuntosLibreta('nos', 1)">+1 Punto</button>
+                </div>
+                <div class="col-6">
+                    <span class="small text-muted d-block">ELLOS</span>
+                    <h4 class="display-3 fw-bold text-white my-1" id="valEllos">0</h4>
+                    <button class="btn btn-xs btn-outline-light px-3" onclick="sumarPuntosLibreta('ellos', 1)">+1 Punto</button>
+                </div>
+            </div>
+        `;
+    } else if (juego === 'rummy' || juego === 'generala') {
+        workspace.innerHTML = `
+            <div class="p-3 text-center">
+                <h5 class="text-white mb-3 text-uppercase font-tech">Carga rápida a la Libreta de ${usuarioLogueado}</h5>
+                <div class="input-group justify-content-center mx-auto" style="max-width:300px;">
+                    <input type="number" id="ptsNuevosJuego" class="form-control input-dark text-center" placeholder="Puntos logrados">
+                    <button class="btn btn-cyan-premium" onclick="guardarRondaGenerica('${juego}')">Guardar en Libreta</button>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function sumarPuntosLibreta(bando, val) {
+    const el = bando === 'nos' ? document.getElementById('valNos') : document.getElementById('valEllos');
+    let act = Number(el.innerText) + val;
+    el.innerText = act;
+
+    // Guardar récord acumulado si suma a "nosotros"
+    if(bando === 'nos') {
+        const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
+        let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
+        datosUser.puntos += val;
+        localStorage.setItem(llaveDatos, JSON.stringify(datosUser));
+        cargarHistorialUsuario();
+    }
+}
+
+function guardarRondaGenerica(juego) {
+    const input = document.getElementById('ptsNuevosJuego');
+    const pts = Number(input.value) || 0;
+
+    const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
+    let datosUser = JSON.parse(localStorage.getItem(llaveDatos)) || { totalRondas: 0, juegoActivo: null, puntos: 0 };
+    
+    datosUser.puntos += pts;
+    localStorage.setItem(llaveDatos, JSON.stringify(datosUser));
+    
+    alert(`Ronda de ${juego} archivada con éxito en tu libreta virtual.`);
+    input.value = "";
+    cargarHistorialUsuario();
+}
+
+// --- MANEJO DE MANUALES Y REGLAS ---
+function verReglas(juego) {
+    const visor = document.getElementById('visor-reglas');
+    const titulo = document.getElementById('reglasTitulo');
+    const cuerpo = document.getElementById('reglasCuerpo');
+
+    if (REGLAS_DICCIONARIO[juego]) {
+        titulo.innerText = `Lector Oficial: ${juego.toUpperCase()}`;
+        cuerpo.innerHTML = REGLAS_DICCIONARIO[juego];
+        visor.classList.remove('d-none');
+        visor.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+function cerrarVisorReglas() { document.getElementById('visor-reglas').classList.add('d-none'); }
+
+// --- DICCIONARIO ---
+function validarDiccionario(event) {
+    event.preventDefault();
+    const input = document.getElementById('inputPalabra');
+    const p = input.value.trim().toUpperCase();
+    const alertBox = document.getElementById('alertDiccionario');
+
+    alertBox.style.display = "block";
+    alertBox.classList.remove('alert-success', 'alert-danger');
+
+    if (DICCIONARIO_VALIDO.includes(p)) {
+        alertBox.className = "alert alert-success mt-3 text-center small animate-fade-in";
+        alertBox.innerHTML = `✓ <strong>${p}</strong> es válida en el léxico oficial local.`;
+    } else {
+        alertBox.className = "alert alert-danger mt-3 text-center small animate-fade-in";
+        alertBox.innerHTML = `✕ <strong>${p}</strong> no existe en este set referil.`;
+    }
+}
+
+// --- RELOJ PROFESSIONAL ---
+function invertirReloj(p) {
+    if (FischerInterval && activeClock !== p) return;
+    if (FischerInterval) {
+        if (activeClock === 1) timeP1 += 3; else timeP2 += 3;
+    }
+    activeClock = p === 1 ? 2 : 1;
+    document.getElementById('cBox1').classList.toggle('active', activeClock === 1);
+    document.getElementById('cBox2').classList.toggle('active', activeClock === 2);
+    
+    if(!FischerInterval) {
+        FischerInterval = setInterval(() => {
+            if(activeClock === 1) { timeP1--; refrescarClocks(); } 
+            else { timeP2--; refrescarClocks(); }
+        }, 1000);
+    }
+}
+function refrescarClocks() {
+    const f = (t) => `${String(Math.floor(t/60)).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+    document.getElementById('txtC1').innerText = f(timeP1);
+    document.getElementById('txtC2').innerText = f(timeP2);
+}
+function pausarReloj() { clearInterval(FischerInterval); FischerInterval = null; }
+function resetReloj() { pausarReloj(); timeP1 = 300; timeP2 = 300; refrescarClocks(); }
