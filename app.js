@@ -117,12 +117,33 @@ function verificarSesionExistente() {
         usuarioLogueado = sesion;
         
         // Inyectar el pill del perfil activo junto al botón salir de forma segura
-        containerPerfilNav.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-                <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
-                    <div class="avatar-dot">${sesion.charAt(0).toUpperCase()}</div>
-                    <span class="small text-white">${sesion}</span>
-                </div>
+       containerPerfilNav.innerHTML = `
+    <div class="d-flex align-items-center gap-2">
+        <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
+            
+            <div class="avatar-dot">
+                <i class="bi bi-person-fill"></i>
+            </div>
+
+            <div class="d-flex flex-column lh-1">
+                <span class="text-white fw-semibold">
+                    Mariana Delgado
+                </span>
+
+                <small style="color:#9CA3AF;">
+                    Jugador
+                </small>
+            </div>
+
+        </div>
+
+        <button class="btn btn-xs btn-outline-danger"
+                onclick="cerrarSesion()">
+            <i class="bi bi-box-arrow-right"></i>
+            Salir
+        </button>
+    </div>
+`;
                 <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Salir</button>
             </div>
         `;
