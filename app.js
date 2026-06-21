@@ -127,10 +127,10 @@ function verificarSesionExistente() {
         usuarioLogueado = sesion;
         
         // Inyectar el pill del perfil activo junto al botón salir de forma segura
-       containerPerfilNav.innerHTML = `
+      containerPerfilNav.innerHTML = `
     <div class="d-flex align-items-center gap-2">
         <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
-            
+
             <div class="avatar-dot">
                 <i class="bi bi-person-fill"></i>
             </div>
@@ -147,17 +147,12 @@ function verificarSesionExistente() {
 
         </div>
 
-        <button class="btn btn-xs btn-outline-danger"
-                onclick="cerrarSesion()">
+        <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">
             <i class="bi bi-box-arrow-right"></i>
             Salir
         </button>
     </div>
 `;
-                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Salir</button>
-            </div>
-        `;
-
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
         document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${sesion}`;
