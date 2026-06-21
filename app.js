@@ -106,7 +106,17 @@ function procesarAutenticacion(event) {
 
     verificarSesionExistente();
 }
+function verificarSesionExistente() {
 
+    console.log("Verificando sesión");
+
+    const panelBloqueado = document.getElementById('estado-bloqueado');
+    const panelDashboard = document.getElementById('dashboard-seccion');
+    const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
+
+    console.log(panelBloqueado);
+    console.log(panelDashboard);
+    console.log(containerPerfilNav);
 function verificarSesionExistente() {
     const panelBloqueado = document.getElementById('estado-bloqueado');
     const panelDashboard = document.getElementById('dashboard-seccion');
