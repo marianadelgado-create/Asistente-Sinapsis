@@ -127,7 +127,7 @@ function verificarSesionExistente() {
         usuarioLogueado = sesion;
         
         // Inyectar el pill del perfil activo junto al botón salir de forma segura
-      containerPerfilNav.innerHTML = `
+     containerPerfilNav.innerHTML = `
     <div class="d-flex align-items-center gap-2">
         <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
 
@@ -152,6 +152,7 @@ function verificarSesionExistente() {
             Salir
         </button>
     </div>
+
 `;
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
