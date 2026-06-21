@@ -106,17 +106,7 @@ function procesarAutenticacion(event) {
 
     verificarSesionExistente();
 }
-function verificarSesionExistente() {
 
-    console.log("Verificando sesión");
-
-    const panelBloqueado = document.getElementById('estado-bloqueado');
-    const panelDashboard = document.getElementById('dashboard-seccion');
-    const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
-
-    console.log(panelBloqueado);
-    console.log(panelDashboard);
-    console.log(containerPerfilNav);
 function verificarSesionExistente() {
     const panelBloqueado = document.getElementById('estado-bloqueado');
     const panelDashboard = document.getElementById('dashboard-seccion');
@@ -127,33 +117,16 @@ function verificarSesionExistente() {
         usuarioLogueado = sesion;
         
         // Inyectar el pill del perfil activo junto al botón salir de forma segura
-     containerPerfilNav.innerHTML = `
-    <div class="d-flex align-items-center gap-2">
-        <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
-
-            <div class="avatar-dot">
-                <i class="bi bi-person-fill"></i>
+        containerPerfilNav.innerHTML = `
+            <div class="d-flex align-items-center gap-2">
+                <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
+                    <div class="avatar-dot">${sesion.charAt(0).toUpperCase()}</div>
+                    <span class="small text-white">${sesion}</span>
+                </div>
+                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Salir</button>
             </div>
+        `;
 
-            <div class="d-flex flex-column lh-1">
-                <span class="text-white fw-semibold">
-                    Mariana Delgado
-                </span>
-
-                <small style="color:#9CA3AF;">
-                    Jugador
-                </small>
-            </div>
-
-        </div>
-
-        <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">
-            <i class="bi bi-box-arrow-right"></i>
-            Salir
-        </button>
-    </div>
-
-`;
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
         document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${sesion}`;
