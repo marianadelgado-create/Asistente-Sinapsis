@@ -150,12 +150,18 @@ function verificarSesionExistente() {
     const panelDashboard = document.getElementById('dashboard-seccion');
     const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
     const sesion = localStorage.getItem('sinapsis_sesion_activa');
-    const user = JSON.parse(localStorage.getItem('user'));
+    
+    // Intentamos obtener 'user', si no existe, creamos un objeto vacío por defecto
+    let user = JSON.parse(localStorage.getItem('user')) || { 
+        nombre: "Jugador", 
+        rango: "Nuevo", 
+        nivel: 1, 
+        stats: { partidasJugadas: 0, puntosTotales: 0 } 
+    };
 
-    if (sesion && user) {
+    if (sesion) {
         usuarioLogueado = sesion;
         
-        // Renderizado del Perfil en el Nav (Fase 1)
         containerPerfilNav.innerHTML = `
             <div class="d-flex align-items-center gap-3">
                 <div class="perfil-info text-end">
@@ -166,22 +172,25 @@ function verificarSesionExistente() {
             </div>
         `;
 
-        panelBloqueado.classList.add('d-none');
-        panelDashboard.classList.remove('d-none');
+        if (panelBloqueado) panelBloqueado.classList.add('d-none');
+        if (panelDashboard) panelDashboard.classList.remove('d-none');
         
-        // Actualizar estadísticas en la Libreta
-        document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${user.nombre}`;
-        document.getElementById('lblRecordPts').innerHTML = `
-            <div class="d-flex justify-content-center gap-4 text-center">
-                <div><small>Partidas</small><br><strong>${user.stats.partidasJugadas}</strong></div>
-                <div><small>Puntos</small><br><strong>${user.stats.puntosTotales}</strong></div>
-            </div>
-        `;
+        const elBienvenida = document.getElementById('txtBienvenidaLibreta');
+        if (elBienvenida) elBienvenida.innerText = `Libreta Virtual de ${user.nombre}`;
+        
+        const elStats = document.getElementById('lblRecordPts');
+        if (elStats) {
+            elStats.innerHTML = `
+                <div class="d-flex justify-content-center gap-4 text-center">
+                    <div><small>Partidas</small><br><strong>${user.stats.partidasJugadas}</strong></div>
+                    <div><small>Puntos</small><br><strong>${user.stats.puntosTotales}</strong></div>
+                </div>
+            `;
+        }
     } else {
-        // Estado inicial (No logueado)
         containerPerfilNav.innerHTML = `<button class="btn-profile-pill" onclick="abrirAuthModal()">Iniciar Sesión</button>`;
-        panelBloqueado.classList.remove('d-none');
-        panelDashboard.classList.add('d-none');
+        if (panelBloqueado) panelBloqueado.classList.remove('d-none');
+        if (panelDashboard) panelDashboard.classList.add('d-none');
     }
 }
 
