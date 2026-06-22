@@ -49,6 +49,36 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // --- ENGINES DE CONTROL DE ACCESO ---
+
+// Al iniciar o al loguearse, inicializamos los datos si no existen
+if (!localStorage.getItem('user')) {
+    const usuarioInicial = {
+        nombre: "Mariana",
+        fechaIngreso: "22/06/2026", // Fecha actual
+        partidasJugadas: 0,
+        victorias: 0,
+        rango: "Jugador"
+    };
+    localStorage.setItem('user', JSON.stringify(usuarioInicial));
+}
+// 2. FUNCIÓN DE ACTUALIZACIÓN (Pegá esto justo debajo del bloque anterior)
+function actualizarStats(gano) {
+    let user = JSON.parse(localStorage.getItem('user'));
+    
+    user.partidasJugadas += 1;
+    if (gano) {
+        user.victorias += 1;
+    }
+    
+    // Lógica para subir de nivel
+    if (user.partidasJugadas >= 10) {
+        user.rango = "Exploradora Neural";
+    }
+    
+    localStorage.setItem('user', JSON.stringify(user));
+    console.log("Stats actualizadas:", user); // Esto es útil para testear en la consola
+}
+
 function abrirAuthModal() {
     // Si ya hay sesión iniciada, abrir el modal no hace falta
     if(usuarioLogueado) return;
