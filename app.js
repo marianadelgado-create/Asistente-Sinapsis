@@ -326,3 +326,7 @@ function refrescarClocks() {
 }
 function pausarReloj() { clearInterval(FischerInterval); FischerInterval = null; }
 function resetReloj() { pausarReloj(); timeP1 = 300; timeP2 = 300; refrescarClocks(); }
+// --- FUNCIÓN DE CIERRE DEL ASISTENTE ---
+function cerrarAsistente() {
+    document.getElementById('dashboard-seccion').classList.add('d-none');
+}
