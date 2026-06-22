@@ -112,6 +112,7 @@ function cambiarFrenteAuth(modo) {
     }
 }
 
+// --- LÍNEA 98 ---
 function procesarAutenticacion(event) {
     event.preventDefault();
     const username = document.getElementById('authUsername').value.trim();
@@ -136,6 +137,7 @@ function procesarAutenticacion(event) {
 
     verificarSesionExistente();
 }
+// --- LÍNEA 116 ---
 
 function verificarSesionExistente() {
     const panelBloqueado = document.getElementById('estado-bloqueado');
