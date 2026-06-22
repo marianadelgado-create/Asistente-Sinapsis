@@ -61,16 +61,6 @@ if (!localStorage.getItem('user')) {
     };
     localStorage.setItem('user', JSON.stringify(usuarioInicial));
 }
-// 2. Función de actualización
-    window.actualizarStats = function(gano) {
-        let user = JSON.parse(localStorage.getItem('user'));
-        user.partidasJugadas += 1;
-        if (gano) user.victorias += 1;
-        if (user.partidasJugadas >= 10) user.rango = "Exploradora Neural";
-        localStorage.setItem('user', JSON.stringify(user));
-    };
-
-}); // <--- ESTA LLAVE CIERRA TODO EL BLOQUE
 // 2. FUNCIÓN DE ACTUALIZACIÓN (Pegá esto justo debajo del bloque anterior)
 function actualizarStats(gano) {
     let user = JSON.parse(localStorage.getItem('user'));
