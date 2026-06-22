@@ -51,15 +51,21 @@ document.addEventListener("DOMContentLoaded", () => {
 // --- ENGINES DE CONTROL DE ACCESO ---
 
 // Al iniciar o al loguearse, inicializamos los datos si no existen
+// --- CONFIGURACIÓN DE PERFIL: MARIANA DELGADO (FASE 1) ---
+const usuarioConfig = {
+    nombre: "Mariana Delgado",
+    rango: "Jugador",
+    nivel: 12,
+    fechaRegistro: "22/06/2026",
+    juegosFavoritos: ["Truco", "Scrabble", "Rummy"],
+    stats: {
+        partidasJugadas: 124,
+        puntosTotales: 872
+    }
+};
+// Solo guardar si no existe, para no borrar tus avances actuales
 if (!localStorage.getItem('user')) {
-    const usuarioInicial = {
-        nombre: "Mariana",
-        fechaIngreso: "22/06/2026", // Fecha actual
-        partidasJugadas: 0,
-        victorias: 0,
-        rango: "Jugador"
-    };
-    localStorage.setItem('user', JSON.stringify(usuarioInicial));
+    localStorage.setItem('user', JSON.stringify(usuarioConfig));
 }
 // 2. FUNCIÓN DE ACTUALIZACIÓN (Pegá esto justo debajo del bloque anterior)
 function actualizarStats(gano) {
@@ -144,37 +150,36 @@ function verificarSesionExistente() {
     const panelDashboard = document.getElementById('dashboard-seccion');
     const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
     const sesion = localStorage.getItem('sinapsis_sesion_activa');
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    if (sesion) {
+    if (sesion && user) {
         usuarioLogueado = sesion;
         
-        // Inyectar el pill del perfil activo junto al botón salir de forma segura
+        // Renderizado del Perfil en el Nav (Fase 1)
         containerPerfilNav.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
-                <div class="btn-profile-pill d-flex align-items-center border-glow-cyan" style="cursor:default">
-                    <div class="avatar-dot">${sesion.charAt(0).toUpperCase()}</div>
-                    <span class="small text-white">${sesion}</span>
+            <div class="d-flex align-items-center gap-3">
+                <div class="perfil-info text-end">
+                    <div class="fw-bold text-white">${user.nombre}</div>
+                    <small class="text-cyan">${user.rango} | Nivel ${user.nivel}</small>
                 </div>
-                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()"><i class="bi bi-box-arrow-right"></i> Salir</button>
+                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">Salir</button>
             </div>
         `;
 
         panelBloqueado.classList.add('d-none');
         panelDashboard.classList.remove('d-none');
-        document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${sesion}`;
         
-        cargarHistorialUsuario();
-    } else {
-        usuarioLogueado = null;
-        
-        // Inyectar el disparador limpio de Login
-        containerPerfilNav.innerHTML = `
-            <button class="btn-profile-pill d-flex align-items-center" onclick="abrirAuthModal()">
-                <div class="avatar-dot">?</div>
-                <span class="small text-white">Iniciar Sesión</span>
-            </button>
+        // Actualizar estadísticas en la Libreta
+        document.getElementById('txtBienvenidaLibreta').innerText = `Libreta Virtual de ${user.nombre}`;
+        document.getElementById('lblRecordPts').innerHTML = `
+            <div class="d-flex justify-content-center gap-4 text-center">
+                <div><small>Partidas</small><br><strong>${user.stats.partidasJugadas}</strong></div>
+                <div><small>Puntos</small><br><strong>${user.stats.puntosTotales}</strong></div>
+            </div>
         `;
-
+    } else {
+        // Estado inicial (No logueado)
+        containerPerfilNav.innerHTML = `<button class="btn-profile-pill" onclick="abrirAuthModal()">Iniciar Sesión</button>`;
         panelBloqueado.classList.remove('d-none');
         panelDashboard.classList.add('d-none');
     }
