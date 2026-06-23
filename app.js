@@ -50,3 +50,45 @@ window.addEventListener('load', () => {
     }
     verificarSesionExistente();
 });
+// --- RESTAURACIÓN DE MÓDULOS DE JUEGO ---
+
+function activarAsistente(juego) {
+    const workspace = document.getElementById('workspace-asistente');
+    if (!workspace) return;
+    
+    // Aquí es donde vive la lógica que anotaba puntos
+    workspace.innerHTML = `
+        <div class="p-4 text-center">
+            <h5 class="text-white">Computar Ronda de ${juego.toUpperCase()}</h5>
+            <div class="input-group justify-content-center">
+                <input type="number" id="ptsNuevosJuego" class="form-control max-w-100" placeholder="Puntos logrados">
+                <button class="btn btn-cyan-premium" onclick="guardarRondaGenerica('${juego}')">Anotar</button>
+            </div>
+        </div>
+    `;
+    document.getElementById('dashboard-seccion').classList.remove('d-none');
+}
+
+function verReglas(juego) {
+    const visor = document.getElementById('visor-reglas');
+    const cuerpo = document.getElementById('reglasCuerpo');
+    if (!visor || !cuerpo) return;
+
+    // Usamos el diccionario que ya teníamos definido arriba
+    const reglas = REGLAS_DICCIONARIO[juego] || "<p>Reglas no encontradas para este juego.</p>";
+    cuerpo.innerHTML = reglas;
+    visor.classList.remove('d-none');
+    visor.scrollIntoView({ behavior: 'smooth' });
+}
+
+function guardarRondaGenerica(juego) {
+    const input = document.getElementById('ptsNuevosJuego');
+    const pts = Number(input.value) || 0;
+    
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.stats.puntosTotales += pts;
+    localStorage.setItem('user', JSON.stringify(user));
+    
+    alert(`Puntaje de ${juego.toUpperCase()} guardado.`);
+    verificarSesionExistente(); // Refresca el dashboard con los nuevos puntos
+}
