@@ -13,27 +13,33 @@ window.cerrarSesion = function() {
     window.location.reload();
 };
 
+// 3. INICIALIZACIÓN (Modificada para NO autologuear)
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('wrapperPerfilAccion');
-    const sesionTerminada = localStorage.getItem('sesion_terminada');
-    let user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    // Si NO hay sesión terminada y NO hay usuario, creamos uno (esto es lo que te molestaba)
-    if (!user && !sesionTerminada) {
-        user = { nombre: "Mariana Delgado", rango: "Jugador", nivel: 12, stats: { puntosTotales: 872 } };
-        localStorage.setItem('user', JSON.stringify(user));
-    }
-
-    // Mostrar UI solo si hay usuario
     if (user && contenedor) {
+        // Caso: Usuario ya logueado
         contenedor.innerHTML = `
             <span class="text-white me-2">${user.nombre} | Niv.${user.nivel}</span>
             <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
         `;
     } else if (contenedor) {
-        // Si no hay usuario, mostramos un botón de acceso
-        contenedor.innerHTML = `<button class="btn btn-sm btn-primary" onclick="location.reload()">Entrar</button>`;
-        // Limpiamos la bandera para que la próxima vez sí pueda entrar
-        localStorage.removeItem('sesion_terminada');
+        // Caso: Usuario NO logueado. 
+        // CAMBIO: Ya no creamos el objeto usuario aquí.
+        contenedor.innerHTML = `
+            <button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>
+        `;
     }
 });
+
+// Función para simular un inicio de sesión real
+window.iniciarSesionManual = function() {
+    const nombre = prompt("¿Cuál es tu nombre?");
+    if (nombre) {
+        const nuevoUser = { nombre: nombre, rango: "Jugador", nivel: 1, stats: { puntosTotales: 0 } };
+        localStorage.setItem('user', JSON.stringify(nuevoUser));
+        localStorage.removeItem('sesion_terminada');
+        window.location.reload();
+    }
+};
