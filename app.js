@@ -1,36 +1,32 @@
 /**
- * SINAPSIS ENGINE CORE - RECONSTRUCCIÓN TOTAL V5
+ * SINAPSIS ENGINE CORE - REINICIO Y ESTABILIZACIÓN V6
  */
 
-// 1. DICCIONARIO MAESTRO (Más contenido para reglas)
+// 1. DICCIONARIO MAESTRO
 const BIBLIOTECA_JUEGOS = {
-    generala: { titulo: "Generala", texto: "Juego de dados donde el objetivo es obtener la mayor puntuación completando jugadas como la Generala, Poker o Full. ¡Requiere azar y estrategia al decidir qué dados guardar!" },
-    truco: { titulo: "Truco", texto: "El juego de naipes por excelencia en Argentina. Combina engaño, memoria y estrategia. Se juega a 30 puntos y utiliza señas para comunicarse con el compañero." },
-    scrabble: { titulo: "Scrabble", texto: "Un desafío léxico donde cada letra tiene un valor. El objetivo es formar palabras sobre un tablero aprovechando casillas multiplicadoras de puntos." },
-    trivial: { titulo: "Trivial", texto: "Pone a prueba tus conocimientos generales. Debes recorrer el tablero y responder preguntas de distintas categorías para obtener todos los quesitos." }
+    generala: { titulo: "Generala", texto: "Juego de dados: busca obtener Generala, Poker o Full." },
+    truco: { titulo: "Truco", texto: "Juego de naipes de engaño y estrategia por puntos." },
+    scrabble: { titulo: "Scrabble", texto: "Desafío léxico: forma palabras con valores de letras." },
+    trivial: { titulo: "Trivial", texto: "Responde preguntas de diversas categorías." }
 };
 
-// 2. FUNCIONES DE SESIÓN
+// 2. FUNCIONES DE INTERFAZ (Forzadas a nivel global)
+window.cerrarSesion = function() {
+    localStorage.removeItem('user');
+    window.location.reload();
+};
+
 window.abrirAuthModal = function() {
     const modalEl = document.getElementById('authModal');
     if (modalEl) {
-        const modal = new bootstrap.Modal(modalEl);
-        modal.show();
-    } else {
-        console.error("No se encontró el modal de autenticación.");
+        new bootstrap.Modal(modalEl).show();
     }
 };
 
-window.cerrarSesion = function() {
-    localStorage.removeItem('user');
-    location.reload();
-};
-
-// 3. FUNCIONES DE JUEGO (Reglas y Anotador)
-window.verReglas = function(juegoId) {
-    const juego = BIBLIOTECA_JUEGOS[juegoId];
+window.verReglas = function(id) {
     const visor = document.getElementById('visor-reglas');
     const cuerpo = document.getElementById('reglasCuerpo');
+    const juego = BIBLIOTECA_JUEGOS[id];
     
     if (visor && cuerpo) {
         cuerpo.innerHTML = juego ? `<h5>${juego.titulo}</h5><p>${juego.texto}</p>` : "Reglas no encontradas.";
@@ -39,51 +35,47 @@ window.verReglas = function(juegoId) {
     }
 };
 
-window.activarAsistente = function(juegoId) {
+window.activarAsistente = function(id) {
     const workspace = document.getElementById('workspace-asistente');
-    if (workspace) {
+    const dashboard = document.getElementById('dashboard-seccion');
+    
+    if (workspace && dashboard) {
         workspace.innerHTML = `
-            <div class="p-4 text-center">
-                <h5>Computar Ronda de ${juegoId.toUpperCase()}</h5>
-                <input type="number" id="ptsNuevosJuego" class="form-control" placeholder="Puntos obtenidos">
-                <button class="btn btn-primary mt-2" onclick="guardarRondaGenerica('${juegoId}')">Confirmar Anotación</button>
+            <div class="p-4 border border-cyan rounded mt-3">
+                <h5>Anotador: ${id.toUpperCase()}</h5>
+                <input type="number" id="ptsInput" class="form-control" placeholder="Puntos...">
+                <button class="btn btn-success mt-2" onclick="guardarPuntos('${id}')">Registrar</button>
             </div>
         `;
+        dashboard.classList.remove('d-none');
     }
 };
 
-window.guardarRondaGenerica = function(juegoId) {
-    const pts = parseInt(document.getElementById('ptsNuevosJuego').value) || 0;
+window.guardarPuntos = function(id) {
     let user = JSON.parse(localStorage.getItem('user'));
+    const pts = parseInt(document.getElementById('ptsInput').value) || 0;
     user.stats.puntosTotales += pts;
     localStorage.setItem('user', JSON.stringify(user));
-    alert("¡Puntaje registrado con éxito!");
-    location.reload(); // Refresca para actualizar el perfil
+    alert("Puntos sumados.");
+    window.location.reload();
 };
 
-// 4. INICIALIZACIÓN
+// 3. INICIALIZACIÓN
 document.addEventListener('DOMContentLoaded', () => {
-    // Si no hay usuario, forzamos uno para que el sitio funcione
-    if (!localStorage.getItem('user')) {
-        const userDefault = { 
-            nombre: "Mariana Delgado", rango: "Jugador", nivel: 12, 
-            stats: { partidasJugadas: 124, puntosTotales: 872 } 
-        };
-        localStorage.setItem('user', JSON.stringify(userDefault));
+    let user = JSON.parse(localStorage.getItem('user'));
+    
+    // Si Mariana es el usuario predeterminado, forzamos su estado
+    if (!user) {
+        user = { nombre: "Mariana Delgado", rango: "Jugador", nivel: 12, stats: { puntosTotales: 872 } };
+        localStorage.setItem('user', JSON.stringify(user));
     }
     
-    // Sincronizar UI
-    const user = JSON.parse(localStorage.getItem('user'));
+    // Actualizar el DOM
     const container = document.getElementById('wrapperPerfilAccion');
     if (container) {
         container.innerHTML = `
-            <div class="d-flex align-items-center gap-3">
-                <div class="text-end">
-                    <div class="fw-bold text-white">${user.nombre}</div>
-                    <small class="text-cyan">${user.rango} | Nivel ${user.nivel}</small>
-                </div>
-                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">Salir</button>
-            </div>
+            <span class="text-white me-2">${user.nombre} | Niv.${user.nivel}</span>
+            <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
         `;
     }
 });
