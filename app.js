@@ -155,7 +155,54 @@ if (!localStorage.getItem('user')) {
     localStorage.setItem('user', JSON.stringify(usuarioDefault));
     console.log("Datos de usuario inicializados.");
 }
+function verificarSesionExistente() {
+    const panelBloqueado = document.getElementById('estado-bloqueado');
+    const panelDashboard = document.getElementById('dashboard-seccion');
+    const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
+    const sesion = localStorage.getItem('sinapsis_sesion_activa');
+    
+    // Intentamos obtener 'user', si no existe, creamos un objeto vacío por defecto
+    let user = JSON.parse(localStorage.getItem('user')) || { 
+        nombre: "Jugador", 
+        rango: "Nuevo", 
+        nivel: 1, 
+        stats: { partidasJugadas: 0, puntosTotales: 0 } 
+    };
 
+    if (sesion) {
+        usuarioLogueado = sesion;
+        
+        containerPerfilNav.innerHTML = `
+            <div class="d-flex align-items-center gap-3">
+                <div class="perfil-info text-end">
+                    <div class="fw-bold text-white">${user.nombre}</div>
+                    <small class="text-cyan">${user.rango} | Nivel ${user.nivel}</small>
+                </div>
+                <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">Salir</button>
+            </div>
+        `;
+
+        if (panelBloqueado) panelBloqueado.classList.add('d-none');
+        if (panelDashboard) panelDashboard.classList.remove('d-none');
+        
+        const elBienvenida = document.getElementById('txtBienvenidaLibreta');
+        if (elBienvenida) elBienvenida.innerText = `Libreta Virtual de ${user.nombre}`;
+        
+        const elStats = document.getElementById('lblRecordPts');
+        if (elStats) {
+            elStats.innerHTML = `
+                <div class="d-flex justify-content-center gap-4 text-center">
+                    <div><small>Partidas</small><br><strong>${user.stats.partidasJugadas}</strong></div>
+                    <div><small>Puntos</small><br><strong>${user.stats.puntosTotales}</strong></div>
+                </div>
+            `;
+        }
+    } else {
+        containerPerfilNav.innerHTML = `<button class="btn-profile-pill" onclick="abrirAuthModal()">Iniciar Sesión</button>`;
+        if (panelBloqueado) panelBloqueado.classList.remove('d-none');
+        if (panelDashboard) panelDashboard.classList.add('d-none');
+    }
+}
 
 function cargarHistorialUsuario() {
     const llaveDatos = `sinapsis_libreta_${usuarioLogueado}`;
@@ -169,62 +216,7 @@ function activarAsistente(juego) {
         abrirAuthModal();
         return;
     }
-// --- FUNCIÓN DE VERIFICACIÓN BLINDADA ---
-function verificarSesionExistente() {
-    const panelBloqueado = document.getElementById('estado-bloqueado');
-    const panelDashboard = document.getElementById('dashboard-seccion');
-    const containerPerfilNav = document.getElementById('wrapperPerfilAccion');
-    const sesion = localStorage.getItem('sinapsis_sesion_activa');
-    
-    // Obtenemos los datos, si no existen, el inicializador ya los creó
-    let user = JSON.parse(localStorage.getItem('user'));
 
-    if (sesion && user) {
-        usuarioLogueado = sesion;
-        
-        if (containerPerfilNav) {
-            containerPerfilNav.innerHTML = `
-                <div class="d-flex align-items-center gap-3">
-                    <div class="perfil-info text-end">
-                        <div class="fw-bold text-white">${user.nombre}</div>
-                        <small class="text-cyan">${user.rango} | Nivel ${user.nivel}</small>
-                    </div>
-                    <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">Salir</button>
-                </div>
-            `;
-        }
-
-        if (panelBloqueado) panelBloqueado.classList.add('d-none');
-        if (panelDashboard) panelDashboard.classList.remove('d-none');
-        
-        const elBienvenida = document.getElementById('txtBienvenidaLibreta');
-        if (elBienvenida) elBienvenida.innerText = `Libreta Virtual de ${user.nombre}`;
-        
-        const elStats = document.getElementById('lblRecordPts');
-        if (elStats && user.stats) {
-            elStats.innerHTML = `
-                <div class="d-flex justify-content-center gap-4 text-center">
-                    <div><small>Partidas</small><br><strong>${user.stats.partidasJugadas}</strong></div>
-                    <div><small>Puntos</small><br><strong>${user.stats.puntosTotales}</strong></div>
-                </div>
-            `;
-        }
-    } else {
-        if (containerPerfilNav) {
-            containerPerfilNav.innerHTML = `<button class="btn-profile-pill" onclick="abrirAuthModal()">Iniciar Sesión</button>`;
-        }
-        if (panelBloqueado) panelBloqueado.classList.remove('d-none');
-        if (panelDashboard) panelDashboard.classList.add('d-none');
-    }
-}
-
-// --- FUNCIÓN DE CIERRE DEL ASISTENTE ---
-function cerrarAsistente() {
-    const dashboard = document.getElementById('dashboard-seccion');
-    if (dashboard) {
-        dashboard.classList.add('d-none');
-    }
-}
     const workspace = document.getElementById('workspace-asistente');
     window.location.href = "#dashboard-seccion";
 
