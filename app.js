@@ -1,96 +1,89 @@
 /**
- * SINAPSIS ENGINE CORE - RECONSTRUCCIÓN TOTAL V4
+ * SINAPSIS ENGINE CORE - RECONSTRUCCIÓN TOTAL V5
  */
 
-// 1. DICCIONARIOS DE REGLAS
-const REGLAS_DICCIONARIO = {
-    generala: "<h5>Reglas: Generala</h5><p>Se juega con 5 dados...</p>",
-    truco: "<h5>Reglas: Truco</h5><p>Juego de naipes...</p>",
-    scrabble: "<h5>Reglas: Scrabble</h5><p>Formar palabras...</p>",
-    trivial: "<h5>Reglas: Trivial</h5><p>Preguntas y respuestas...</p>"
+// 1. DICCIONARIO MAESTRO (Más contenido para reglas)
+const BIBLIOTECA_JUEGOS = {
+    generala: { titulo: "Generala", texto: "Juego de dados donde el objetivo es obtener la mayor puntuación completando jugadas como la Generala, Poker o Full. ¡Requiere azar y estrategia al decidir qué dados guardar!" },
+    truco: { titulo: "Truco", texto: "El juego de naipes por excelencia en Argentina. Combina engaño, memoria y estrategia. Se juega a 30 puntos y utiliza señas para comunicarse con el compañero." },
+    scrabble: { titulo: "Scrabble", texto: "Un desafío léxico donde cada letra tiene un valor. El objetivo es formar palabras sobre un tablero aprovechando casillas multiplicadoras de puntos." },
+    trivial: { titulo: "Trivial", texto: "Pone a prueba tus conocimientos generales. Debes recorrer el tablero y responder preguntas de distintas categorías para obtener todos los quesitos." }
 };
 
-// 2. FUNCIONES DE PERFIL Y SEGURIDAD
-function obtenerUsuario() {
-    const userGuardado = localStorage.getItem('user');
-    if (!userGuardado) return { nombre: "Mariana", rango: "Jugador", nivel: 1, stats: { partidasJugadas: 0, puntosTotales: 0 } };
+// 2. FUNCIONES DE SESIÓN
+window.abrirAuthModal = function() {
+    const modalEl = document.getElementById('authModal');
+    if (modalEl) {
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+    } else {
+        console.error("No se encontró el modal de autenticación.");
+    }
+};
+
+window.cerrarSesion = function() {
+    localStorage.removeItem('user');
+    location.reload();
+};
+
+// 3. FUNCIONES DE JUEGO (Reglas y Anotador)
+window.verReglas = function(juegoId) {
+    const juego = BIBLIOTECA_JUEGOS[juegoId];
+    const visor = document.getElementById('visor-reglas');
+    const cuerpo = document.getElementById('reglasCuerpo');
     
-    const user = JSON.parse(userGuardado);
-    // Aseguramos que 'stats' exista para evitar el TypeError
-    if (!user.stats) user.stats = { partidasJugadas: 0, puntosTotales: 0 };
-    return user;
-}
+    if (visor && cuerpo) {
+        cuerpo.innerHTML = juego ? `<h5>${juego.titulo}</h5><p>${juego.texto}</p>` : "Reglas no encontradas.";
+        visor.classList.remove('d-none');
+        visor.scrollIntoView({ behavior: 'smooth' });
+    }
+};
 
-function verificarSesionExistente() {
-    const user = obtenerUsuario();
+window.activarAsistente = function(juegoId) {
+    const workspace = document.getElementById('workspace-asistente');
+    if (workspace) {
+        workspace.innerHTML = `
+            <div class="p-4 text-center">
+                <h5>Computar Ronda de ${juegoId.toUpperCase()}</h5>
+                <input type="number" id="ptsNuevosJuego" class="form-control" placeholder="Puntos obtenidos">
+                <button class="btn btn-primary mt-2" onclick="guardarRondaGenerica('${juegoId}')">Confirmar Anotación</button>
+            </div>
+        `;
+    }
+};
+
+window.guardarRondaGenerica = function(juegoId) {
+    const pts = parseInt(document.getElementById('ptsNuevosJuego').value) || 0;
+    let user = JSON.parse(localStorage.getItem('user'));
+    user.stats.puntosTotales += pts;
+    localStorage.setItem('user', JSON.stringify(user));
+    alert("¡Puntaje registrado con éxito!");
+    location.reload(); // Refresca para actualizar el perfil
+};
+
+// 4. INICIALIZACIÓN
+document.addEventListener('DOMContentLoaded', () => {
+    // Si no hay usuario, forzamos uno para que el sitio funcione
+    if (!localStorage.getItem('user')) {
+        const userDefault = { 
+            nombre: "Mariana Delgado", rango: "Jugador", nivel: 12, 
+            stats: { partidasJugadas: 124, puntosTotales: 872 } 
+        };
+        localStorage.setItem('user', JSON.stringify(userDefault));
+    }
+    
+    // Sincronizar UI
+    const user = JSON.parse(localStorage.getItem('user'));
     const container = document.getElementById('wrapperPerfilAccion');
-    const panelDashboard = document.getElementById('dashboard-seccion');
-
     if (container) {
         container.innerHTML = `
             <div class="d-flex align-items-center gap-3">
-                <div class="perfil-info text-end">
+                <div class="text-end">
                     <div class="fw-bold text-white">${user.nombre}</div>
-                    <small class="text-cyan">${user.rango} | Nivel ${user.nivel || 1}</small>
+                    <small class="text-cyan">${user.rango} | Nivel ${user.nivel}</small>
                 </div>
                 <button class="btn btn-xs btn-outline-danger" onclick="cerrarSesion()">Salir</button>
             </div>
         `;
     }
-}
-
-// 3. FUNCIONES GLOBALES PARA EL HTML
-window.cerrarSesion = function() {
-    localStorage.removeItem('sinapsis_sesion_activa');
-    location.reload();
-};
-
-window.verReglas = function(juego) {
-    const visor = document.getElementById('visor-reglas');
-    const cuerpo = document.getElementById('reglasCuerpo');
-    if (visor && cuerpo) {
-        cuerpo.innerHTML = REGLAS_DICCIONARIO[juego] || "<p>Reglas no disponibles en esta versión.</p>";
-        visor.classList.remove('d-none');
-        visor.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        console.error("Visor de reglas no encontrado en el DOM");
-    }
-};
-
-window.activarAsistente = function(juego) {
-    const workspace = document.getElementById('workspace-asistente');
-    const panelDashboard = document.getElementById('dashboard-seccion');
-    if (workspace && panelDashboard) {
-        workspace.innerHTML = `
-            <div class="p-4 text-center">
-                <h5>Computar Ronda de ${juego.toUpperCase()}</h5>
-                <input type="number" id="ptsNuevosJuego" class="form-control" placeholder="Puntos">
-                <button class="btn btn-primary mt-2" onclick="guardarRondaGenerica('${juego}')">Anotar</button>
-            </div>
-        `;
-        panelDashboard.classList.remove('d-none');
-        panelDashboard.scrollIntoView({ behavior: 'smooth' });
-    }
-};
-
-window.guardarRondaGenerica = function(juego) {
-    const input = document.getElementById('ptsNuevosJuego');
-    const pts = parseInt(input.value) || 0;
-    let user = obtenerUsuario();
-    
-    user.stats.puntosTotales += pts;
-    localStorage.setItem('user', JSON.stringify(user));
-    alert("Puntaje guardado.");
-    verificarSesionExistente();
-};
-
-// 4. INICIALIZACIÓN SEGURA
-document.addEventListener('DOMContentLoaded', () => {
-    if (!localStorage.getItem('user')) {
-        localStorage.setItem('user', JSON.stringify({
-            nombre: "Mariana Delgado", rango: "Jugador", nivel: 12, 
-            stats: { partidasJugadas: 124, puntosTotales: 872 }
-        }));
-    }
-    verificarSesionExistente();
 });
