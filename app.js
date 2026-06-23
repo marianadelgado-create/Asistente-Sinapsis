@@ -12,7 +12,10 @@ const BIBLIOTECA_JUEGOS = {
 
 // 2. FUNCIONES DE INTERFAZ (Forzadas a nivel global)
 window.cerrarSesion = function() {
+    // Esto solo borra los datos de tu sesión de Sinapsis
     localStorage.removeItem('user');
+    
+    // Esto recarga la página para que el sitio vuelva a su estado inicial
     window.location.reload();
 };
 
