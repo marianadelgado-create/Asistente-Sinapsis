@@ -1,45 +1,43 @@
 /**
- * SINAPSIS ENGINE CORE - SOLUCIÓN DE BLOQUEO DE SESIÓN
+ * SINAPSIS ENGINE CORE - RECONEXIÓN GLOBAL DEFINITIVA
  */
 
+// 1. FUNCIONES GLOBALES (Para que los botones siempre las encuentren)
+window.verReglas = function(juego) {
+    alert("¡Conexión exitosa! Abriendo reglas de: " + juego);
+    // Aquí iremos expandiendo a medida que verifiques que el botón funciona
+};
+
+window.activarAsistente = function(juego) {
+    alert("¡Conexión exitosa! Abriendo libreta para: " + juego);
+};
+
+window.iniciarSesionManual = function() {
+    const nombre = prompt("Ingresa tu nombre:");
+    if (nombre) {
+        localStorage.setItem('user', JSON.stringify({ nombre: nombre, nivel: 1 }));
+        window.location.reload();
+    }
+};
+
 window.cerrarSesion = function() {
-    // 1. Borramos el usuario
-    localStorage.removeItem('user');
-    
-    // 2. Marcamos en el navegador que NO queremos que se autogenere
-    localStorage.setItem('sesion_terminada', 'true');
-    
-    // 3. Recargamos
+    localStorage.clear();
     window.location.reload();
 };
 
-// 3. INICIALIZACIÓN (Modificada para NO autologuear)
+// 2. INICIALIZACIÓN DE INTERFAZ
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('wrapperPerfilAccion');
     const user = JSON.parse(localStorage.getItem('user'));
 
-    if (user && contenedor) {
-        // Caso: Usuario ya logueado
-        contenedor.innerHTML = `
-            <span class="text-white me-2">${user.nombre} | Niv.${user.nivel}</span>
-            <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
-        `;
-    } else if (contenedor) {
-        // Caso: Usuario NO logueado. 
-        // CAMBIO: Ya no creamos el objeto usuario aquí.
-        contenedor.innerHTML = `
-            <button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>
-        `;
+    if (contenedor) {
+        if (user) {
+            contenedor.innerHTML = `
+                <span class="text-white me-2">${user.nombre} | Niv.${user.nivel}</span>
+                <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
+            `;
+        } else {
+            contenedor.innerHTML = `<button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>`;
+        }
     }
 });
-
-// Función para simular un inicio de sesión real
-window.iniciarSesionManual = function() {
-    const nombre = prompt("¿Cuál es tu nombre?");
-    if (nombre) {
-        const nuevoUser = { nombre: nombre, rango: "Jugador", nivel: 1, stats: { puntosTotales: 0 } };
-        localStorage.setItem('user', JSON.stringify(nuevoUser));
-        localStorage.removeItem('sesion_terminada');
-        window.location.reload();
-    }
-};
