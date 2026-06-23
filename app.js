@@ -386,3 +386,24 @@ function resetReloj() { pausarReloj(); timeP1 = 300; timeP2 = 300; refrescarCloc
 function cerrarAsistente() {
     document.getElementById('dashboard-seccion').classList.add('d-none');
 }
+// --- SISTEMA DE RECUPERACIÓN DE SESIÓN (AUTO-CORRECTOR) ---
+window.addEventListener('load', () => {
+    // 1. Verificamos si existe usuario, si no, creamos a Mariana por defecto
+    if (!localStorage.getItem('user')) {
+        const usuarioDefault = {
+            nombre: "Mariana Delgado",
+            rango: "Jugador",
+            nivel: 12,
+            stats: { partidasJugadas: 124, puntosTotales: 872 }
+        };
+        localStorage.setItem('user', JSON.stringify(usuarioDefault));
+    }
+
+    // 2. Si no hay sesión activa, forzamos la carga de Mariana para que el sistema funcione
+    if (!localStorage.getItem('sinapsis_sesion_activa')) {
+        localStorage.setItem('sinapsis_sesion_activa', 'Mariana Delgado');
+    }
+
+    // 3. Ejecutamos la verificación
+    verificarSesionExistente();
+});
