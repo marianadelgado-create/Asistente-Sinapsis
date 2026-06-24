@@ -568,7 +568,7 @@
                         <button class="btn btn-xs btn-outline-light active" id="tabLogin" onclick="cambiarFrenteAuth('login')">Ingresar</button>
                         <button class="btn btn-xs btn-outline-light" id="tabRegistro" onclick="cambiarFrenteAuth('registro')">Registrarse</button>
                     </div>
-                    <form id="authForm" onsubmit="procesarAutenticacion(event)">
+                    <form id="authForm" onsubmit="return procesarAutenticacion(event)">
                         <div class="mb-3">
                             <label class="text-muted-custom small mb-1">Nombre de Usuario</label>
                             <input type="text" id="authUsername" class="form-control input-dark" placeholder="Ej: Mariana" required>
