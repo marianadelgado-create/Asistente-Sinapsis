@@ -72,6 +72,20 @@
             <h2 class="h1 text-white fw-bold">Mesa de Asistencia Interactiva</h2>
             <p class="text-muted-custom">Explorá nuestro catálogo extendido organizado por categorías tácticas.</p>
         </div>
+        <div id="area-de-trabajo" class="container my-4">
+    <div id="panel-maestro" class="d-none p-3 bg-dark text-white rounded">
+        <h4 id="panel-titulo">Seleccioná un juego</h4>
+        <div class="controles-puntos d-flex align-items-center gap-3 mt-2">
+            <button onclick="restarPunto()" class="btn btn-outline-danger">-</button>
+            <span id="display-puntos" class="h3 mb-0">0</span>
+            <button onclick="sumarPunto()" class="btn btn-outline-success">+</button>
+        </div>
+    </div>
+</div>
+
+<section id="juegos">
+   ... tus tarjetas de Truco, Scrabble, etc ...
+</section>
 
         <!-- CATEGORÍA: CLÁSICOS DE CARTAS -->
         <div class="mb-5">
@@ -586,48 +600,42 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // Función que falta y que está causando el error "is not defined"
-    window.abrirAuthModal = function() {
-        const modal = new bootstrap.Modal(document.getElementById('authModal'));
-        modal.show();
-    };
-
-    window.procesarAutenticacion = function(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('authUsername').value;
-        localStorage.setItem('userSinapsis', nombre);
-        
-        const modalEl = document.getElementById('authModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if(modal) modal.hide();
-        
-        const bloque = document.getElementById('estado-bloqueado');
-        if(bloque) bloque.style.display = 'none';
-        
-        const wrapper = document.getElementById('wrapperPerfilAccion');
-        if(wrapper) wrapper.innerText = "Hola, " + nombre;
-        
-        return false;
-    };
-
-    window.verReglas = function(juego) {
-        const visor = document.getElementById('visor-reglas');
-        if(visor) {
-            visor.classList.remove('d-none');
-            document.getElementById('reglasTitulo').innerText = "Reglas: " + juego;
-        }
-    };
-
+    
+    // 1. GESTIÓN DE JUEGO Y PUNTOS
     window.activarAsistente = function(juego) {
-        const workspace = document.getElementById('workspace-asistente');
-        if(workspace) {
-            workspace.innerHTML = `<h4>Jugando: ${juego}</h4>`;
-        }
+        const panel = document.getElementById('panel-maestro');
+        const titulo = document.getElementById('panel-titulo');
+        const display = document.getElementById('display-puntos');
+        
+        panel.classList.remove('d-none'); // Muestra el panel
+        titulo.innerText = "Juego: " + juego;
+        
+        window.juegoActual = juego;
+        window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
+        display.innerText = window.puntosJugador;
+        
+        // Scroll suave al panel
+        panel.scrollIntoView({ behavior: 'smooth' });
     };
 
-    window.lanzarDadosEngine = function() {
-        document.getElementById('uiDado1').innerText = Math.floor(Math.random() * 6) + 1;
-        document.getElementById('uiDado2').innerText = Math.floor(Math.random() * 6) + 1;
+    window.sumarPunto = function() {
+        if (!window.juegoActual) return;
+        window.puntosJugador++;
+        localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
+        document.getElementById('display-puntos').innerText = window.puntosJugador;
+    };
+
+    window.restarPunto = function() {
+        if (!window.juegoActual) return;
+        if (window.puntosJugador > 0) window.puntosJugador--;
+        localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
+        document.getElementById('display-puntos').innerText = window.puntosJugador;
+    };
+
+    // 2. CIERRE DE SESIÓN (Para que no tengas que borrar el localStorage a mano)
+    window.cerrarSesion = function() {
+        localStorage.clear();
+        location.reload();
     };
 </script>
    
