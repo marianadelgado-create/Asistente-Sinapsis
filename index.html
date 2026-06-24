@@ -600,21 +600,40 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    
-    // 1. GESTIÓN DE JUEGO Y PUNTOS
+    // 1. GESTIÓN DEL MODAL (lo que falta para que el botón de arriba funcione)
+    window.abrirAuthModal = function() {
+        const modalEl = document.getElementById('authModal');
+        if(modalEl) {
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+        }
+    };
+
+    // 2. GESTIÓN DE USUARIO
+    window.procesarAutenticacion = function(event) {
+        event.preventDefault();
+        const nombre = document.getElementById('authUsername').value;
+        localStorage.setItem('userSinapsis', nombre);
+        
+        const modalEl = document.getElementById('authModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if(modal) modal.hide();
+        
+        alert("Bienvenida, " + nombre);
+        location.reload(); // Recargamos para que todo se sincronice
+    };
+
+    // 3. JUEGOS Y PUNTOS
     window.activarAsistente = function(juego) {
         const panel = document.getElementById('panel-maestro');
-        const titulo = document.getElementById('panel-titulo');
-        const display = document.getElementById('display-puntos');
+        if(panel) panel.classList.remove('d-none');
         
-        panel.classList.remove('d-none'); // Muestra el panel
-        titulo.innerText = "Juego: " + juego;
-        
+        document.getElementById('panel-titulo').innerText = "Juego: " + juego;
         window.juegoActual = juego;
-        window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
-        display.innerText = window.puntosJugador;
         
-        // Scroll suave al panel
+        window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
+        document.getElementById('display-puntos').innerText = window.puntosJugador;
+        
         panel.scrollIntoView({ behavior: 'smooth' });
     };
 
@@ -630,12 +649,6 @@
         if (window.puntosJugador > 0) window.puntosJugador--;
         localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
         document.getElementById('display-puntos').innerText = window.puntosJugador;
-    };
-
-    // 2. CIERRE DE SESIÓN (Para que no tengas que borrar el localStorage a mano)
-    window.cerrarSesion = function() {
-        localStorage.clear();
-        location.reload();
     };
 </script>
    
