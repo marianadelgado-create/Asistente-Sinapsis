@@ -600,53 +600,48 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // 1. GESTIÓN DEL MODAL (lo que falta para que el botón de arriba funcione)
-    window.abrirAuthModal = function() {
-        const modalEl = document.getElementById('authModal');
-        if(modalEl) {
-            const modal = new bootstrap.Modal(modalEl);
-            modal.show();
+    // --- LÓGICA DE INTERFAZ ---
+    window.cambiarFrenteAuth = function(modo) {
+        const registroInputs = document.querySelectorAll('.id-registro-only');
+        const titulo = document.getElementById('authModalTitle');
+        if (modo === 'registro') {
+            registroInputs.forEach(el => el.classList.remove('d-none'));
+            if(titulo) titulo.innerText = "REGISTRARSE EN SINAPSIS";
+        } else {
+            registroInputs.forEach(el => el.classList.add('d-none'));
+            if(titulo) titulo.innerText = "UNIRSE A SINAPSIS";
         }
     };
 
-    // 2. GESTIÓN DE USUARIO
-    window.procesarAutenticacion = function(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('authUsername').value;
-        localStorage.setItem('userSinapsis', nombre);
-        
+    window.abrirAuthModal = function() {
         const modalEl = document.getElementById('authModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if(modal) modal.hide();
-        
-        alert("Bienvenida, " + nombre);
-        location.reload(); // Recargamos para que todo se sincronice
+        if(modalEl) new bootstrap.Modal(modalEl).show();
     };
 
-    // 3. JUEGOS Y PUNTOS
+    window.procesarAutenticacion = function(event) {
+        if(event) event.preventDefault();
+        const nombre = document.getElementById('authUsername').value;
+        localStorage.setItem('userSinapsis', nombre);
+        alert("Bienvenida, " + nombre);
+        location.reload(); 
+    };
+
+    // --- LOGICA DE JUEGOS Y PUNTOS ---
     window.activarAsistente = function(juego) {
         const panel = document.getElementById('panel-maestro');
-        if(panel) panel.classList.remove('d-none');
-        
-        document.getElementById('panel-titulo').innerText = "Juego: " + juego;
-        window.juegoActual = juego;
-        
-        window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
-        document.getElementById('display-puntos').innerText = window.puntosJugador;
-        
-        panel.scrollIntoView({ behavior: 'smooth' });
+        if(panel) {
+            panel.classList.remove('d-none');
+            document.getElementById('panel-titulo').innerText = "Juego: " + juego;
+            window.juegoActual = juego;
+            window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
+            document.getElementById('display-puntos').innerText = window.puntosJugador;
+            panel.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     window.sumarPunto = function() {
         if (!window.juegoActual) return;
         window.puntosJugador++;
-        localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
-        document.getElementById('display-puntos').innerText = window.puntosJugador;
-    };
-
-    window.restarPunto = function() {
-        if (!window.juegoActual) return;
-        if (window.puntosJugador > 0) window.puntosJugador--;
         localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
         document.getElementById('display-puntos').innerText = window.puntosJugador;
     };
