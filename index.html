@@ -602,63 +602,49 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // 1. Al cargar la página, verificamos el usuario
-    window.onload = function() {
-        console.log("Cargando Sinapsis...");
-        const user = localStorage.getItem('userSinapsis');
-        if (user) {
-            document.getElementById('dashboard-seccion').classList.remove('d-none');
+    // 1. Lógica para cambiar entre Ingreso/Registro (que es lo que te daba error)
+    window.cambiarFrenteAuth = function(modo) {
+        const registroFields = document.querySelectorAll('.id-registro-only');
+        const titulo = document.getElementById('authModalTitle');
+        const btn = document.getElementById('btnAuthSubmit');
+        
+        if (modo === 'registro') {
+            registroFields.forEach(el => el.classList.remove('d-none'));
+            titulo.innerText = "REGISTRARSE EN SINAPSIS";
+            btn.innerText = "Crear Cuenta";
+        } else {
+            registroFields.forEach(el => el.classList.add('d-none'));
+            titulo.innerText = "UNIRSE A SINAPSIS";
+            btn.innerText = "Entrar a la Mesa";
         }
     };
 
-    // 2. Funciones que tus botones buscan
-    window.abrirAuthModal = function() {
-        const modal = new bootstrap.Modal(document.getElementById('authModal'));
-        modal.show();
+    // 2. Lógica para procesar el login
+    window.procesarAutenticacion = function(event) {
+        event.preventDefault(); // IMPORTANTE: evita que la página se recargue sola
+        
+        const nombre = document.getElementById('authUsername').value;
+        localStorage.setItem('userSinapsis', nombre);
+        
+        // Cerramos el modal usando la API de Bootstrap
+        const modalEl = document.getElementById('authModal');
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if (modal) modal.hide();
+        
+        // Recargamos la página para que el usuario aparezca activo
+        location.reload();
+        return false;
     };
 
-    window.procesarAutenticacion = function(event) {
-    event.preventDefault();
-    const nombre = document.getElementById('authUsername').value;
-    localStorage.setItem('userSinapsis', nombre);
-    
-    // Ocultar modal manualmente y recargar
-    const modalEl = document.getElementById('authModal');
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    if(modal) modal.hide();
-    
-    // Recarga para que el script de inicio (window.onload) detecte al usuario
-    window.location.reload(); 
-    return false;
-};
-
-    window.activarAsistente = function(juego) {
-    console.log("Activando:", juego); // Mirá la consola, si aparece, el botón funciona
-    const panel = document.getElementById('panel-maestro');
-    if(panel) {
-        panel.classList.remove('d-none');
-        document.getElementById('panel-titulo').innerText = "Jugando: " + juego;
-        window.juegoActual = juego; // Esto es vital
-        panel.scrollIntoView({ behavior: 'smooth' });
-    }
-};
-    window.verReglas = function(juego) {
-    const visor = document.getElementById('visor-reglas');
-    if(visor) {
-        visor.classList.remove('d-none');
-        document.getElementById('reglasTitulo').innerText = "Reglas: " + juego;
-        
-        // AQUÍ ESTÁ EL TRUCO: Definimos qué mostrar según el juego
-        const contenido = {
-            'Truco': '1. Se juega a 30 puntos. 2. Los tantos valen 1, 2, 3...',
-            'Rummy': '1. Se forman escaleras o tríos. 2. Gana quien se queda sin cartas.',
-            'Uno': '1. Emparejar color o número. 2. Gritar "UNO" al quedar con una carta.'
-        };
-        
-        document.getElementById('reglasCuerpo').innerText = contenido[juego] || "Contenido no disponible.";
-        visor.scrollIntoView({ behavior: 'smooth' });
-    }
-};
+    // 3. Recuperar usuario al cargar
+    window.onload = function() {
+        const user = localStorage.getItem('userSinapsis');
+        if (user) {
+            const dash = document.getElementById('dashboard-seccion');
+            if (dash) dash.classList.remove('d-none');
+            console.log("Usuario detectado:", user);
+        }
+    };
 </script>
    
 </body>
