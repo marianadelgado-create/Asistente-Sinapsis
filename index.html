@@ -598,7 +598,7 @@
         </div>
     </div>
 <script>
-    // --- LÓGICA DE USUARIO ---
+    // --- LÓGICA DE SESIÓN (Acceso al Ecosistema) ---
     function gestionarSesion() {
         const nombreGuardado = localStorage.getItem('user');
         if (nombreGuardado) {
@@ -608,8 +608,8 @@
                 location.reload();
             }
         } else {
-            // Si no hay usuario, pedimos el nombre
-            const nombre = prompt("¿Cómo te llamas?");
+            // Si no hay usuario, pedimos el nombre para el registro
+            const nombre = prompt("¿Cómo te llamas, jugador?");
             if (nombre && nombre.trim() !== "") {
                 localStorage.setItem('user', nombre);
                 location.reload();
@@ -634,15 +634,16 @@
         }
     }
 
-    // --- CARGA INICIAL ---
-   window.onload = function() {
+    // --- CARGA INICIAL (La bienvenida a Sinapsis) ---
+    window.onload = function() {
         const nombre = localStorage.getItem('user');
         const textoLogin = document.getElementById('texto-login');
-        const avatar = document.getElementById('avatar-icon'); // Buscamos el icono
         
-        if (nombre) {
-            if (textoLogin) textoLogin.innerText = nombre;
-            if (avatar) avatar.innerText = nombre.charAt(0).toUpperCase(); // Pone la inicial
+        // Ajuste de bienvenida según si el usuario ya entró
+        if (nombre && textoLogin) {
+            textoLogin.innerText = nombre; // Muestra el nombre si ya está logueado
+        } else if (textoLogin) {
+            textoLogin.innerText = "Acceder al Ecosistema"; // Mensaje para invitados
         }
     };
 </script>
