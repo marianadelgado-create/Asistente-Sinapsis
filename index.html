@@ -36,7 +36,7 @@
                 </ul>
                <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
     <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
-    <button class="btn-profile-pill d-flex align-items-center" id="btn-login" onclick="iniciarSesionManual()">
+    <button class="btn-profile-pill d-flex align-items-center" id="btn-login" onclick="gestionarSesion()">
         <div class="avatar-dot" id="avatar-icon">?</div>
         <span class="small text-white" id="texto-login">Iniciar Sesión</span>
     </button>
@@ -598,36 +598,51 @@
         </div>
     </div>
 <script>
+    // --- LÓGICA DE USUARIO ---
     function gestionarSesion() {
-        const nombre = localStorage.getItem('user');
-        
-        if (nombre) {
-            // Si hay usuario, al tocar el botón salimos
-            localStorage.clear();
-            location.reload();
+        const nombreGuardado = localStorage.getItem('user');
+        if (nombreGuardado) {
+            // Si ya hay usuario, al hacer clic preguntamos si quiere salir
+            if(confirm("¿Cerrar sesión de " + nombreGuardado + "?")) {
+                localStorage.clear();
+                location.reload();
+            }
         } else {
             // Si no hay usuario, pedimos el nombre
-            const nuevoNombre = prompt("¿Cómo te llamas?");
-            if (nuevoNombre) {
-                localStorage.setItem('user', nuevoNombre);
+            const nombre = prompt("¿Cómo te llamas?");
+            if (nombre && nombre.trim() !== "") {
+                localStorage.setItem('user', nombre);
                 location.reload();
             }
         }
     }
 
-    window.onload = function() {
-        const nombre = localStorage.getItem('user');
-        const boton = document.getElementById('btn-estado');
-        const texto = document.getElementById('texto-estado');
-        const dashboard = document.getElementById('dashboard-seccion');
+    // --- LÓGICA DE NAVEGACIÓN ---
+    function verReglas() {
+        const visor = document.getElementById('visor-reglas');
+        if (visor) {
+            visor.classList.remove('d-none');
+            visor.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
+    function activarAsistente() {
+        const dashboard = document.getElementById('dashboard-seccion');
+        if (dashboard) {
+            dashboard.classList.remove('d-none');
+            dashboard.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // --- CARGA INICIAL ---
+   window.onload = function() {
+        const nombre = localStorage.getItem('user');
+        const textoLogin = document.getElementById('texto-login');
+        const avatar = document.getElementById('avatar-icon'); // Buscamos el icono
+        
         if (nombre) {
-            // Usuario logueado: Cambiamos texto a Salir
-            if (texto) texto.innerText = "Salir (" + nombre + ")";
-            if (dashboard) dashboard.classList.remove('d-none');
-        } else {
-            // Invitado
-            if (texto) texto.innerText = "Iniciar Sesión";
+            if (textoLogin) textoLogin.innerText = nombre;
+            if (avatar) avatar.innerText = nombre.charAt(0).toUpperCase(); // Pone la inicial
         }
     };
 </script>
