@@ -34,12 +34,25 @@
                     <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratorio Híbrido</a></li>
                     <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta Virtual</a></li>
                 </ul>
-               <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
-    <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
-    <button class="btn-profile-pill d-flex align-items-center" id="btn-login" onclick="gestionarSesion()">
-        <div class="avatar-dot" id="avatar-icon">?</div>
-        <span class="small text-white" id="texto-login">Iniciar Sesión</span>
-    </button>
+              <!-- Reemplaza todo tu bloque anterior por este -->
+<div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
+    <div class="dropdown">
+        <!-- El botón que se abre al hacer clic -->
+        <button class="btn-profile-pill d-flex align-items-center dropdown-toggle" type="button" id="menuUsuario" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="avatar-dot" id="avatar-icon">?</div>
+            <span class="small text-white ms-2" id="texto-login">Mi Perfil</span>
+        </button>
+        
+        <!-- El menú que se despliega hacia abajo -->
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="menuUsuario">
+            <li><h6 class="dropdown-header" id="header-usuario">Invitado</h6></li>
+            <li><a class="dropdown-item" href="#">Mis Juegos</a></li>
+            <li><a class="dropdown-item" href="#">Mis Puntos</a></li>
+            <li><a class="dropdown-item" href="#">Comunidad</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#" onclick="gestionarSesion()">Cerrar Sesión</a></li>
+        </ul>
+    </div>
 </div>
 </div>
             </div>
@@ -598,26 +611,14 @@
         </div>
     </div>
 <script>
-    // --- LÓGICA DE SESIÓN (Acceso al Ecosistema) ---
+    // --- LÓGICA DE GESTIÓN DE SESIÓN ---
     function gestionarSesion() {
-        const nombreGuardado = localStorage.getItem('user');
-        if (nombreGuardado) {
-            // Si ya hay usuario, al hacer clic preguntamos si quiere salir
-            if(confirm("¿Cerrar sesión de " + nombreGuardado + "?")) {
-                localStorage.clear();
-                location.reload();
-            }
-        } else {
-            // Si no hay usuario, pedimos el nombre para el registro
-            const nombre = prompt("¿Cómo te llamas, jugador?");
-            if (nombre && nombre.trim() !== "") {
-                localStorage.setItem('user', nombre);
-                location.reload();
-            }
-        }
+        // Al hacer clic en "Cerrar Sesión" en el menú
+        localStorage.clear();
+        location.reload();
     }
 
-    // --- LÓGICA DE NAVEGACIÓN ---
+    // --- LÓGICA DE NAVEGACIÓN (Tus otras secciones) ---
     function verReglas() {
         const visor = document.getElementById('visor-reglas');
         if (visor) {
@@ -634,19 +635,29 @@
         }
     }
 
-    // --- CARGA INICIAL (La bienvenida a Sinapsis) ---
+    // --- CARGA INICIAL (Configura el menú según el usuario) ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
+        const headerUsuario = document.getElementById('header-usuario');
         const textoLogin = document.getElementById('texto-login');
-        
-        // Ajuste de bienvenida según si el usuario ya entró
-        if (nombre && textoLogin) {
-            textoLogin.innerText = nombre; // Muestra el nombre si ya está logueado
-        } else if (textoLogin) {
-            textoLogin.innerText = "Acceder al Ecosistema"; // Mensaje para invitados
+        const avatarIcon = document.getElementById('avatar-icon');
+
+        if (nombre) {
+            // Si el usuario ya está logueado, actualizamos el menú
+            if (headerUsuario) headerUsuario.innerText = "Hola, " + nombre;
+            if (textoLogin) textoLogin.innerText = nombre;
+            if (avatarIcon) avatarIcon.innerText = nombre.charAt(0).toUpperCase();
+        } else {
+            // Si es un usuario nuevo, le pedimos su nombre
+            const nuevoNombre = prompt("Bienvenido a Sinapsis. ¿Cómo te llamas?");
+            if (nuevoNombre && nuevoNombre.trim() !== "") {
+                localStorage.setItem('user', nuevoNombre);
+                location.reload();
+            } else {
+                if (headerUsuario) headerUsuario.innerText = "Invitado";
+            }
         }
     };
 </script>
-
 </body>
 </html>
