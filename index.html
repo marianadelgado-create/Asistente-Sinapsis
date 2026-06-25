@@ -13,27 +13,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <script>
-    // Definimos las funciones de forma global para que el HTML siempre las encuentre
-    window.abrirAuthModal = function() {
-        const modal = new bootstrap.Modal(document.getElementById('authModal'));
-        modal.show();
-    };
-
-    window.procesarAutenticacion = function(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('authUsername').value;
-        if(nombre) {
-            localStorage.setItem('userSinapsis', nombre);
-            location.reload(); 
-        }
-    };
-    
-    // Y todas las otras funciones que usamos (verReglas, activarAsistente, etc.)
-    window.verReglas = function(juego) { ... }; 
-    window.activarAsistente = function(juego) { ... };
-</script>
-
     <div class="space-bg"></div>
     <div class="glow-blue"></div>
     <div class="glow-coral"></div>
@@ -677,6 +656,40 @@
             if (dash) dash.classList.remove('d-none');
         }
     };
+</script>
+<script>
+    // Este código espera a que TODA la página cargue antes de intentar hacer nada
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // 1. Detectar el clic en "Iniciar Sesión" (lo busca por cualquier lugar)
+        const botonesLogin = document.querySelectorAll('[onclick*="abrirAuthModal"]');
+        // Si no funciona, intentamos asignar el evento por ID
+        const btnLogin = document.getElementById('btn-login-header'); 
+        
+        // 2. Definir las funciones para que el navegador las conozca
+        window.abrirAuthModal = function() {
+            const modalEl = document.getElementById('authModal');
+            if (modalEl) {
+                const modal = new bootstrap.Modal(modalEl);
+                modal.show();
+            }
+        };
+
+        window.procesarAutenticacion = function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('authUsername').value;
+            if(nombre) {
+                localStorage.setItem('userSinapsis', nombre);
+                location.reload();
+            }
+        };
+
+        // 3. Conectar el formulario si existe
+        const form = document.getElementById('authForm');
+        if (form) {
+            form.onsubmit = window.procesarAutenticacion;
+        }
+    });
 </script>
 
    
