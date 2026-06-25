@@ -618,17 +618,36 @@
     };
 
     window.procesarAutenticacion = function(event) {
-        if(event) event.preventDefault();
-        const nombre = document.getElementById('authUsername').value;
-        localStorage.setItem('userSinapsis', nombre);
-        location.reload(); 
-    };
+    if(event) event.preventDefault();
+    const nombre = document.getElementById('authUsername').value;
+    if(!nombre) return alert("Por favor ingresá un nombre");
+    
+    localStorage.setItem('userSinapsis', nombre);
+    
+    // Forzamos el cierre del modal usando Bootstrap
+    const modalEl = document.getElementById('authModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if(modal) modal.hide();
+    
+    // Recargamos para que todo se active
+    location.reload();
+};
 
     window.activarAsistente = function(juego) {
         document.getElementById('panel-maestro').classList.remove('d-none');
         document.getElementById('panel-titulo').innerText = "Juego: " + juego;
         window.juegoActual = juego;
     };
+    window.verReglas = function(juego) {
+    const visor = document.getElementById('visor-reglas');
+    if(visor) {
+        visor.classList.remove('d-none');
+        document.getElementById('reglasTitulo').innerText = "Reglas: " + juego;
+        visor.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        alert("El visor de reglas no está configurado en el HTML.");
+    }
+};
 </script>
    
 </body>
