@@ -35,22 +35,23 @@ window.onload = function() {
     const dashboard = document.getElementById('dashboard-seccion');
     const bienvenida = document.getElementById('txtBienvenidaLibreta');
     
-    // Si hay usuario, activamos todo
-    if (nombre) {
-        // 1. Mostrar nombre en el navbar
-        if (contenedor) {
+    if (contenedor) {
+        if (nombre) {
+            // CASO: Usuario logueado
             contenedor.innerHTML = `
                 <span class="text-white me-2">${nombre}</span>
                 <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
             `;
-        }
-        // 2. Mostrar la sección dashboard
-        if (dashboard) {
-            dashboard.classList.remove('d-none');
-        }
-        // 3. Poner nombre en el título de la libreta
-        if (bienvenida) {
-            bienvenida.innerText = "Bienvenido, " + nombre;
+            if (dashboard) dashboard.classList.remove('d-none');
+            if (bienvenida) bienvenida.innerText = "Bienvenido, " + nombre;
+        } else {
+            // CASO: Usuario NO logueado (AQUÍ ESTABA EL PROBLEMA)
+            contenedor.innerHTML = `
+                <button class="btn-profile-pill d-flex align-items-center" onclick="iniciarSesionManual()">
+                    <div class="avatar-dot">?</div>
+                    <span class="small text-white">Iniciar Sesión</span>
+                </button>
+            `;
         }
     }
 };
