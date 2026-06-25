@@ -35,10 +35,12 @@
                     <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta Virtual</a></li>
                 </ul>
                <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
-    <div id="perfil-usuario" class="d-flex align-items-center">
-        <span class="text-white me-3" id="texto-login">Mariana</span>
-        <button class="btn btn-sm btn-outline-light" onclick="cerrarSesion()">Salir</button>
-    </div>
+    <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
+    <button class="btn-profile-pill d-flex align-items-center" id="btn-login" onclick="iniciarSesionManual()">
+        <div class="avatar-dot" id="avatar-icon">?</div>
+        <span class="small text-white" id="texto-login">Iniciar Sesión</span>
+    </button>
+</div>
 </div>
             </div>
         </div>
@@ -596,7 +598,7 @@
         </div>
     </div>
 <script>
-    // --- 1. FUNCIONES DE SESIÓN ---
+    // --- Lógica de Usuario ---
     function iniciarSesionManual() {
         const nombre = prompt("¿Cómo te llamas?");
         if (nombre && nombre.trim() !== "") {
@@ -606,14 +608,12 @@
     }
 
     function cerrarSesion() {
-        if (confirm("¿Estás segura de que quieres salir?")) {
-            localStorage.clear();
-            location.reload();
-        }
+        localStorage.clear();
+        location.reload();
     }
 
-    // --- 2. FUNCIONES DE NAVEGACIÓN ---
-    function verReglas(juego) {
+    // --- Lógica de Navegación ---
+    function verReglas() {
         const visor = document.getElementById('visor-reglas');
         if (visor) {
             visor.classList.remove('d-none');
@@ -621,7 +621,7 @@
         }
     }
 
-    function activarAsistente(juego) {
+    function activarAsistente() {
         const dashboard = document.getElementById('dashboard-seccion');
         if (dashboard) {
             dashboard.classList.remove('d-none');
@@ -629,38 +629,27 @@
         }
     }
 
-    // --- 3. CARGA Y ESTABILIDAD ---
+    // --- Carga Inicial ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
-        const wrapper = document.getElementById('wrapperPerfilAccion');
+        const btnLogin = document.getElementById('btn-login');
+        const textoLogin = document.getElementById('texto-login');
+        const avatar = document.getElementById('avatar-icon');
         const dashboard = document.getElementById('dashboard-seccion');
-        const bienvenida = document.getElementById('txtBienvenidaLibreta');
-
-        if (!wrapper) return; // Si no encuentra el contenedor, sale
 
         if (nombre) {
-            // Usuario logueado: Dibujamos perfil con botón Salir explícito
-            wrapper.innerHTML = `
-                <div class="d-flex align-items-center">
-                    <span class="text-white me-3 fw-bold">Hola, ${nombre}</span>
-                    <button class="btn btn-sm btn-outline-danger" onclick="cerrarSesion()">Salir</button>
-                </div>
-            `;
-            // Mostramos secciones ocultas
+            // Usuario detectado: personalizamos el botón
+            if (textoLogin) textoLogin.innerText = nombre;
+            if (avatar) avatar.innerText = nombre.charAt(0).toUpperCase();
+            if (btnLogin) {
+                btnLogin.onclick = cerrarSesion; // Cambiamos función a Salir
+                btnLogin.title = "Haz clic para cerrar sesión";
+            }
+            // Mostramos libreta automáticamente si el usuario ya está logueado
             if (dashboard) dashboard.classList.remove('d-none');
-            if (bienvenida) bienvenida.innerText = "Bienvenida, " + nombre;
-        } else {
-            // Usuario invitado: Dibujamos el botón de acceso original
-            wrapper.innerHTML = `
-                <button class="btn-profile-pill d-flex align-items-center" onclick="iniciarSesionManual()">
-                    <div class="avatar-dot">?</div>
-                    <span class="small text-white">Iniciar Sesión</span>
-                </button>
-            `;
         }
     };
 </script>
-
 
 </body>
 </html>
