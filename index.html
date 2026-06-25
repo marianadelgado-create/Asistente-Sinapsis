@@ -597,54 +597,51 @@
             </div>
         </div>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // 1. Lógica para cambiar entre Ingreso/Registro (que es lo que te daba error)
-    window.cambiarFrenteAuth = function(modo) {
-        const registroFields = document.querySelectorAll('.id-registro-only');
-        const titulo = document.getElementById('authModalTitle');
-        const btn = document.getElementById('btnAuthSubmit');
-        
-        if (modo === 'registro') {
-            registroFields.forEach(el => el.classList.remove('d-none'));
-            titulo.innerText = "REGISTRARSE EN SINAPSIS";
-            btn.innerText = "Crear Cuenta";
-        } else {
-            registroFields.forEach(el => el.classList.add('d-none'));
-            titulo.innerText = "UNIRSE A SINAPSIS";
-            btn.innerText = "Entrar a la Mesa";
-        }
-    };
+    // Caja de seguridad para que el navegador no pierda las funciones
+    (function() {
+        window.cambiarFrenteAuth = function(modo) {
+            const registroFields = document.querySelectorAll('.id-registro-only');
+            const titulo = document.getElementById('authModalTitle');
+            const btn = document.getElementById('btnAuthSubmit');
+            
+            if (modo === 'registro') {
+                registroFields.forEach(el => el.classList.remove('d-none'));
+                if(titulo) titulo.innerText = "REGISTRARSE EN SINAPSIS";
+                if(btn) btn.innerText = "Crear Cuenta";
+            } else {
+                registroFields.forEach(el => el.classList.add('d-none'));
+                if(titulo) titulo.innerText = "UNIRSE A SINAPSIS";
+                if(btn) btn.innerText = "Entrar a la Mesa";
+            }
+        };
 
-    // 2. Lógica para procesar el login
-    window.procesarAutenticacion = function(event) {
-        event.preventDefault(); // IMPORTANTE: evita que la página se recargue sola
-        
-        const nombre = document.getElementById('authUsername').value;
-        localStorage.setItem('userSinapsis', nombre);
-        
-        // Cerramos el modal usando la API de Bootstrap
-        const modalEl = document.getElementById('authModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
-        
-        // Recargamos la página para que el usuario aparezca activo
-        location.reload();
-        return false;
-    };
+        window.procesarAutenticacion = function(event) {
+            event.preventDefault();
+            const nombre = document.getElementById('authUsername').value;
+            if(!nombre) return alert("Por favor ingresá tu nombre");
+            
+            localStorage.setItem('userSinapsis', nombre);
+            
+            const modalEl = document.getElementById('authModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            
+            location.reload(); 
+            return false;
+        };
 
-    // 3. Recuperar usuario al cargar
-    window.onload = function() {
-        const user = localStorage.getItem('userSinapsis');
-        if (user) {
-            const dash = document.getElementById('dashboard-seccion');
-            if (dash) dash.classList.remove('d-none');
-            console.log("Usuario detectado:", user);
-        }
-    };
+        window.onload = function() {
+            const user = localStorage.getItem('userSinapsis');
+            if (user) {
+                const dash = document.getElementById('dashboard-seccion');
+                if (dash) dash.classList.remove('d-none');
+            }
+        };
+    })();
 </script>
    
 </body>
