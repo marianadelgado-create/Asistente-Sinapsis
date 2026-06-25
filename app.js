@@ -1,62 +1,56 @@
-/**
- * SINAPSIS ENGINE CORE - RECONEXIÓN GLOBAL DEFINITIVA
- */
-
-// 1. FUNCIONES GLOBALES (Para que los botones siempre las encuentren)
-window.verReglas = function(juego) {
-    alert("¡Conexión exitosa! Abriendo reglas de: " + juego);
-    // Aquí iremos expandiendo a medida que verifiques que el botón funciona
-};
-
-window.activarAsistente = function(juego) {
-    alert("¡Conexión exitosa! Abriendo libreta para: " + juego);
-};
-
 window.iniciarSesionManual = function() {
     const nombre = prompt("Ingresa tu nombre:");
     if (nombre) {
-        localStorage.setItem('user', JSON.stringify({ nombre: nombre, nivel: 1 }));
-        window.location.reload();
+        localStorage.setItem('user', nombre);
+        location.reload();
     }
 };
 
 window.cerrarSesion = function() {
     localStorage.clear();
-    window.location.reload();
+    location.reload();
 };
 
-// 2. INICIALIZACIÓN DE INTERFAZ
-document.addEventListener('DOMContentLoaded', () => {
+window.verReglas = function(juego) {
+    const visor = document.getElementById('visor-reglas');
+    if(visor) {
+        visor.classList.remove('d-none');
+        visor.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        alert("Reglas de " + juego + ": (Contenido pendiente)");
+    }
+};
+
+window.activarAsistente = function(juego) {
+    const panel = document.getElementById('panel-maestro');
+    if(panel) {
+        panel.classList.remove('d-none');
+        panel.scrollIntoView({ behavior: 'smooth' });
+    }
+};
+
+window.onload = function() {
+    const nombre = localStorage.getItem('user');
     const contenedor = document.getElementById('wrapperPerfilAccion');
+    const dashboard = document.getElementById('dashboard-seccion');
+    const bienvenida = document.getElementById('txtBienvenidaLibreta');
     
-    // Búsqueda inteligente: mira si existe 'user' o 'userSinapsis'
-    const rawUser = localStorage.getItem('user') || localStorage.getItem('userSinapsis');
-    
-    console.log("Elemento contenedor encontrado:", contenedor);
-    console.log("Usuario detectado en localStorage:", rawUser);
-
-    if (contenedor) {
-        if (rawUser) {
-            // Intentamos obtener el nombre
-            let nombreUsuario = "";
-            try {
-                // Si es un JSON, lo parseamos
-                const data = JSON.parse(rawUser);
-                nombreUsuario = data.nombre || data;
-            } catch (e) {
-                // Si es solo texto plano, lo usamos tal cual
-                nombreUsuario = rawUser;
-            }
-
+    // Si hay usuario, activamos todo
+    if (nombre) {
+        // 1. Mostrar nombre en el navbar
+        if (contenedor) {
             contenedor.innerHTML = `
-                <span class="text-white me-2">${nombreUsuario}</span>
+                <span class="text-white me-2">${nombre}</span>
                 <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
             `;
-        } else {
-            // Si sigue siendo null, mostramos el botón de entrar
-            contenedor.innerHTML = `
-                <button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>
-            `;
+        }
+        // 2. Mostrar la sección dashboard
+        if (dashboard) {
+            dashboard.classList.remove('d-none');
+        }
+        // 3. Poner nombre en el título de la libreta
+        if (bienvenida) {
+            bienvenida.innerText = "Bienvenido, " + nombre;
         }
     }
-});
+};
