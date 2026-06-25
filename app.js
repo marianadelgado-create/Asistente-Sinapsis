@@ -1,9 +1,9 @@
-// 1. Funciones de Sesión
+// --- FUNCIONES GLOBALES ---
 window.iniciarSesionManual = function() {
     const nombre = prompt("Ingresa tu nombre:");
     if (nombre) {
         localStorage.setItem('user', nombre);
-        location.reload(); // Recarga para aplicar los cambios
+        location.reload();
     }
 };
 
@@ -12,8 +12,17 @@ window.cerrarSesion = function() {
     location.reload();
 };
 
-// 2. Control de Interfaz (Se ejecuta al cargar la página)
+window.verReglas = function(juego) {
+    alert("Abriendo reglas de: " + juego);
+};
+
+window.activarAsistente = function(juego) {
+    alert("Abriendo libreta para: " + juego);
+};
+
+// --- INICIALIZACIÓN ---
 window.onload = function() {
+    console.log("Sistema Sinapsis cargado");
     const nombre = localStorage.getItem('user');
     const textoLogin = document.getElementById('texto-login');
     const btnLogin = document.getElementById('btn-login');
@@ -21,13 +30,8 @@ window.onload = function() {
     const bienvenida = document.getElementById('txtBienvenidaLibreta');
 
     if (nombre) {
-        // --- SI HAY USUARIO ---
-        // Cambiamos el texto del botón
         if (textoLogin) textoLogin.innerText = nombre;
-        // Cambiamos la función del botón a "Cerrar Sesión"
         if (btnLogin) btnLogin.onclick = window.cerrarSesion;
-        
-        // Mostramos la Libreta Virtual (quitamos el d-none)
         if (dashboard) dashboard.classList.remove('d-none');
         if (bienvenida) bienvenida.innerText = "Bienvenido, " + nombre;
     }
