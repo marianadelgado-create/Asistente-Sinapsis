@@ -610,15 +610,16 @@
             </div>
         </div>
     </div>
+    <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // --- LÓGICA DE GESTIÓN DE SESIÓN ---
+    // --- 1. GESTIÓN DE SESIÓN (No toca la navegación) ---
     function gestionarSesion() {
-        // Al hacer clic en "Cerrar Sesión" en el menú
         localStorage.clear();
         location.reload();
     }
 
-    // --- LÓGICA DE NAVEGACIÓN (Tus otras secciones) ---
+    // --- 2. NAVEGACIÓN (Tus funciones de siempre, NO LAS TOQUES) ---
     function verReglas() {
         const visor = document.getElementById('visor-reglas');
         if (visor) {
@@ -635,27 +636,28 @@
         }
     }
 
-    // --- CARGA INICIAL (Configura el menú según el usuario) ---
+    // --- 3. CARGA INICIAL (Sinapsis Profesional) ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
         const headerUsuario = document.getElementById('header-usuario');
         const textoLogin = document.getElementById('texto-login');
-        const avatarIcon = document.getElementById('avatar-icon');
 
         if (nombre) {
-            // Si el usuario ya está logueado, actualizamos el menú
+            // Usuario ya registrado: carga el nombre en el menú
             if (headerUsuario) headerUsuario.innerText = "Hola, " + nombre;
             if (textoLogin) textoLogin.innerText = nombre;
-            if (avatarIcon) avatarIcon.innerText = nombre.charAt(0).toUpperCase();
         } else {
-            // Si es un usuario nuevo, le pedimos su nombre
-            const nuevoNombre = prompt("Bienvenido a Sinapsis. ¿Cómo te llamas?");
-            if (nuevoNombre && nuevoNombre.trim() !== "") {
-                localStorage.setItem('user', nuevoNombre);
-                location.reload();
-            } else {
-                if (headerUsuario) headerUsuario.innerText = "Invitado";
-            }
+            // Usuario nuevo: Bienvenida profesional
+            setTimeout(function() {
+                alert("¡Bienvenida a Sinapsis! Conectando tecnología y encuentro.");
+                const nuevoNombre = prompt("Para comenzar, ingresa tu nombre:");
+                if (nuevoNombre && nuevoNombre.trim() !== "") {
+                    localStorage.setItem('user', nuevoNombre);
+                    location.reload();
+                } else {
+                    if (headerUsuario) headerUsuario.innerText = "Invitado";
+                }
+            }, 800);
         }
     };
 </script>
