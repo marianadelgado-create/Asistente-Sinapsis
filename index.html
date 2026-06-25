@@ -599,66 +599,32 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // 1. Funciones Globales para los botones
-    window.abrirAuthModal = function() {
-        const modalEl = document.getElementById('authModal');
-        if (modalEl) {
-            new bootstrap.Modal(modalEl).show();
-        } else {
-            console.error("No se encontró el elemento authModal");
-        }
-    };
-
-    window.cambiarFrenteAuth = function(modo) {
-        const registroFields = document.querySelectorAll('.id-registro-only');
-        const titulo = document.getElementById('authModalTitle');
-        const btn = document.getElementById('btnAuthSubmit');
+    window.procesarAutenticacion = function() {
+        const nombreInput = document.getElementById('authUsername');
+        const nombre = nombreInput ? nombreInput.value : "";
         
-        if (modo === 'registro') {
-            registroFields.forEach(el => el.classList.remove('d-none'));
-            if(titulo) titulo.innerText = "REGISTRARSE EN SINAPSIS";
-            if(btn) btn.innerText = "Crear Cuenta";
-        } else {
-            registroFields.forEach(el => el.classList.add('d-none'));
-            if(titulo) titulo.innerText = "UNIRSE A SINAPSIS";
-            if(btn) btn.innerText = "Entrar a la Mesa";
-        }
-    };
-
-    window.procesarAutenticacion = function(event) {
-        if(event) event.preventDefault();
-        const nombre = document.getElementById('authUsername').value;
-        if(nombre) {
+        if (nombre.trim() !== "") {
             localStorage.setItem('userSinapsis', nombre);
+            console.log("Guardado:", nombre);
+            
+            // Cerrar el modal
+            const modalEl = document.getElementById('authModal');
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+            
+            // Recargar
             location.reload();
-        }
-        return false;
-    };
-
-    window.verReglas = function(juego) {
-        const visor = document.getElementById('visor-reglas');
-        if(visor) {
-            visor.classList.remove('d-none');
-            document.getElementById('reglasTitulo').innerText = "Reglas: " + juego;
-            visor.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            alert("Por favor, escribí un nombre.");
         }
     };
 
-    window.activarAsistente = function(juego) {
-        const panel = document.getElementById('panel-maestro');
-        if(panel) {
-            panel.classList.remove('d-none');
-            document.getElementById('panel-titulo').innerText = "Jugando: " + juego;
-            panel.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-    // 2. Inicialización al cargar
     window.onload = function() {
         const user = localStorage.getItem('userSinapsis');
         if (user) {
             const dash = document.getElementById('dashboard-seccion');
             if (dash) dash.classList.remove('d-none');
+            console.log("Usuario activo:", user);
         }
     };
 </script>
