@@ -618,34 +618,45 @@
     };
 
     window.procesarAutenticacion = function(event) {
-    if(event) event.preventDefault();
+    event.preventDefault();
     const nombre = document.getElementById('authUsername').value;
-    if(!nombre) return alert("Por favor ingresá un nombre");
-    
     localStorage.setItem('userSinapsis', nombre);
     
-    // Forzamos el cierre del modal usando Bootstrap
+    // Ocultar modal manualmente y recargar
     const modalEl = document.getElementById('authModal');
     const modal = bootstrap.Modal.getInstance(modalEl);
     if(modal) modal.hide();
     
-    // Recargamos para que todo se active
-    location.reload();
+    // Recarga para que el script de inicio (window.onload) detecte al usuario
+    window.location.reload(); 
+    return false;
 };
 
     window.activarAsistente = function(juego) {
-        document.getElementById('panel-maestro').classList.remove('d-none');
-        document.getElementById('panel-titulo').innerText = "Juego: " + juego;
-        window.juegoActual = juego;
-    };
+    console.log("Activando:", juego); // Mirá la consola, si aparece, el botón funciona
+    const panel = document.getElementById('panel-maestro');
+    if(panel) {
+        panel.classList.remove('d-none');
+        document.getElementById('panel-titulo').innerText = "Jugando: " + juego;
+        window.juegoActual = juego; // Esto es vital
+        panel.scrollIntoView({ behavior: 'smooth' });
+    }
+};
     window.verReglas = function(juego) {
     const visor = document.getElementById('visor-reglas');
     if(visor) {
         visor.classList.remove('d-none');
         document.getElementById('reglasTitulo').innerText = "Reglas: " + juego;
+        
+        // AQUÍ ESTÁ EL TRUCO: Definimos qué mostrar según el juego
+        const contenido = {
+            'Truco': '1. Se juega a 30 puntos. 2. Los tantos valen 1, 2, 3...',
+            'Rummy': '1. Se forman escaleras o tríos. 2. Gana quien se queda sin cartas.',
+            'Uno': '1. Emparejar color o número. 2. Gritar "UNO" al quedar con una carta.'
+        };
+        
+        document.getElementById('reglasCuerpo').innerText = contenido[juego] || "Contenido no disponible.";
         visor.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        alert("El visor de reglas no está configurado en el HTML.");
     }
 };
 </script>
