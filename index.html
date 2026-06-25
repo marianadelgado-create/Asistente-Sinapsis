@@ -598,36 +598,36 @@
         </div>
     </div>
 <script>
-    function iniciarSesionManual() {
-        const nombre = prompt("¿Cómo te llamas?");
-        if (nombre && nombre.trim() !== "") {
-            localStorage.setItem('user', nombre);
+    function gestionarSesion() {
+        const nombre = localStorage.getItem('user');
+        
+        if (nombre) {
+            // Si hay usuario, al tocar el botón salimos
+            localStorage.clear();
             location.reload();
+        } else {
+            // Si no hay usuario, pedimos el nombre
+            const nuevoNombre = prompt("¿Cómo te llamas?");
+            if (nuevoNombre) {
+                localStorage.setItem('user', nuevoNombre);
+                location.reload();
+            }
         }
-    }
-
-    function cerrarSesion() {
-        localStorage.clear();
-        location.reload();
     }
 
     window.onload = function() {
         const nombre = localStorage.getItem('user');
-        const btnLogin = document.getElementById('btn-login');
-        const btnSalir = document.getElementById('btn-salir');
+        const boton = document.getElementById('btn-estado');
+        const texto = document.getElementById('texto-estado');
         const dashboard = document.getElementById('dashboard-seccion');
 
         if (nombre) {
-            // Si hay usuario: ocultamos el de iniciar, mostramos el de salir
-            if (btnLogin) btnLogin.classList.add('d-none');
-            if (btnSalir) btnSalir.classList.remove('d-none');
-            
-            // Mostramos la libreta
+            // Usuario logueado: Cambiamos texto a Salir
+            if (texto) texto.innerText = "Salir (" + nombre + ")";
             if (dashboard) dashboard.classList.remove('d-none');
         } else {
-            // Si no hay usuario: al revés
-            if (btnLogin) btnLogin.classList.remove('d-none');
-            if (btnSalir) btnSalir.classList.add('d-none');
+            // Invitado
+            if (texto) texto.innerText = "Iniciar Sesión";
         }
     };
 </script>
