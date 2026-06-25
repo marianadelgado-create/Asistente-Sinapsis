@@ -45,7 +45,16 @@
             </div>
         </div>
     </nav>
+<div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
+    <button class="btn-profile-pill d-flex align-items-center" id="btn-login" onclick="iniciarSesionManual()">
+        <div class="avatar-dot">?</div>
+        <span class="small text-white">Iniciar Sesión</span>
+    </button>
 
+    <button class="btn btn-sm btn-outline-danger d-none" id="btn-salir" onclick="cerrarSesion()">
+        Salir
+    </button>
+</div>
     <!-- HERO SECTION -->
     <header id="comunidad" class="container py-5 text-center text-lg-start header-hero">
         <div class="row align-items-center g-5">
@@ -598,7 +607,6 @@
         </div>
     </div>
 <script>
-    // --- Lógica de Usuario ---
     function iniciarSesionManual() {
         const nombre = prompt("¿Cómo te llamas?");
         if (nombre && nombre.trim() !== "") {
@@ -612,41 +620,23 @@
         location.reload();
     }
 
-    // --- Lógica de Navegación ---
-    function verReglas() {
-        const visor = document.getElementById('visor-reglas');
-        if (visor) {
-            visor.classList.remove('d-none');
-            visor.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    function activarAsistente() {
-        const dashboard = document.getElementById('dashboard-seccion');
-        if (dashboard) {
-            dashboard.classList.remove('d-none');
-            dashboard.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // --- Carga Inicial ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
         const btnLogin = document.getElementById('btn-login');
-        const textoLogin = document.getElementById('texto-login');
-        const avatar = document.getElementById('avatar-icon');
+        const btnSalir = document.getElementById('btn-salir');
         const dashboard = document.getElementById('dashboard-seccion');
 
         if (nombre) {
-            // Usuario detectado: personalizamos el botón
-            if (textoLogin) textoLogin.innerText = nombre;
-            if (avatar) avatar.innerText = nombre.charAt(0).toUpperCase();
-            if (btnLogin) {
-                btnLogin.onclick = cerrarSesion; // Cambiamos función a Salir
-                btnLogin.title = "Haz clic para cerrar sesión";
-            }
-            // Mostramos libreta automáticamente si el usuario ya está logueado
+            // Si hay usuario: ocultamos el de iniciar, mostramos el de salir
+            if (btnLogin) btnLogin.classList.add('d-none');
+            if (btnSalir) btnSalir.classList.remove('d-none');
+            
+            // Mostramos la libreta
             if (dashboard) dashboard.classList.remove('d-none');
+        } else {
+            // Si no hay usuario: al revés
+            if (btnLogin) btnLogin.classList.remove('d-none');
+            if (btnSalir) btnSalir.classList.add('d-none');
         }
     };
 </script>
