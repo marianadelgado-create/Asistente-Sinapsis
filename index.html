@@ -599,51 +599,35 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // --- LÓGICA DE INTERFAZ ---
-    window.cambiarFrenteAuth = function(modo) {
-        const registroInputs = document.querySelectorAll('.id-registro-only');
-        const titulo = document.getElementById('authModalTitle');
-        if (modo === 'registro') {
-            registroInputs.forEach(el => el.classList.remove('d-none'));
-            if(titulo) titulo.innerText = "REGISTRARSE EN SINAPSIS";
-        } else {
-            registroInputs.forEach(el => el.classList.add('d-none'));
-            if(titulo) titulo.innerText = "UNIRSE A SINAPSIS";
+    // 1. Al cargar la página, verificamos el usuario
+    window.onload = function() {
+        console.log("Cargando Sinapsis...");
+        const user = localStorage.getItem('userSinapsis');
+        if (user) {
+            document.getElementById('dashboard-seccion').classList.remove('d-none');
         }
     };
 
+    // 2. Funciones que tus botones buscan
     window.abrirAuthModal = function() {
-        const modalEl = document.getElementById('authModal');
-        if(modalEl) new bootstrap.Modal(modalEl).show();
+        const modal = new bootstrap.Modal(document.getElementById('authModal'));
+        modal.show();
     };
 
     window.procesarAutenticacion = function(event) {
         if(event) event.preventDefault();
         const nombre = document.getElementById('authUsername').value;
         localStorage.setItem('userSinapsis', nombre);
-        alert("Bienvenida, " + nombre);
         location.reload(); 
     };
 
-    // --- LOGICA DE JUEGOS Y PUNTOS ---
     window.activarAsistente = function(juego) {
-        const panel = document.getElementById('panel-maestro');
-        if(panel) {
-            panel.classList.remove('d-none');
-            document.getElementById('panel-titulo').innerText = "Juego: " + juego;
-            window.juegoActual = juego;
-            window.puntosJugador = parseInt(localStorage.getItem('puntos_' + juego)) || 0;
-            document.getElementById('display-puntos').innerText = window.puntosJugador;
-            panel.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-    window.sumarPunto = function() {
-        if (!window.juegoActual) return;
-        window.puntosJugador++;
-        localStorage.setItem('puntos_' + window.juegoActual, window.puntosJugador);
-        document.getElementById('display-puntos').innerText = window.puntosJugador;
+        document.getElementById('panel-maestro').classList.remove('d-none');
+        document.getElementById('panel-titulo').innerText = "Juego: " + juego;
+        window.juegoActual = juego;
     };
 </script>
    
