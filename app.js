@@ -28,16 +28,27 @@ window.cerrarSesion = function() {
 // 2. INICIALIZACIÓN DE INTERFAZ
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('wrapperPerfilAccion');
-    const user = JSON.parse(localStorage.getItem('user'));
+    // Buscamos tanto 'user' (que pusimos en el nuevo script) 
+    // como 'userSinapsis' (que quedó de las pruebas anteriores)
+    const userGuardado = localStorage.getItem('user') || localStorage.getItem('userSinapsis');
+    
+    console.log("Elemento contenedor encontrado:", contenedor);
+    console.log("Usuario detectado:", userGuardado);
 
     if (contenedor) {
-        if (user) {
+        if (userGuardado) {
+            // Si es un objeto JSON, lo parseamos, si es solo el nombre, lo usamos directo
+            let nombre = userGuardado;
+            try { nombre = JSON.parse(userGuardado).nombre; } catch(e) {}
+            
             contenedor.innerHTML = `
-                <span class="text-white me-2">${user.nombre} | Niv.${user.nivel}</span>
+                <span class="text-white me-2">${nombre}</span>
                 <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
             `;
         } else {
-            contenedor.innerHTML = `<button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>`;
+            contenedor.innerHTML = `
+                <button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>
+            `;
         }
     }
 });
