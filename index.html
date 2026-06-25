@@ -599,8 +599,16 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // ESTAS FUNCIONES AHORA ESTÁN DISPONIBLES PARA TODOS LOS BOTONES
-    
+    // 1. Funciones Globales para los botones
+    window.abrirAuthModal = function() {
+        const modalEl = document.getElementById('authModal');
+        if (modalEl) {
+            new bootstrap.Modal(modalEl).show();
+        } else {
+            console.error("No se encontró el elemento authModal");
+        }
+    };
+
     window.cambiarFrenteAuth = function(modo) {
         const registroFields = document.querySelectorAll('.id-registro-only');
         const titulo = document.getElementById('authModalTitle');
@@ -618,16 +626,12 @@
     };
 
     window.procesarAutenticacion = function(event) {
-        event.preventDefault();
+        if(event) event.preventDefault();
         const nombre = document.getElementById('authUsername').value;
-        if(!nombre) return alert("Por favor ingresá tu nombre");
-        localStorage.setItem('userSinapsis', nombre);
-        
-        const modalEl = document.getElementById('authModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if (modal) modal.hide();
-        
-        location.reload(); 
+        if(nombre) {
+            localStorage.setItem('userSinapsis', nombre);
+            location.reload();
+        }
         return false;
     };
 
@@ -649,6 +653,7 @@
         }
     };
 
+    // 2. Inicialización al cargar
     window.onload = function() {
         const user = localStorage.getItem('userSinapsis');
         if (user) {
@@ -657,41 +662,5 @@
         }
     };
 </script>
-<script>
-    // Este código espera a que TODA la página cargue antes de intentar hacer nada
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        // 1. Detectar el clic en "Iniciar Sesión" (lo busca por cualquier lugar)
-        const botonesLogin = document.querySelectorAll('[onclick*="abrirAuthModal"]');
-        // Si no funciona, intentamos asignar el evento por ID
-        const btnLogin = document.getElementById('btn-login-header'); 
-        
-        // 2. Definir las funciones para que el navegador las conozca
-        window.abrirAuthModal = function() {
-            const modalEl = document.getElementById('authModal');
-            if (modalEl) {
-                const modal = new bootstrap.Modal(modalEl);
-                modal.show();
-            }
-        };
-
-        window.procesarAutenticacion = function(event) {
-            event.preventDefault();
-            const nombre = document.getElementById('authUsername').value;
-            if(nombre) {
-                localStorage.setItem('userSinapsis', nombre);
-                location.reload();
-            }
-        };
-
-        // 3. Conectar el formulario si existe
-        const form = document.getElementById('authForm');
-        if (form) {
-            form.onsubmit = window.procesarAutenticacion;
-        }
-    });
-</script>
-
-   
 </body>
 </html>
