@@ -597,7 +597,7 @@
     </div>
 
 <script>
-    // 1. Funciones básicas (siempre disponibles)
+    // 1. Sesión
     function iniciarSesionManual() {
         const nombre = prompt("Ingresa tu nombre:");
         if (nombre) {
@@ -611,34 +611,35 @@
         location.reload();
     }
 
+    // 2. Funciones de Navegación (Cambiamos los alertas por acciones reales)
     function verReglas(juego) {
-        alert("Reglas de: " + juego);
+        const visor = document.getElementById('visor-reglas');
+        if (visor) {
+            visor.classList.remove('d-none');
+            visor.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     function activarAsistente(juego) {
         const dashboard = document.getElementById('dashboard-seccion');
-        if (dashboard) dashboard.classList.remove('d-none');
-        alert("Panel activado para: " + juego);
+        if (dashboard) {
+            dashboard.classList.remove('d-none');
+            dashboard.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
-    // 2. Ejecución segura al cargar la página
+    // 3. Carga inicial
     window.onload = function() {
         const nombre = localStorage.getItem('user');
+        const btnLogin = document.getElementById('btn-login');
+        const textoLogin = document.getElementById('texto-login');
         const dashboard = document.getElementById('dashboard-seccion');
-        const bienvenida = document.getElementById('txtBienvenidaLibreta');
         
-        // Si hay usuario, mostramos el dashboard y cambiamos el botón
         if (nombre) {
-            const btnLogin = document.getElementById('btn-login');
-            const textoLogin = document.getElementById('texto-login');
-            
             if (textoLogin) textoLogin.innerText = nombre;
             if (btnLogin) btnLogin.onclick = cerrarSesion;
-            
             if (dashboard) dashboard.classList.remove('d-none');
-            if (bienvenida) bienvenida.innerText = "Bienvenido, " + nombre;
         }
-        console.log("Sistema cargado. Usuario:", nombre);
     };
 </script>
 
