@@ -595,8 +595,49 @@
             </div>
         </div>
     </div>
-<script src="app.js"></script>
-</body>
+
+<script>
+    // 1. Funciones de sesión
+    function iniciarSesionManual() {
+        const nombre = prompt("Ingresa tu nombre:");
+        if (nombre) {
+            localStorage.setItem('user', nombre);
+            location.reload();
+        }
+    }
+
+    function cerrarSesion() {
+        localStorage.clear();
+        location.reload();
+    }
+
+    // 2. Funciones de juego
+    function verReglas(juego) {
+        alert("Abriendo reglas de: " + juego);
+    }
+
+    function activarAsistente(juego) {
+        const dashboard = document.getElementById('dashboard-seccion');
+        if (dashboard) dashboard.classList.remove('d-none');
+        alert("Activando asistente para: " + juego);
+    }
+
+    // 3. Carga inicial
+    window.onload = function() {
+        const nombre = localStorage.getItem('user');
+        const textoLogin = document.getElementById('texto-login');
+        const btnLogin = document.getElementById('btn-login');
+        const dashboard = document.getElementById('dashboard-seccion');
+        const bienvenida = document.getElementById('txtBienvenidaLibreta');
+
+        if (nombre) {
+            if (textoLogin) textoLogin.innerText = nombre;
+            if (btnLogin) btnLogin.onclick = cerrarSesion;
+            if (dashboard) dashboard.classList.remove('d-none');
+            if (bienvenida) bienvenida.innerText = "Bienvenido, " + nombre;
+        }
+    };
+</script>
 
 
 </body>
