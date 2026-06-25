@@ -1,27 +1,34 @@
-window.onload = function() {
-    console.log("El script se cargó correctamente");
-    
-    const contenedor = document.getElementById('wrapperPerfilAccion');
-    const nombre = localStorage.getItem('user');
-    
-    if (!contenedor) {
-        console.error("ERROR: No encontré el elemento con id 'wrapperPerfilAccion'. Revisa tu HTML.");
-        return;
+// 1. Funciones de Sesión
+window.iniciarSesionManual = function() {
+    const nombre = prompt("Ingresa tu nombre:");
+    if (nombre) {
+        localStorage.setItem('user', nombre);
+        location.reload(); // Recarga para aplicar los cambios
     }
+};
+
+window.cerrarSesion = function() {
+    localStorage.clear();
+    location.reload();
+};
+
+// 2. Control de Interfaz (Se ejecuta al cargar la página)
+window.onload = function() {
+    const nombre = localStorage.getItem('user');
+    const textoLogin = document.getElementById('texto-login');
+    const btnLogin = document.getElementById('btn-login');
+    const dashboard = document.getElementById('dashboard-seccion');
+    const bienvenida = document.getElementById('txtBienvenidaLibreta');
 
     if (nombre) {
-        console.log("Usuario detectado:", nombre);
-        contenedor.innerHTML = `
-            <span class="text-white me-2">${nombre}</span>
-            <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
-        `;
-    } else {
-        console.log("No hay usuario. Dibujando botón...");
-        contenedor.innerHTML = `
-            <button class="btn-profile-pill d-flex align-items-center" onclick="iniciarSesionManual()">
-                <div class="avatar-dot">?</div>
-                <span class="small text-white">Iniciar Sesión</span>
-            </button>
-        `;
+        // --- SI HAY USUARIO ---
+        // Cambiamos el texto del botón
+        if (textoLogin) textoLogin.innerText = nombre;
+        // Cambiamos la función del botón a "Cerrar Sesión"
+        if (btnLogin) btnLogin.onclick = window.cerrarSesion;
+        
+        // Mostramos la Libreta Virtual (quitamos el d-none)
+        if (dashboard) dashboard.classList.remove('d-none');
+        if (bienvenida) bienvenida.innerText = "Bienvenido, " + nombre;
     }
 };
