@@ -28,24 +28,32 @@ window.cerrarSesion = function() {
 // 2. INICIALIZACIÓN DE INTERFAZ
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('wrapperPerfilAccion');
-    // Buscamos tanto 'user' (que pusimos en el nuevo script) 
-    // como 'userSinapsis' (que quedó de las pruebas anteriores)
-    const userGuardado = localStorage.getItem('user') || localStorage.getItem('userSinapsis');
+    
+    // Búsqueda inteligente: mira si existe 'user' o 'userSinapsis'
+    const rawUser = localStorage.getItem('user') || localStorage.getItem('userSinapsis');
     
     console.log("Elemento contenedor encontrado:", contenedor);
-    console.log("Usuario detectado:", userGuardado);
+    console.log("Usuario detectado en localStorage:", rawUser);
 
     if (contenedor) {
-        if (userGuardado) {
-            // Si es un objeto JSON, lo parseamos, si es solo el nombre, lo usamos directo
-            let nombre = userGuardado;
-            try { nombre = JSON.parse(userGuardado).nombre; } catch(e) {}
-            
+        if (rawUser) {
+            // Intentamos obtener el nombre
+            let nombreUsuario = "";
+            try {
+                // Si es un JSON, lo parseamos
+                const data = JSON.parse(rawUser);
+                nombreUsuario = data.nombre || data;
+            } catch (e) {
+                // Si es solo texto plano, lo usamos tal cual
+                nombreUsuario = rawUser;
+            }
+
             contenedor.innerHTML = `
-                <span class="text-white me-2">${nombre}</span>
+                <span class="text-white me-2">${nombreUsuario}</span>
                 <button class="btn btn-sm btn-danger" onclick="cerrarSesion()">Salir</button>
             `;
         } else {
+            // Si sigue siendo null, mostramos el botón de entrar
             contenedor.innerHTML = `
                 <button class="btn btn-sm btn-primary" onclick="iniciarSesionManual()">Entrar</button>
             `;
