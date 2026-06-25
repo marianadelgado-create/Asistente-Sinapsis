@@ -597,6 +597,11 @@
     </div>
 
 <script>
+    window.onload = function() {
+    alert("La página cargó. ¿Ves el botón?"); // <-- ESTO ES PARA PROBAR
+    
+    const nombre = localStorage.getItem('user');
+    // ... resto de tu código ...
     // 1. Funciones de sesión
     function iniciarSesionManual() {
         const nombre = prompt("Ingresa tu nombre:");
