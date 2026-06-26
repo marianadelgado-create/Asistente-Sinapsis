@@ -743,39 +743,98 @@
     libreta.classList.remove('d-none');
     libreta.scrollIntoView({ behavior: 'smooth' });
 }
-/* --- SISTEMA DE MESAS VIRTUALES (MVP) --- */
+/* --- SISTEMA UNIFICADO DE MESA VIRTUAL --- */
 
+// Definimos la variable una sola vez
 let mesaActual = {
     juego: null,
     jugadores: [],
-    puntuaciones: {},
-    turno: 0,
-    estado: 'espera'
+    puntuaciones: {}
 };
 
-function iniciarMesa(nombreJuego, listaJugadores) {
+// Función para iniciar la mesa
+function iniciarMesa(nombreJuego) {
+    let input = prompt("Ingrese los nombres de los jugadores separados por coma:", "Mariana, Jugador 2, Jugador 3");
+    
+    if (!input) return;
+
+    let listaJugadores = input.split(',').map(n => n.trim());
+
     mesaActual.juego = nombreJuego;
     mesaActual.jugadores = listaJugadores;
+    mesaActual.puntuaciones = {};
     listaJugadores.forEach(j => mesaActual.puntuaciones[j] = 0);
     
-    // Ocultar juegos, mostrar tablero (usando tu lógica anterior)
-    document.getElementById('juegos').style.display = 'none';
+    const juegos = document.getElementById('juegos');
+    if (juegos) juegos.style.display = 'none';
     
-    // Aquí llamamos a la función que dibuja el tablero en pantalla
     renderizarTablero();
 }
 
+// Función que dibuja la mesa
 function renderizarTablero() {
     const contenedorAsistente = document.getElementById('contenedor-asistente');
     const contenido = document.getElementById('contenido-asistente');
-    const juegos = document.getElementById('juegos');
-
-    // Si no encuentra los elementos, nos avisa en consola en lugar de romper todo
-    if (!contenedorAsistente || !contenido || !juegos) {
-        console.error("Error: Falta el div 'contenedor-asistente' o 'juegos' en tu HTML");
-        return; 
+    
+    if (contenedorAsistente) contenedorAsistente.style.display = 'block';
+    
+    if (contenido) {
+        contenido.innerHTML = `
+            <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
+            <div class="d-flex gap-3 my-3">
+                ${mesaActual.jugadores.map(j => `
+                    <div class="card p-2 bg-secondary text-white">
+                        <strong>${j}</strong>
+                        <div class="fs-4">${mesaActual.puntuaciones[j]}</div>
+                    </div>
+                `).join('')}
+            </div>
+            <button class="btn btn-outline-light mt-3" onclick="location.reload()">Cerrar Mesa (Volver)</button>
+        `;
     }
+}
 
+// 2. Función para iniciar (la que llamás desde el HTML)
+function iniciarMesa(nombreJuego) {
+    let input = prompt("Ingrese los nombres de los jugadores separados por coma:", "Mariana, Jugador 2, Jugador 3");
+    
+    if (!input) return;
+
+    let listaJugadores = input.split(',').map(n => n.trim());
+
+    mesaActual.juego = nombreJuego;
+    mesaActual.jugadores = listaJugadores;
+    mesaActual.puntuaciones = {};
+    listaJugadores.forEach(j => mesaActual.puntuaciones[j] = 0);
+    
+    const juegos = document.getElementById('juegos');
+    if (juegos) juegos.style.display = 'none';
+    
+    renderizarTablero();
+}
+
+// 3. Función que dibuja la mesa
+function renderizarTablero() {
+    const contenedorAsistente = document.getElementById('contenedor-asistente');
+    const contenido = document.getElementById('contenido-asistente');
+    
+    if (contenedorAsistente) contenedorAsistente.style.display = 'block';
+    
+    if (contenido) {
+        contenido.innerHTML = `
+            <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
+            <div class="d-flex gap-3 my-3">
+                ${mesaActual.jugadores.map(j => `
+                    <div class="card p-2 bg-secondary text-white">
+                        <strong>${j}</strong>
+                        <div class="fs-4">${mesaActual.puntuaciones[j]}</div>
+                    </div>
+                `).join('')}
+            </div>
+            <button class="btn btn-outline-light mt-3" onclick="location.reload()">Cerrar Mesa (Volver)</button>
+        `;
+    }
+}
     juegos.style.display = 'none';
     contenedorAsistente.style.display = 'block';
     
