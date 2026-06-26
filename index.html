@@ -31,7 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
                     <li class="nav-item"><a class="nav-link" href="#galeria">Mesa de Juegos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratorio Híbrido</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta Virtual</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" onclick="abrirLibreta()">Libreta Virtual</a></li>
                 </ul>
               <!-- Reemplaza todo tu bloque anterior por este -->
 <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
@@ -583,6 +583,11 @@
     </footer>
 
     <!-- AUTH MODAL -->
+     <!-- Sección Libreta Virtual -->
+<section id="seccion-libreta" class="d-none container my-5 p-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
+    <h3 class="text-white font-tech">Libreta Virtual</h3>
+    <p class="text-muted">Aquí podrás registrar tus avances, anotaciones de partidas y estrategias fígitales.</p>
+</section>
      <!-- ESCAPARATE DE JUEGOS MVP -->
 <div class="container my-5">
     <div class="row g-4 justify-content-center">
@@ -690,6 +695,15 @@
             alert("Por favor, ingresa un nombre para continuar.");
         }
     }
+    function abrirLibreta() {
+    // Escondemos todo lo demás si quieres una vista limpia
+    document.getElementById('dashboard-seccion').classList.add('d-none'); // Asumiendo que es tu contenedor principal
+    
+    // Mostramos la libreta
+    const libreta = document.getElementById('seccion-libreta');
+    libreta.classList.remove('d-none');
+    libreta.scrollIntoView({ behavior: 'smooth' });
+}
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
