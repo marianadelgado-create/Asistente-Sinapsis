@@ -96,6 +96,9 @@
 </div>
 
 <section id="juegos">
+    <section id="juegos" id="contenedor-juegos">
+    ...
+</section>
    ... tus tarjetas de Truco, Scrabble, etc ...
 </section>
 
@@ -722,6 +725,30 @@
     const libreta = document.getElementById('seccion-libreta');
     libreta.classList.remove('d-none');
     libreta.scrollIntoView({ behavior: 'smooth' });
+}
+function activarAsistente(juego) {
+    // Ocultamos la sección de juegos
+    const contenedor = document.getElementById('contenedor-juegos');
+    if (contenedor) {
+        contenedor.style.display = 'none';
+    }
+
+    // Creamos un contenedor nuevo para el asistente si no existe
+    let areaAsistente = document.getElementById('area-asistente');
+    if (!areaAsistente) {
+        areaAsistente = document.createElement('section');
+        areaAsistente.id = 'area-asistente';
+        areaAsistente.className = 'container mt-5 text-white';
+        document.querySelector('main').appendChild(areaAsistente);
+    }
+
+    // Mostramos contenido específico según el juego
+    areaAsistente.innerHTML = `
+        <h2 class="text-cyan">${juego.toUpperCase()} - MODO ASISTENTE</h2>
+        <p>Estamos configurando el sistema para: ${juego}</p>
+        <button class="btn btn-outline-light" onclick="location.reload()">Volver a la selección</button>
+    `;
+    areaAsistente.style.display = 'block';
 }
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
