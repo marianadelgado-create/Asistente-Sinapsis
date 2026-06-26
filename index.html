@@ -727,28 +727,34 @@
     libreta.scrollIntoView({ behavior: 'smooth' });
 }
 function activarAsistente(juego) {
-    // Ocultamos la sección de juegos
-    const contenedor = document.getElementById('contenedor-juegos');
-    if (contenedor) {
-        contenedor.style.display = 'none';
+    // 1. Ocultamos el contenedor principal de las tarjetas
+    const contenedorJuegos = document.getElementById('contenedor-juegos'); // Asegúrate que tu div padre tenga este ID
+    if (contenedorJuegos) {
+        contenedorJuegos.style.display = 'none';
     }
 
-    // Creamos un contenedor nuevo para el asistente si no existe
-    let areaAsistente = document.getElementById('area-asistente');
-    if (!areaAsistente) {
-        areaAsistente = document.createElement('section');
-        areaAsistente.id = 'area-asistente';
-        areaAsistente.className = 'container mt-5 text-white';
-        document.querySelector('main').appendChild(areaAsistente);
+    // 2. Aquí llamamos a la lógica específica del juego
+    if (juego === 'rummy') {
+        iniciarCampeonatoRummy();
     }
+    // Puedes agregar más juegos aquí después
+}
 
-    // Mostramos contenido específico según el juego
-    areaAsistente.innerHTML = `
-        <h2 class="text-cyan">${juego.toUpperCase()} - MODO ASISTENTE</h2>
-        <p>Estamos configurando el sistema para: ${juego}</p>
-        <button class="btn btn-outline-light" onclick="location.reload()">Volver a la selección</button>
+function iniciarCampeonatoRummy() {
+    console.log("Iniciando lógica de Campeonato Rummy...");
+    // Aquí es donde luego construiremos el anotador del Rummy
+    // Por ahora, creemos un contenedor vacío para trabajar
+    const main = document.querySelector('main');
+    const divRummy = document.createElement('div');
+    divRummy.id = 'area-juego-rummy';
+    divRummy.innerHTML = `
+        <div class="container mt-5 text-white">
+            <h2>Campeonato Rummy</h2>
+            <p>Aquí comenzaremos a sumar los puntos de las rondas.</p>
+            <button class="btn btn-secondary" onclick="location.reload()">Volver al Menú</button>
+        </div>
     `;
-    areaAsistente.style.display = 'block';
+    main.appendChild(divRummy);
 }
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
