@@ -31,11 +31,11 @@
 
 body {
     background: radial-gradient(circle at 50% 50%, rgba(3, 6, 15, 0.95) 0%, #03060f 100%), 
-                url('img/fondo');
+                url('img/fondo.jpg');
     background-size: cover;
     background-blend-mode: overlay;
     background-position: center;
-    background-attachment: fixed; /* Esto hace que el fondo quede fijo y no se mueva al hacer scroll */
+    background-attachment: fixed;
     color: var(--text-pure);
     font-family: var(--font-base);
     scroll-behavior: smooth;
