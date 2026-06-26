@@ -5,15 +5,18 @@
 :root {
     --bg-deep: #03060f;
     --surface-glass: rgba(13, 22, 41, 0.88);
-    --accent-cyan: #00F2FE;
-    --accent-coral: #FF6868;
+    /* Actualizamos los acentos según tu paleta */
+    --accent-cyan: #00F0FF; 
+    --accent-coral: #FF17E7;
     --accent-hybrid: #a855f7;
     --text-pure: #F9FAFB;
     --text-muted: #9CA3AF;
     --border-glass: rgba(255, 255, 255, 0.08);
-    --border-glow: rgba(0, 242, 254, 0.4);
+    /* Ajustamos el borde para que sea más intenso */
+    --border-glow: rgba(0, 240, 255, 0.6);
     --font-tech: 'Orbitron', sans-serif;
     --font-base: 'Inter', sans-serif;
+}
 }
 
 body {
@@ -116,6 +119,24 @@ body {
 }
 
 /* TARJETAS FLIP CON ALTO CONTRASTE */
+/* Efecto de nodo para las tarjetas */
+.game-card-premium {
+    position: relative;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+/* Agregamos un punto brillante que simule un nodo */
+.game-card-premium::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 10px;
+    height: 10px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-cyan);
+}
 .game-card-premium { background: transparent; height: 250px; perspective: 1000px; }
 .game-card-wrapper { position: relative; width: 100%; height: 100%; transition: transform 0.5s ease; transform-style: preserve-3d; }
 .game-card-premium:hover .game-card-wrapper { transform: rotateY(180deg); }
