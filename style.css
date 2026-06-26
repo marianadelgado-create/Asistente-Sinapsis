@@ -30,16 +30,14 @@
 }
 
 body {
-    background: radial-gradient(circle at 50% 50%, rgba(3, 6, 15, 0.95) 0%, #03060f 100%), 
-                url('./img/fondo.jpg');
-    background-size: cover;
-    background-blend-mode: overlay;
-    background-position: center;
-    background-attachment: fixed;
+    background-color: #03060f !important; /* Color de respaldo */
+    background-image: url('img/fondo.jpg') !important;
+    background-size: cover !important;
+    background-position: center center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
     color: var(--text-pure);
     font-family: var(--font-base);
-    scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 /* FONDOS AMBIENTALES */
