@@ -17,10 +17,25 @@
     --font-tech: 'Orbitron', sans-serif;
     --font-base: 'Inter', sans-serif;
 }
+/* Animación de nodo alrededor del dado */
+.central-orb {
+    position: relative;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    animation: pulseGlow 4s infinite ease-in-out;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.2); }
+    50% { box-shadow: 0 0 40px rgba(0, 242, 254, 0.5); }
 }
 
 body {
-    background-color: var(--bg-deep);
+    background: radial-gradient(circle at 50% 50%, rgba(3, 6, 15, 0.95) 0%, #03060f 100%), 
+                url('img/u_zaceuk53v0-network-9209292.jpg');
+    background-size: cover;
+    background-blend-mode: overlay;
+    background-position: center;
+    background-attachment: fixed; /* Esto hace que el fondo quede fijo y no se mueva al hacer scroll */
     color: var(--text-pure);
     font-family: var(--font-base);
     scroll-behavior: smooth;
