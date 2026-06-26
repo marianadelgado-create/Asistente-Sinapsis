@@ -142,7 +142,10 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('rummy')">Campeonato</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" 
+        onclick="iniciarMesa('Rummy', ['Mariana', 'Jugador 2', 'Jugador 3'])">
+    Campeonato
+</button>
                                 </div>
                             </div>
                         </div>
@@ -726,7 +729,51 @@
     libreta.classList.remove('d-none');
     libreta.scrollIntoView({ behavior: 'smooth' });
 }
+/* --- SISTEMA DE MESAS VIRTUALES (MVP) --- */
 
+let mesaActual = {
+    juego: null,
+    jugadores: [],
+    puntuaciones: {},
+    turno: 0,
+    estado: 'espera'
+};
+
+function iniciarMesa(nombreJuego, listaJugadores) {
+    mesaActual.juego = nombreJuego;
+    mesaActual.jugadores = listaJugadores;
+    listaJugadores.forEach(j => mesaActual.puntuaciones[j] = 0);
+    
+    // Ocultar juegos, mostrar tablero (usando tu lógica anterior)
+    document.getElementById('juegos').style.display = 'none';
+    
+    // Aquí llamamos a la función que dibuja el tablero en pantalla
+    renderizarTablero();
+}
+
+function renderizarTablero() {
+    const area = document.getElementById('contenido-asistente'); // El que creamos antes
+    document.getElementById('contenedor-asistente').style.display = 'block';
+    
+    area.innerHTML = `
+        <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
+        <div id="tablero-puntos" class="d-flex gap-3 my-3">
+            ${mesaActual.jugadores.map(j => `
+                <div class="card p-2 bg-secondary text-white">
+                    <strong>${j}</strong>
+                    <span class="fs-4">${mesaActual.puntuaciones[j]}</span>
+                </div>
+            `).join('')}
+        </div>
+        <button class="btn btn-danger" onclick="cerrarPartida()">Cerrar Partida y Guardar</button>
+    `;
+}
+
+function cerrarPartida() {
+    // Aquí luego guardaremos los datos en localStorage
+    alert("Partida guardada en tu perfil.");
+    location.reload(); // Volver a la normalidad
+}
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
