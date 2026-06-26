@@ -630,7 +630,21 @@
             </div>
         </div>
     </div>
+<div id="contenedor-asistente" class="container mt-5" style="display: none; position: fixed; top: 10%; left: 10%; width: 80%; z-index: 9999;">
+    <div class="card p-4 bg-dark text-white border-cyan">
+        <div id="contenido-asistente"></div>
+        <button class="btn btn-outline-light mt-3" onclick="location.reload()">Cerrar Mesa (Volver)</button>
+    </div>
+</div>
 
+<footer>
+    ```
+
+### ¿Por qué esto es mejor?
+* Al ponerlo justo antes del `footer`, te asegurás de que el contenedor esté dentro de la estructura general de tu página (no "flotando" afuera del cuerpo).
+* Al tener `position: fixed`, este asistente va a aparecer **encima de todo** (juegos, libreta, lo que sea) apenas se active.
+
+**Hacé ese cambio, guardá el archivo y recargá la página.** Ahora, cuando le des clic al botón de "Campeonato" de Rummy, **¿qué sucede?** ¿Aparece el recuadro gris oscuro con el nombre del asistente?
   <!-- SECCIÓN FOOTER EXPANDIDA CON SISTEMA DE CAPTURA DE LEADS -->
     <footer class="footer-premium mt-5">
         <div class="container py-5">
@@ -752,20 +766,29 @@ function iniciarMesa(nombreJuego, listaJugadores) {
 }
 
 function renderizarTablero() {
-    const area = document.getElementById('contenido-asistente'); // El que creamos antes
-    document.getElementById('contenedor-asistente').style.display = 'block';
+    const contenedorAsistente = document.getElementById('contenedor-asistente');
+    const contenido = document.getElementById('contenido-asistente');
+    const juegos = document.getElementById('juegos');
+
+    // Si no encuentra los elementos, nos avisa en consola en lugar de romper todo
+    if (!contenedorAsistente || !contenido || !juegos) {
+        console.error("Error: Falta el div 'contenedor-asistente' o 'juegos' en tu HTML");
+        return; 
+    }
+
+    juegos.style.display = 'none';
+    contenedorAsistente.style.display = 'block';
     
-    area.innerHTML = `
+    contenido.innerHTML = `
         <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
-        <div id="tablero-puntos" class="d-flex gap-3 my-3">
+        <div class="d-flex gap-3 my-3">
             ${mesaActual.jugadores.map(j => `
                 <div class="card p-2 bg-secondary text-white">
                     <strong>${j}</strong>
-                    <span class="fs-4">${mesaActual.puntuaciones[j]}</span>
                 </div>
             `).join('')}
         </div>
-        <button class="btn btn-danger" onclick="cerrarPartida()">Cerrar Partida y Guardar</button>
+        <p>Sistema de puntuación inicializado.</p>
     `;
 }
 
