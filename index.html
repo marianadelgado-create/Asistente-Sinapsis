@@ -793,6 +793,19 @@ function validarDiccionario() {
     // Aquí tu lógica de validación
     console.log("Validando:", pal);
 }
+// Guardar Puntos en memoria del navegador
+function guardarAvance(juego, puntos) {
+    let historial = JSON.parse(localStorage.getItem('sinapsis_historial') || '{}');
+    historial[juego] = puntos;
+    localStorage.setItem('sinapsis_historial', JSON.stringify(historial));
+    document.getElementById('txtEstado').textContent = "Guardado en Historial";
+}
+
+// Cargar al iniciar la Libreta
+function cargarHistorial() {
+    let historial = JSON.parse(localStorage.getItem('sinapsis_historial') || '{}');
+    console.log("Tu progreso:", historial);
+}
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
