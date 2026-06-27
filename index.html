@@ -20,8 +20,9 @@
     <!-- NAVBAR PREMIUM CON LOGIN INTUITIVO -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container">
-            <a href="#" class="navbar-brand">
-    <img src="img/logo sinapsis.png" alt="Sinapsis" style="height: 40px; filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.5));">
+           <a href="#" class="navbar-brand d-flex align-items-center gap-2">
+    <img src="img/logo sinapsis.png" alt="Sinapsis" style="height: 60px; filter: drop-shadow(0 0 10px #00f2fe);">
+    <span class="fw-bold fs-4" style="letter-spacing: 2px;">SINAPSIS</span>
 </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -82,62 +83,25 @@
 
 
     <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS (NOVEDADES Y FUTURO FÍGITAL) -->
-    <section id="laboratorio" class="container py-5">
-        <div class="text-center mb-5">
-            <h2 class="h1 text-white fw-bold"><span class="text-gradient">Laboratorio</span> de Híbridos</h2>
-            <p class="text-muted-custom">Próximas experiencias del Universo Sinapsis: Reversiones clásicas y despliegue de hardware inteligente.</p>
-        </div>
-    <div id="prototipos" class="mb-5">
-        <h4 class="text-cyan mb-4">Prototipos Híbridos</h4>
-        <div class="row g-4">
-            <div class="col-12 col-md-4">
-                <div class="game-card-premium">
-                    <h5>5TO JINETE</h5>
-                    <button class="btn btn-cyan-premium" onclick="iniciarMesa('5to Jinete')">Jugar</button>
+   <section id="laboratorio" class="container py-5">
+    <div class="row mb-5">
+        <div class="col-12 col-lg-8 mx-auto">
+            <div class="game-card-hero" style="border: 2px solid #00f2fe; border-radius: 20px; overflow: hidden;">
+                <img src="img/5to-jinete-preview.jpg" alt="5to Jinete" class="img-fluid w-100">
+                <div class="p-4 bg-dark">
+                    <h3>5TO JINETE</h3>
+                    <button class="btn btn-cyan-premium btn-lg" onclick="iniciarMesa('5to Jinete')">Jugar Prototipo</button>
                 </div>
             </div>
         </div>
     </div>
-<!-- ESCAPARATE DE JUEGOS MVP -->
-<!-- SECCIÓN DE JUEGOS PREMIUM DE SINAPSIS -->
-<div class="container my-5">
-    <div class="row g-4 justify-content-center">
-        <!-- Tarjeta de Ajedrez -->
-        <div class="col-md-5 col-lg-4">
-            <div class="game-card-premium">
-                <div class="game-card-wrapper">
-                    <div class="game-card-front text-center d-flex align-items-center justify-content-center">
-                        <h5 class="game-title m-0">AJEDREZ</h5>
-                    </div>
-                    <div class="game-card-back p-4 text-center d-flex flex-column justify-content-center align-items-center">
-                        <p class="small text-muted-custom">El clásico nivelado para el siglo XXI.</p>
-                        <button class="btn btn-cyan-premium w-100">Jugar Híbrido</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tarjeta de Scrabble -->
-        <div class="col-md-5 col-lg-4">
-            <div class="game-card-premium">
-                <div class="game-card-wrapper">
-                    <div class="game-card-front text-center d-flex align-items-center justify-content-center">
-                        <h5 class="game-title m-0">SCRABBLE</h5>
-                    </div>
-                    <div class="game-card-back p-4 text-center d-flex flex-column justify-content-center align-items-center">
-                        <p class="small text-muted-custom">Potencia tu vocabulario en tiempo real.</p>
-                        <button class="btn btn-cyan-premium w-100">Jugar Híbrido</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row g-4">
+        <div class="col-md-6"><div class="game-card-premium"><h5>RUMMY (MVP)</h5><button onclick="iniciarMesa('Rummy')">Iniciar</button></div></div>
+        <div class="col-md-6"><div class="game-card-premium"><h5>AJEDREZ</h5><button onclick="iniciarMesa('Ajedrez')">Jugar</button></div></div>
     </div>
-</div>
-            </div>
-        </div>
-    </div>
-
 </section>
+
+
 <!-- FIN SECCIÓN HÍBRIDOS -->
   <!-- SECCIÓN: MESA DE JUEGOS CATEGORIZADA -->
     <section id="galeria" class="container py-5">
@@ -161,6 +125,26 @@
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-suit-spade-fill me-2"></i> Clásicos de Cartas y Fichas</h3>
             <div class="row g-4">
+                <!-- RUMMY -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="game-card-premium">
+                        <div class="game-card-wrapper">
+                            <div class="game-card-front bg-rummy">
+                                <div class="floating-icon f-2 text-cyan"><i class="bi bi-layers-half"></i></div>
+                                <span class="game-title">RUMMY</span>
+                            </div>
+                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h4 class="text-cyan font-tech mb-2">RUMMY</h4>
+                                    <p class="small text-light opacity-75">Combina piernas y escaleras numéricas. Descargá tus fichas antes que tus oponentes en el campeonato.</p>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" 
+        onclick="iniciarMesa('Rummy', ['Mariana', 'Jugador 2', 'Jugador 3'])">
+    Campeonato
+</button>
+</div>
                 <!-- TRUCO -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="game-card-premium">
@@ -182,26 +166,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- RUMMY -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="game-card-premium">
-                        <div class="game-card-wrapper">
-                            <div class="game-card-front bg-rummy">
-                                <div class="floating-icon f-2 text-cyan"><i class="bi bi-layers-half"></i></div>
-                                <span class="game-title">RUMMY</span>
-                            </div>
-                            <div class="game-card-back p-4 d-flex flex-column justify-content-between">
-                                <div>
-                                    <h4 class="text-cyan font-tech mb-2">RUMMY</h4>
-                                    <p class="small text-light opacity-75">Combina piernas y escaleras numéricas. Descargá tus fichas antes que tus oponentes en el campeonato.</p>
-                                </div>
-                                <div class="d-flex gap-2">
-                                    <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" 
-        onclick="iniciarMesa('Rummy', ['Mariana', 'Jugador 2', 'Jugador 3'])">
-    Campeonato
-</button>
-                                </div>
+                
                             </div>
                         </div>
                     </div>
