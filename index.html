@@ -101,8 +101,30 @@
 </section>
    ... tus tarjetas de Truco, Scrabble, etc ...
 </section>
-
+<!-- NUEVA SECCIÓN: PROTOTIPOS HÍBRIDOS (ARRIBA DE TODO) -->
+<div class="mb-5">
+    <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-cpu-fill me-2"></i> Prototipos Híbridos</h3>
+    <div class="row g-4">
+        <!-- 5TO JINETE -->
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="game-card-premium">
+                <div class="game-card-wrapper">
+                    <div class="game-card-front bg-dark border-cyan">
+                        <span class="game-title text-cyan">5TO JINETE</span>
+                    </div>
+                    <div class="game-card-back p-4">
+                        <h4 class="text-cyan font-tech mb-2">5TO JINETE</h4>
+                        <p class="small text-light">Tu juego bandera. La experiencia de fusión entre lo manual y lo digital.</p>
+                        <button class="btn btn-outline-cyan btn-sm" onclick="iniciarMesa('5to Jinete')">Iniciar Campeonato</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN SECCIÓN HÍBRIDOS -->
         <!-- CATEGORÍA: CLÁSICOS DE CARTAS -->
+
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-suit-spade-fill me-2"></i> Clásicos de Cartas y Fichas</h3>
             <div class="row g-4">
@@ -432,34 +454,7 @@
             <p class="text-muted-custom">Próximas experiencias del Universo Sinapsis: Reversiones clásicas y despliegue de hardware inteligente.</p>
         </div>
 
-        <div class="row g-4 justify-content-center">
-            <!-- PROTOTIPO: EL 5TO JINETE -->
-            <div class="col-12 col-lg-8">
-                <div class="dashboard-card p-4 border-glow-hybrid position-relative overflow-hidden">
-                    <div class="badge-prototype position-absolute">PROTOTIPO V.01</div>
-                    <div class="row g-4 align-items-center">
-                        <div class="col-md-5 text-center">
-                            <div class="hybrid-icon-orb"><i class="bi bi-rocket-takeoff-fill"></i></div>
-                        </div>
-                        <div class="col-md-7">
-                            <h3 class="font-tech text-cyan mb-2">EL 5TO JINETE</h3>
-                            <span class="badge badge-tech mb-3">Estrategia Galáctica Híbrida</span>
-                            <p class="small text-muted-custom">
-                                Un lienzo central inteligente diseñado para **4 a 8 jugadores**. Cada participante monta su tableta o celular en los soportes perimetrales integrados, conectándose mediante Bluetooth o cable de datos directamente a la plataforma.
-                            </p>
-                            <ul class="small text-muted-custom ps-3 mb-4">
-                                <li><strong>Lienzo Inteligente:</strong> Superficie física sensitiva que reconoce la posición de las flotas espaciales.</li>
-                                <li><strong>Consola Táctica Periférica:</strong> Tu pantalla gestiona los recursos secretos y las cartas de traición.</li>
-                            </ul>
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-cyan-premium" onclick="alert('Proyecto en fase de simulación para entrega final. ¡Lienzo fígital configurado!')">Ver Diagrama de Lienzo</button>
-                                <button class="btn btn-sm btn-outline-premium" onclick="verReglas('jinete')">Reglas Base</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </section>
 
     <!-- DASHBOARD CENTRAL / LIBRETA VIRTUAL -->
@@ -640,11 +635,8 @@
 <footer>
     ```
 
-### ¿Por qué esto es mejor?
-* Al ponerlo justo antes del `footer`, te asegurás de que el contenedor esté dentro de la estructura general de tu página (no "flotando" afuera del cuerpo).
-* Al tener `position: fixed`, este asistente va a aparecer **encima de todo** (juegos, libreta, lo que sea) apenas se active.
 
-**Hacé ese cambio, guardá el archivo y recargá la página.** Ahora, cuando le des clic al botón de "Campeonato" de Rummy, **¿qué sucede?** ¿Aparece el recuadro gris oscuro con el nombre del asistente?
+
   <!-- SECCIÓN FOOTER EXPANDIDA CON SISTEMA DE CAPTURA DE LEADS -->
     <footer class="footer-premium mt-5">
         <div class="container py-5">
