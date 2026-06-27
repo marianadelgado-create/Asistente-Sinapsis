@@ -592,220 +592,77 @@
 
     <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
+
+
+   <script>
     // --- 1. GESTIÓN DE SESIÓN ---
-    function gestionarSesion() {
-        localStorage.clear();
-        location.reload();
-    }
+    function gestionarSesion() { localStorage.clear(); location.reload(); }
 
-    // --- 2. NAVEGACIÓN ---
-    function verReglas() {
-        const visor = document.getElementById('visor-reglas');
-        if (visor) {
-            visor.classList.remove('d-none');
-            visor.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    function activarAsistente() {
-        const dashboard = document.getElementById('dashboard-seccion');
-        if (dashboard) {
-            dashboard.classList.remove('d-none');
-            dashboard.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // --- 3. CONTROL DEL MODAL Y BIENVENIDA ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
-        const headerUsuario = document.getElementById('header-usuario');
-        const textoLogin = document.getElementById('texto-login');
-
         if (nombre) {
-            // Usuario ya registrado
+            const headerUsuario = document.getElementById('header-usuario');
             if (headerUsuario) headerUsuario.innerText = "Hola, " + nombre;
-            if (textoLogin) textoLogin.innerText = nombre;
         } else {
-            // Usuario nuevo: Abre el modal moderno en lugar del alert viejo
-            setTimeout(function() {
-                const modalElement = document.getElementById('modalBienvenida');
-                const miModal = new bootstrap.Modal(modalElement);
-                miModal.show();
-            }, 500);
+            const modalElement = document.getElementById('modalBienvenida');
+            if (modalElement) new bootstrap.Modal(modalElement).show();
         }
     };
 
-    // Función que se ejecuta al darle al botón "Comenzar" del modal
     function guardarNombre() {
         const nombre = document.getElementById('inputNombre').value;
-        if (nombre && nombre.trim() !== "") {
-            localStorage.setItem('user', nombre);
-            location.reload();
-        } else {
-            alert("Por favor, ingresa un nombre para continuar.");
+        if (nombre) { localStorage.setItem('user', nombre); location.reload(); }
+    }
+
+    // --- 2. NAVEGACIÓN Y LIBRETA ---
+    function abrirLibreta() {
+        const libreta = document.getElementById('seccion-libreta');
+        if (libreta) {
+            libreta.classList.remove('d-none');
+            libreta.scrollIntoView({ behavior: 'smooth' });
         }
     }
-    function abrirLibreta() {
-    // Escondemos todo lo demás si quieres una vista limpia
-    document.getElementById('dashboard-seccion').classList.add('d-none'); // Asumiendo que es tu contenedor principal
-    
-    // Mostramos la libreta
-    const libreta = document.getElementById('seccion-libreta');
-    libreta.classList.remove('d-none');
-    libreta.scrollIntoView({ behavior: 'smooth' });
-}
-/* --- SISTEMA UNIFICADO DE MESA VIRTUAL --- */
 
-// Definimos la variable una sola vez
-let mesaActual = {
-    juego: null,
-    jugadores: [],
-    puntuaciones: {}
-};
+    // --- 3. SISTEMA DE MESA VIRTUAL ---
+    let mesaActual = { juego: null, jugadores: [], puntuaciones: {} };
 
-// Función para iniciar la mesa
-function iniciarMesa(nombreJuego) {
-    let input = prompt("Ingrese los nombres de los jugadores separados por coma:", "Mariana, Jugador 2, Jugador 3");
-    
-    if (!input) return;
-
-    let listaJugadores = input.split(',').map(n => n.trim());
-
-    mesaActual.juego = nombreJuego;
-    mesaActual.jugadores = listaJugadores;
-    mesaActual.puntuaciones = {};
-    listaJugadores.forEach(j => mesaActual.puntuaciones[j] = 0);
-    
-    const juegos = document.getElementById('juegos');
-    if (juegos) juegos.style.display = 'none';
-    
-    renderizarTablero();
-}
-
-// Función que dibuja la mesa
-function renderizarTablero() {
-    const contenedorAsistente = document.getElementById('contenedor-asistente');
-    const contenido = document.getElementById('contenido-asistente');
-    
-    if (contenedorAsistente) contenedorAsistente.style.display = 'block';
-    
-    if (contenido) {
-        contenido.innerHTML = `
-            <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
-            <div class="d-flex gap-3 my-3">
-                ${mesaActual.jugadores.map(j => `
-                    <div class="card p-2 bg-secondary text-white">
-                        <strong>${j}</strong>
-                        <div class="fs-4">${mesaActual.puntuaciones[j]}</div>
-                    </div>
-                `).join('')}
-            </div>
-            <button class="btn btn-outline-light mt-3" onclick="location.reload()">Cerrar Mesa (Volver)</button>
-        `;
+    function iniciarMesa(nombreJuego) {
+        let input = prompt("Jugadores (separados por coma):", "Mariana, Jugador 2");
+        if (!input) return;
+        mesaActual.juego = nombreJuego;
+        mesaActual.jugadores = input.split(',').map(n => n.trim());
+        document.getElementById('contenedor-asistente').style.display = 'block';
+        renderizarTablero();
     }
-}
 
-// 2. Función para iniciar (la que llamás desde el HTML)
-function iniciarMesa(nombreJuego) {
-    let input = prompt("Ingrese los nombres de los jugadores separados por coma:", "Mariana, Jugador 2, Jugador 3");
-    
-    if (!input) return;
-
-    let listaJugadores = input.split(',').map(n => n.trim());
-
-    mesaActual.juego = nombreJuego;
-    mesaActual.jugadores = listaJugadores;
-    mesaActual.puntuaciones = {};
-    listaJugadores.forEach(j => mesaActual.puntuaciones[j] = 0);
-    
-    const juegos = document.getElementById('juegos');
-    if (juegos) juegos.style.display = 'none';
-    
-    renderizarTablero();
-}
-
-// 3. Función que dibuja la mesa
-function renderizarTablero() {
-    const contenedorAsistente = document.getElementById('contenedor-asistente');
-    const contenido = document.getElementById('contenido-asistente');
-    
-    if (contenedorAsistente) contenedorAsistente.style.display = 'block';
-    
-    if (contenido) {
-        contenido.innerHTML = `
-            <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
-            <div class="d-flex gap-3 my-3">
-                ${mesaActual.jugadores.map(j => `
-                    <div class="card p-2 bg-secondary text-white">
-                        <strong>${j}</strong>
-                        <div class="fs-4">${mesaActual.puntuaciones[j]}</div>
-                    </div>
-                `).join('')}
-            </div>
-            <button class="btn btn-outline-light mt-3" onclick="location.reload()">Cerrar Mesa (Volver)</button>
-        `;
+    function renderizarTablero() {
+        const cont = document.getElementById('contenido-asistente');
+        if (cont) {
+            cont.innerHTML = `<h3>${mesaActual.juego} ACTIVO</h3><button class="btn btn-outline-light" onclick="location.reload()">Cerrar</button>`;
+        }
     }
-}
-    juegos.style.display = 'none';
-    contenedorAsistente.style.display = 'block';
-    
-    contenido.innerHTML = `
-        <h3 class="text-white">${mesaActual.juego.toUpperCase()} - MESA ACTIVA</h3>
-        <div class="d-flex gap-3 my-3">
-            ${mesaActual.jugadores.map(j => `
-                <div class="card p-2 bg-secondary text-white">
-                    <strong>${j}</strong>
-                </div>
-            `).join('')}
-        </div>
-        <p>Sistema de puntuación inicializado.</p>
-    `;
 
+    // --- 4. HERRAMIENTAS LIBRETA ---
+    function iniciarReloj() {
+        let tiempo = 300;
+        const display = document.getElementById('txtC1');
+        const interval = setInterval(() => {
+            let m = Math.floor(tiempo / 60);
+            let s = tiempo % 60;
+            if(display) display.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+            if (tiempo <= 0) clearInterval(interval);
+            tiempo--;
+        }, 1000);
+    }
 
-function cerrarPartida() {
-    // Aquí luego guardaremos los datos en localStorage
-    alert("Partida guardada en tu perfil.");
-    location.reload(); // Volver a la normalidad
-}
-// Reloj Fischer
-function iniciarReloj() {
-    let tiempo = 300; // 5 min
-    const display = document.getElementById('txtC1');
-    const intervalo = setInterval(() => {
-        let m = Math.floor(tiempo / 60);
-        let s = tiempo % 60;
-        display.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-        if (tiempo <= 0) clearInterval(intervalo);
-        tiempo--;
-    }, 1000);
-}
+    function lanzarDadosEngine() {
+        alert("Resultado: " + (Math.floor(Math.random() * 6) + 1));
+    }
 
-// Dados
-function lanzarDadosEngine() {
-    const res = Math.floor(Math.random() * 6) + 1;
-    alert("Resultado: " + res);
-}
-
-// Validador (Tu lógica original)
-function validarDiccionario() {
-    const pal = document.getElementById('inputPalabra').value;
-    // Aquí tu lógica de validación
-    console.log("Validando:", pal);
-}
-// Guardar Puntos en memoria del navegador
-function guardarAvance(juego, puntos) {
-    let historial = JSON.parse(localStorage.getItem('sinapsis_historial') || '{}');
-    historial[juego] = puntos;
-    localStorage.setItem('sinapsis_historial', JSON.stringify(historial));
-    document.getElementById('txtEstado').textContent = "Guardado en Historial";
-}
-
-// Cargar al iniciar la Libreta
-function cargarHistorial() {
-    let historial = JSON.parse(localStorage.getItem('sinapsis_historial') || '{}');
-    console.log("Tu progreso:", historial);
-}
+    function validarDiccionario() {
+        alert("Validando: " + document.getElementById('inputPalabra').value);
+    }
+// Cierre del script principal
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
