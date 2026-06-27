@@ -80,6 +80,12 @@ body {
     color: #03060f; font-size: 12px; font-weight: 700;
     display: flex; align-items: center; justify-content: center; margin-right: 8px;
 }
+#txtC1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3rem;
+    color: #00f2fe;
+    text-shadow: 0 0 15px #00f2fe;
+}
 
 /* FOOTER & SOCIALS */
 .footer-premium {
