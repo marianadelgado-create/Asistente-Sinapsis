@@ -459,84 +459,44 @@
 
         
     </section>
+<section id="dashboard-seccion" class="container py-5">
+    <div class="dashboard-card p-4 mb-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+            <div>
+                <span class="badge badge-tech mb-1">LIBRETA VIRTUAL</span>
+                <h2 class="h3 text-white fw-bold mb-0" id="txtBienvenidaLibreta">Panel de Control</h2>
+            </div>
+            <div class="text-end">
+                <span class="small text-muted-custom d-block">Historial Consolidado</span>
+                <span class="text-cyan fw-bold font-tech" id="txtEstado">Sincronizado</span>
+            </div>
+        </div>
 
-    <!-- DASHBOARD CENTRAL / LIBRETA VIRTUAL -->
-    <section id="dashboard-seccion" class="container py-5 d-none">
-        <div class="dashboard-card p-4 mb-4">
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
-                <div>
-                    <span class="badge badge-tech mb-1">LIBRETA VIRTUAL</span>
-                    <h2 class="h3 text-white fw-bold mb-0" id="txtBienvenidaLibreta">Panel de Control</h2>
-                </div>
-                <div class="text-end">
-                    <span class="small text-muted-custom d-block">Historial Consolidado</span>
-                    <span class="text-cyan fw-bold font-tech" id="lblRecordPts">0 Puntos Guardados</span>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-3 bg-dark rounded border border-cyan">
+                    <h5 class="text-cyan">Validador Léxico</h5>
+                    <input type="text" id="inputPalabra" class="form-control mb-2" placeholder="Escribe aquí...">
+                    <button class="btn btn-outline-cyan w-100" onclick="validarDiccionario()">Validar</button>
                 </div>
             </div>
-
-            <!-- WORKSPACE PANEL DINÁMICO -->
-            <div id="workspace-asistente" class="p-3 mb-4 rounded-3 border border-secondary border-dashed" style="background: #040812;">
-                <div class="text-center py-5 text-muted-custom">
-                    <i class="bi bi-cpu display-4 mb-2 d-block opacity-40"></i>
-                    <p>Seleccioná el asistente aritmético de cualquier juego en la mesa de arriba para iniciar la carga.</p>
+            <div class="col-md-4">
+                <div class="p-3 bg-dark rounded border border-cyan text-center">
+                    <h5 class="text-cyan">Reloj Fischer</h5>
+                    <div id="txtC1" class="h2 text-white">05:00</div>
+                    <button class="btn btn-sm btn-outline-light" onclick="iniciarReloj()">Iniciar</button>
                 </div>
             </div>
-
-            <!-- SECCIÓN EXTRA: MOTOR LÉXICO, DADOS Y RELOJ -->
-            <div class="row g-4">
-                <!-- VALIDACIÓN SCRABBLE CON DEFINICIONES -->
-                <div class="col-12 col-lg-6">
-                    <div class="p-4 rounded-3 style-rules-box h-100">
-                        <h4 class="h5 text-white mb-3"><i class="bi bi-spellcheck text-cyan me-2"></i>Validador de Léxico Oficial (Sinapsis Core)</h4>
-                        <form onsubmit="validarDiccionario(event)">
-                            <div class="input-group">
-                                <input type="text" id="inputPalabra" class="form-control input-dark text-uppercase" placeholder="Ingresá palabra para validar..." required>
-                                <button class="btn btn-cyan-premium px-4" type="submit">Validar</button>
-                            </div>
-                        </form>
-                        <div id="alertDiccionario" class="mt-3 p-3 rounded" style="display: none; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
-                            <div class="fw-bold id-status-word mb-1"></div>
-                            <div class="small text-muted id-def-word"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- HERRAMIENTA EXTRA: LANZADOR DE DADOS -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
-                        <h5 class="text-white mb-2"><i class="bi bi-dice-3 text-cyan me-2"></i>Lanzador de Dados</h5>
-                        <div class="d-flex justify-content-center gap-3 my-3">
-                            <div class="dice-box-ui" id="uiDado1">1</div>
-                            <div class="dice-box-ui" id="uiDado2">6</div>
-                        </div>
-                        <button class="btn btn-cyan-premium w-100 py-2" onclick="lanzarDadosEngine()">Tirar Dados</button>
-                    </div>
-                </div>
-
-                <!-- RELOJ FISCHER -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <div class="p-4 rounded-3 style-rules-box text-center h-100 d-flex flex-column justify-content-between">
-                        <h5 class="text-white mb-2"><i class="bi bi-hourglass-split text-cyan me-2"></i>Reloj Fischer</h5>
-                        <div class="d-flex gap-2 mb-2">
-                            <button class="btn btn-timer-premium active w-50 py-2" id="cBox1" onclick="invertirReloj(1)">
-                                <small class="d-block opacity-60 font-tech" style="font-size:9px">P1</small>
-                                <span class="h4 font-tech" id="txtC1">05:00</span>
-                            </button>
-                            <button class="btn btn-timer-premium w-50 py-2" id="cBox2" onclick="invertirReloj(2)">
-                                <small class="d-block opacity-60 font-tech" style="font-size:9px">P2</small>
-                                <span class="h4 font-tech" id="txtC2">05:00</span>
-                            </button>
-                        </div>
-                        <div class="d-flex gap-1 justify-content-center">
-                            <button class="btn btn-xs btn-outline-secondary" onclick="pausarReloj()">Pausa</button>
-                            <button class="btn btn-xs btn-outline-danger" onclick="resetReloj()">Reset</button>
-                        </div>
-                    </div>
+            <div class="col-md-4">
+                <div class="p-3 bg-dark rounded border border-cyan text-center">
+                    <h5 class="text-cyan">Dados</h5>
+                    <button class="btn btn-info w-100 mt-2" onclick="lanzarDadosEngine()">Lanzar</button>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
+    
     <!-- ESTADO ADVERTENCIA BLOQUEO / INVITE ACCESIBLE -->
     <section id="estado-bloqueado" class="container py-5 text-center">
         <div class="dashboard-card p-5 max-width-md mx-auto" style="max-width: 580px;">
@@ -845,6 +805,31 @@ function cerrarPartida() {
     // Aquí luego guardaremos los datos en localStorage
     alert("Partida guardada en tu perfil.");
     location.reload(); // Volver a la normalidad
+}
+// Reloj Fischer
+function iniciarReloj() {
+    let tiempo = 300; // 5 min
+    const display = document.getElementById('txtC1');
+    const intervalo = setInterval(() => {
+        let m = Math.floor(tiempo / 60);
+        let s = tiempo % 60;
+        display.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+        if (tiempo <= 0) clearInterval(intervalo);
+        tiempo--;
+    }, 1000);
+}
+
+// Dados
+function lanzarDadosEngine() {
+    const res = Math.floor(Math.random() * 6) + 1;
+    alert("Resultado: " + res);
+}
+
+// Validador (Tu lógica original)
+function validarDiccionario() {
+    const pal = document.getElementById('inputPalabra').value;
+    // Aquí tu lógica de validación
+    console.log("Validando:", pal);
 }
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
