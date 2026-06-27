@@ -96,31 +96,23 @@
 </div>
     </section>
 
-<section id="juegos" class="container py-5">
-    <h2 class="text-white font-tech mb-5">Mesa de Asistencia Interactiva</h2>
-
-    <div class="mb-5">
-        <h3 class="h4 text-cyan font-tech mb-4">Prototipos Híbridos</h3>
+<section id="galeria" class="container py-5">
+    <h2 class="text-white fw-bold mb-5 text-center">Mesa de Asistencia Interactiva</h2>
+    
+    <div id="prototipos" class="mb-5">
+        <h4 class="text-cyan mb-4">Prototipos Híbridos</h4>
         <div class="row g-4">
-            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-4">
                 <div class="game-card-premium">
-                    <div class="game-card-wrapper">
-                        <div class="game-card-front bg-dark border-cyan">
-                            <span class="game-title text-cyan">5TO JINETE</span>
-                        </div>
-                        <div class="game-card-back p-4">
-                            <h4 class="text-cyan font-tech mb-2">5TO JINETE</h4>
-                            <p class="small text-light">Tu juego bandera.</p>
-                            <button class="btn btn-outline-cyan btn-sm" onclick="iniciarMesa('5to Jinete')">Iniciar</button>
-                        </div>
-                    </div>
+                    <h5>5TO JINETE</h5>
+                    <button class="btn btn-cyan-premium" onclick="iniciarMesa('5to Jinete')">Jugar</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mb-5">
-        <h3 class="h4 text-cyan font-tech mb-4">Clásicos de Cartas y Fichas</h3>
+    <div id="juegos-premium">
+        <h4 class="text-white mb-4">Clásicos</h4>
         <div class="row g-4">
             </div>
     </div>
@@ -471,6 +463,16 @@
                 <span class="text-cyan fw-bold font-tech" id="txtEstado">Sincronizado</span>
             </div>
         </div>
+        <div id="area-de-trabajo" class="container my-4">
+    <div id="panel-maestro" class="d-none p-4 bg-dark text-white rounded border border-cyan">
+        <h4 id="panel-titulo">Seleccioná un juego</h4>
+        <div class="d-flex align-items-center gap-3">
+            <button onclick="restarPunto()" class="btn btn-outline-danger">-</button>
+            <span id="display-puntos" class="h3">0</span>
+            <button onclick="sumarPunto()" class="btn btn-outline-success">+</button>
+        </div>
+    </div>
+</div>
 
         <div class="row g-4">
             <div class="col-md-4">
