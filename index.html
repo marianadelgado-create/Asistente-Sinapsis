@@ -111,7 +111,7 @@
             <p class="text-muted-custom">Explorá nuestro catálogo extendido organizado por categorías tácticas.</p>
         </div>
         <div id="area-de-trabajo" class="container my-4">
-    <div id="panel-maestro" class="d-none p-3 bg-dark text-white rounded">
+    
         <h4 id="panel-titulo">Seleccioná un juego</h4>
         <div class="controles-puntos d-flex align-items-center gap-3 mt-2">
             <button onclick="restarPunto()" class="btn btn-outline-danger">-</button>
@@ -624,12 +624,14 @@
         }
     };
 
-    // --- 2. ANOTADOR Y JUEGOS ---
+    // --- 2. MOTOR DE MESA (Unificado para todas las funciones) ---
     window.iniciarMesa = function(juego) {
-        const c = document.getElementById('contenedor-asistente');
-        if (!c) return alert("Error: El contenedor de juego no existe.");
-        c.style.display = 'block';
-        c.innerHTML = `
+        const contenedor = document.getElementById('contenedor-asistente');
+        if (!contenedor) return alert("Error: No se encontró el área de juego.");
+        
+        contenedor.style.display = 'block';
+        // Limpiamos el contenido anterior antes de inyectar el nuevo
+        contenedor.querySelector('#contenido-asistente').innerHTML = `
             <div class="p-3 bg-dark text-white border border-info rounded">
                 <h4 class="text-center">${juego.toUpperCase()}</h4>
                 <div class="d-flex align-items-center justify-content-center gap-3 my-3">
@@ -637,14 +639,13 @@
                     <span id="puntos-dinamicos" class="h1">0</span>
                     <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
                 </div>
-                <button class="btn btn-secondary w-100" onclick="this.parentElement.parentElement.style.display='none'">Cerrar</button>
             </div>
         `;
     };
 
     window.sumarPuntos = function(v) {
         const d = document.getElementById('puntos-dinamicos');
-        if (d) d.innerText = parseInt(d.innerText) + v;
+        if (d) d.innerText = parseInt(d.innerText || 0) + v;
     };
 
     // --- 3. REGLAS ---
@@ -652,7 +653,10 @@
         const bd = {
             "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
             "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Deshacete de tus cartas."
+            "uno": "UNO: Deshacete de tus cartas.",
+            "ajedrez": "Ajedrez: Juego de estrategia de reyes.",
+            "damas": "Damas: Captura piezas en diagonal.",
+            "teg": "T.E.G.: Conquistá continentes."
         };
         const v = document.getElementById('visor-reglas');
         const t = document.getElementById('reglasTitulo');
@@ -665,16 +669,32 @@
         }
     };
 
-    // --- 4. DADOS Y LIBRETA ---
-    window.lanzarDados = function() {
+    // --- 4. DADOS Y RELOJ ---
+    window.lanzarDadosEngine = function() {
         const d = document.getElementById('display-dado');
         const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerHTML = `<span class="h1">${res}</span>`;
+        if (d) d.innerText = res;
+    };
+
+    window.iniciarReloj = function() {
+        let segundos = 300;
+        const disp = document.getElementById('txtC1');
+        const intervalo = setInterval(() => {
+            segundos--;
+            let m = Math.floor(segundos / 60);
+            let s = segundos % 60;
+            if (disp) disp.innerText = `${m}:${s < 10 ? '0' + s : s}`;
+            if (segundos <= 0) clearInterval(intervalo);
+        }, 1000);
     };
 
     window.abrirLibreta = function() {
-        alert("Abriendo Libreta Virtual...");
+        document.getElementById('seccion-libreta').classList.remove('d-none');
+        document.getElementById('seccion-libreta').scrollIntoView({ behavior: 'smooth' });
     };
+
+    // Función auxiliar para botones genéricos
+    window.activarAsistente = function(juego) { iniciarMesa(juego); };
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
