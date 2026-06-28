@@ -599,115 +599,40 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    // --- 1. GESTIÓN DE SESIÓN ---
-    function gestionarSesion(accion) {
-        if (accion === 'cerrar') {
-            localStorage.removeItem('user');
-            location.reload();
-        } else {
-            const nombre = prompt("¿Cómo te llamas?");
-            if (nombre) {
-                localStorage.setItem('user', nombre);
-                location.reload();
-            }
-        }
-    }
-
-    // --- 2. MOTOR DE JUEGOS Y ANOTADOR ---
-    window.iniciarMesa = function(juego) {
-        const contenedor = document.getElementById('contenedor-asistente');
-        if (!contenedor) return alert("Error: No se encontró el área de juego.");
-        
-        contenedor.style.display = 'block';
-        contenedor.innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex justify-content-center align-items-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
-                </div>
-                <button class="btn btn-secondary w-100" onclick="document.getElementById('contenedor-asistente').style.display='none'">Cerrar</button>
-            </div>
-        `;
-    };
-
-    window.sumarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos');
-        if (d) d.innerText = parseInt(d.innerText) + v;
-    };
-
-    // --- 3. RELOJ FISCHER ---
-    window.iniciarReloj = function() {
-        let tiempo = 300; // 5 min
-        const d = document.getElementById('display-reloj');
-        if(!d) return alert("Reloj no localizado en pantalla");
-        
-        // Limpiamos intervalos previos si existieran
-        if(window.timerInterval) clearInterval(window.timerInterval);
-        
-        window.timerInterval = setInterval(() => {
-            tiempo--;
-            let m = Math.floor(tiempo / 60);
-            let s = tiempo % 60;
-            d.innerText = `${m}:${s < 10 ? '0' + s : s}`;
-            if (tiempo <= 0) clearInterval(window.timerInterval);
-        }, 1000);
-    };
-
-    // --- 4. UTILIDADES ---
-    window.lanzarDados = function() {
-        const disp = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (disp) disp.innerText = res;
-    };
-
-    window.verReglas = function(juego) { alert("Reglas de " + juego + " activas."); };
-    window.abrirLibreta = function() { alert("Libreta abierta."); };
-
-    // --- 5. CARGA INICIAL ---
+    // --- 1. GESTIÓN DE USUARIO ---
     document.addEventListener("DOMContentLoaded", function() {
         const nombre = localStorage.getItem('user');
-        const elements = document.querySelectorAll('#header-usuario, #texto-login');
-        elements.forEach(el => { if(nombre) el.innerText = nombre; });
-    });
-    
-    // --- 1. CONFIGURACIÓN INICIAL ---
-    console.log("Sistema Sinapsis: Iniciando...");
-
-    // Esta función maneja el nombre de usuario
-    window.gestionarSesion = function(accion) {
-        if (accion === 'cerrar') {
-            localStorage.removeItem('user');
-            location.reload();
-        } else {
-            const nombre = prompt("¿Cómo te llamas?");
-            if (nombre) {
-                localStorage.setItem('user', nombre);
-                location.reload();
-            }
+        const h = document.getElementById('header-usuario');
+        const t = document.getElementById('texto-login');
+        if (nombre) {
+            if (h) h.innerText = nombre;
+            if (t) t.innerText = nombre;
         }
-    };
+    });
 
-    // Esto actualiza el nombre automáticamente al cargar
-    document.addEventListener("DOMContentLoaded", function() {
+    window.gestionarSesion = function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
-            const elementos = document.querySelectorAll('#header-usuario, #texto-login');
-            elementos.forEach(el => el.innerText = nombre);
+            localStorage.removeItem('user');
+            location.reload();
+        } else {
+            const nuevo = prompt("¿Cómo te llamas?");
+            if (nuevo) {
+                localStorage.setItem('user', nuevo);
+                location.reload();
+            }
         }
-    });
+    };
 
-    // --- 2. MOTOR DE JUEGOS ---
+    // --- 2. ANOTADOR Y JUEGOS ---
     window.iniciarMesa = function(juego) {
-        const cont = document.getElementById('contenedor-asistente');
-        if (!cont) { alert("Error: No encuentro el contenedor llamado 'contenedor-asistente'"); return; }
-        
-        cont.style.display = 'block';
-        cont.innerHTML = `
+        const c = document.getElementById('contenedor-asistente');
+        if (!c) return alert("Error: El contenedor de juego no existe.");
+        c.style.display = 'block';
+        c.innerHTML = `
             <div class="p-3 bg-dark text-white border border-info rounded">
                 <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex justify-content-center align-items-center gap-3 my-3">
+                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
                     <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
                     <span id="puntos-dinamicos" class="h1">0</span>
                     <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
@@ -719,18 +644,37 @@
 
     window.sumarPuntos = function(v) {
         const d = document.getElementById('puntos-dinamicos');
-        if (d) {
-            d.innerText = parseInt(d.innerText) + v;
-        } else {
-            alert("No encuentro el contador 'puntos-dinamicos'");
+        if (d) d.innerText = parseInt(d.innerText) + v;
+    };
+
+    // --- 3. REGLAS ---
+    window.verReglas = function(juego) {
+        const bd = {
+            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
+            "truco": "Truco: Estrategia, mentiras y picardía.",
+            "uno": "UNO: Deshacete de tus cartas."
+        };
+        const v = document.getElementById('visor-reglas');
+        const t = document.getElementById('reglasTitulo');
+        const c = document.getElementById('reglasCuerpo');
+        if (v && t && c) {
+            t.innerText = "Reglamento: " + juego.toUpperCase();
+            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
+            v.classList.remove('d-none');
+            v.scrollIntoView({ behavior: 'smooth' });
         }
     };
 
-    // --- 3. LIBRETA VIRTUAL ---
-    window.abrirLibreta = function() {
-        alert("La Libreta Virtual está lista para conectarse. Asegúrate de tener un div con id='panel-libreta'");
+    // --- 4. DADOS Y LIBRETA ---
+    window.lanzarDados = function() {
+        const d = document.getElementById('display-dado');
+        const res = Math.floor(Math.random() * 6) + 1;
+        if (d) d.innerHTML = `<span class="h1">${res}</span>`;
     };
 
+    window.abrirLibreta = function() {
+        alert("Abriendo Libreta Virtual...");
+    };
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
