@@ -695,6 +695,71 @@
 
     // Función auxiliar para botones genéricos
     window.activarAsistente = function(juego) { iniciarMesa(juego); };
+    
+    // --- DIAGNÓSTICO DE SESIÓN ---
+    window.gestionarSesion = function() {
+        if (localStorage.getItem('user')) {
+            localStorage.removeItem('user');
+            location.reload();
+        } else {
+            const nombre = prompt("¿Cómo te llamas?");
+            if (nombre) {
+                localStorage.setItem('user', nombre);
+                location.reload();
+            }
+        }
+    };
+
+    // --- DIAGNÓSTICO DE MESA ---
+    window.iniciarMesa = function(juego) {
+        // Buscamos el contenedor por el ID que tienes en el HTML (contenedor-asistente)
+        const c = document.getElementById('contenedor-asistente');
+        if (!c) {
+            alert("No encuentro el elemento con ID 'contenedor-asistente'. Revisa tu HTML.");
+            return;
+        }
+        
+        c.style.display = 'block';
+        
+        // Buscamos el elemento interno
+        const interno = document.getElementById('contenido-asistente');
+        if (!interno) {
+            alert("No encuentro el elemento 'contenido-asistente' dentro del contenedor.");
+            return;
+        }
+
+        interno.innerHTML = `
+            <div class="p-3 bg-dark text-white border border-info rounded">
+                <h4 class="text-center">${juego.toUpperCase()}</h4>
+                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
+                    <span id="puntos-dinamicos" class="h1">0</span>
+                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.sumarPuntos = function(v) {
+        const d = document.getElementById('puntos-dinamicos');
+        if (!d) {
+            alert("No se encuentra el contador de puntos (ID: puntos-dinamicos).");
+        } else {
+            d.innerText = parseInt(d.innerText) + v;
+        }
+    };
+
+    // --- DIAGNÓSTICO DE LIBRETA ---
+    window.abrirLibreta = function() {
+        const s = document.getElementById('seccion-libreta');
+        if (!s) {
+            alert("No encuentro la sección con ID 'seccion-libreta'.");
+        } else {
+            s.classList.remove('d-none');
+            s.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
