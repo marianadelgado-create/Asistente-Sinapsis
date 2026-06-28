@@ -598,13 +598,11 @@
     <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // 1. Lógica de Usuario / Perfil
+    // 1. Sesión y Perfil
     document.addEventListener("DOMContentLoaded", function() {
         const nombreGuardado = localStorage.getItem('user');
         const header = document.getElementById('header-usuario');
-        if (header && nombreGuardado) {
-            header.innerText = nombreGuardado;
-        }
+        if (header && nombreGuardado) { header.innerText = nombreGuardado; }
     });
 
     function gestionarSesion() {
@@ -616,7 +614,18 @@
         }
     }
 
-    // 2. Anotador: Cambia el número del span id="puntos-dinamicos"
+    // 2. Funciones de Juego (¡Estas son las que faltaban!)
+    function iniciarMesa(juego) {
+        console.log("Iniciando mesa de: " + juego);
+        // Aquí agregarás la lógica cuando quieras que el anotador aparezca
+    }
+
+    function verReglas(juego) {
+        console.log("Mostrando reglas de: " + juego);
+        alert("Reglas de " + juego + " en construcción.");
+    }
+
+    // 3. Anotador
     function cambiarPuntos(valor) {
         const display = document.getElementById('puntos-dinamicos');
         if (display) {
@@ -625,29 +634,11 @@
         }
     }
 
-    // 3. Dado: Cambia el número o muestra resultado visualmente
+    // 4. Utilidades
     function lanzarDadosEngine() {
-        const resultado = Math.floor(Math.random() * 6) + 1;
-        // Si tienes un elemento para mostrar el dado, aquí se actualiza
-        alert("Resultado del dado: " + resultado); 
-    }
-
-    // 4. Libreta Virtual: Función para abrir el panel
-    function abrirLibreta() {
-        const panel = document.getElementById('panel-control');
-        if (panel) {
-            panel.style.display = 'block';
-        } else {
-            console.log("El panel de control no está definido en el HTML");
-        }
-    }
-
-    // 5. Diccionario: Función vacía para evitar errores
-    function validarDiccionario() {
-        console.log("Validador listo para conectar.");
+        alert("Dado lanzado: " + (Math.floor(Math.random() * 6) + 1));
     }
 </script>
-
 
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
