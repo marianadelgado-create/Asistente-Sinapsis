@@ -24,6 +24,7 @@
     <img src="img/logo sinapsis.png" alt="Sinapsis" style="height: 60px; filter: drop-shadow(0 0 10px #00f2fe);">
     <span class="fw-bold fs-4" style="letter-spacing: 2px;">SINAPSIS</span>
 </a>
+<span id="header-usuario">Usuario</span>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -681,6 +682,57 @@
         const v = document.getElementById('inputPalabra').value;
         if(v) alert("Validado en Sinapsis: " + v);
     }
+    
+    // --- 1. SESIÓN ---
+    window.onload = function() {
+        const nombre = localStorage.getItem('user');
+        const header = document.getElementById('header-usuario');
+        if (nombre && header) header.innerText = nombre;
+    };
+
+    // --- 2. REGLAS ---
+    function verReglas(juego) {
+        const bd = {
+            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
+            "truco": "Truco: Estrategia, mentiras y picardía.",
+            "uno": "UNO: Jugá por colores o números."
+        };
+        const visor = document.getElementById('visor-reglas');
+        const titulo = document.getElementById('reglasTitulo');
+        const cuerpo = document.getElementById('reglasCuerpo');
+        
+        if (visor) {
+            titulo.innerText = "Reglamento: " + juego.toUpperCase();
+            cuerpo.innerText = bd[juego.toLowerCase()] || "Reglas en construcción.";
+            visor.classList.remove('d-none');
+            visor.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+
+    // --- 3. MESA Y ANOTADOR (Corregido: 'puntos' definido arriba) ---
+    // Definimos una variable global para que todos los juegos la usen
+    let contadorPuntos = 0;
+
+    function iniciarMesa(nombreJuego) {
+        contadorPuntos = 0; // Reinicia al entrar
+        document.getElementById('contenedor-asistente').style.display = 'block';
+        document.getElementById('contenido-asistente').innerHTML = `
+            <h3 class="text-white">${nombreJuego.toUpperCase()}</h3>
+            <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+                <button class="btn btn-danger" onclick="actualizarPuntos(-1)">-</button>
+                <span id="display-puntos" class="h2 text-white">${contadorPuntos}</span>
+                <button class="btn btn-success" onclick="actualizarPuntos(1)">+</button>
+            </div>
+            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
+        `;
+    }
+
+    function actualizarPuntos(valor) { 
+        contadorPuntos += valor; 
+        const disp = document.getElementById('display-puntos'); 
+        if (disp) disp.innerText = contadorPuntos; 
+    }
+
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
