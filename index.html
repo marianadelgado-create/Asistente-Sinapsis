@@ -700,5 +700,31 @@
     </div>
   </div>
 </div>
+<script>
+    // 1. Lógica de Usuario / Perfil
+    document.addEventListener("DOMContentLoaded", function() {
+        const nombreGuardado = localStorage.getItem('user');
+        const header = document.getElementById('header-usuario');
+        if (header && nombreGuardado) {
+            header.innerText = nombreGuardado;
+        }
+    });
+
+    // 2. Función de Sesión (Esta es la que falta y causa el error)
+    function gestionarSesion() {
+        const nombre = prompt("¿Cómo te llamas?");
+        if (nombre) {
+            localStorage.setItem('user', nombre);
+            const header = document.getElementById('header-usuario');
+            if (header) header.innerText = nombre;
+        }
+    }
+
+    // 3. Funciones básicas para que no haya errores
+    function iniciarMesa(juego) {
+        console.log("Iniciando: " + juego);
+        // Aquí irá tu lógica de juego cuando esté lista
+    }
+</script>
 </body>
 </html>
