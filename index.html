@@ -471,7 +471,11 @@
         </div>
     </div>
 </div>
-
+<div id="panel-maestro" class="p-3 bg-dark border border-info">
+    <button onclick="cambiarPuntos(-1)">-</button>
+    <span id="display-puntos" class="h2">0</span>
+    <button onclick="cambiarPuntos(1)">+</button>
+</div>
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="p-3 bg-dark rounded border border-cyan">
@@ -488,6 +492,7 @@
                 </div>
             </div>
             <div class="col-md-4">
+                <div id="display-dado" class="text-center"></div>
                 <div class="p-3 bg-dark rounded border border-cyan text-center">
                     <span id="display-dado"></span>
                     <h5 class="text-cyan">Dados</h5>
@@ -607,8 +612,8 @@
             const t = document.getElementById('texto-login');
             if (t) t.innerText = nombre;
         } else {
-            const modalElement = document.getElementById('modalBienvenida');
-            if (modalElement) new bootstrap.Modal(modalElement).show();
+            const modal = document.getElementById('modalBienvenida');
+            if (modal) new bootstrap.Modal(modal).show();
         }
     };
 
@@ -617,53 +622,12 @@
         if (nombre) { localStorage.setItem('user', nombre); location.reload(); }
     }
 
-    // --- 2. NAVEGACIÓN Y LIBRETA ---
-    function abrirLibreta() {
-        const sec = document.getElementById('seccion-libreta');
-        if (sec) {
-            sec.classList.remove('d-none');
-            sec.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    // --- 3. MESA DE JUEGOS Y ANOTADOR ---
-    function iniciarMesa(juego) {
-        document.getElementById('contenedor-asistente').style.display = 'block';
-        document.getElementById('contenido-asistente').innerHTML = `
-            <h3>${juego.toUpperCase()} - MESA ACTIVA</h3>
-            <div class="d-flex align-items-center gap-3 my-3">
-                <button class="btn btn-outline-danger" onclick="cambiarPuntos(-1)">-</button>
-                <span id="display-puntos" class="h2 text-white mx-3">0</span>
-                <button class="btn btn-outline-success" onclick="cambiarPuntos(1)">+</button>
-            </div>
-            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
-        `;
-    }
-
-    let puntos = 0;
-    function sumarPunto() { cambiarPuntos(1); }
-    function restarPunto() { cambiarPuntos(-1); }
-    function cambiarPuntos(valor) {
-        puntos += valor;
-        const disp = document.getElementById('display-puntos');
-        if(disp) disp.innerText = puntos;
-    }
-
-    // --- 4. HERRAMIENTAS (Reglas, Dados, Diccionario, Reloj) ---
+    // --- 2. SISTEMA DE REGLAS (El Rummy ya no será Truco) ---
     function verReglas(juego) {
         const reglamentos = {
-            "rummy": "Rummy: Combina piernas y escaleras numéricas. Descargá tus fichas antes que tus oponentes en el campeonato.",
-            "truco": "Truco: Estrategia, mentiras y picardía criolla. Administrá los tantos de las malas y las buenas.",
-            "ajedrez": "Ajedrez: El juego de reyes. Desplegá tus aperturas tácticas y controlá el tiempo de juego.",
-            "uno": "UNO: Deshacete de tus cartas haciendo coincidir colores o números. ¡No te olvides de gritar UNO!",
-            "damas": "Damas: Capturá todas las piezas de tu rival saltando en diagonal. Coroná tus fichas para moverte libremente.",
-            "teg": "T.E.G.: Planificación y Plan de Estrategia Global. Conquistá continentes y defendé tus fronteras.",
-            "generala": "Generala: Competencia táctica de dados. Consigue combinaciones como Full, Póker o Generala.",
-            "batalla_naval": "Batalla Naval: Localizá la flota de coordenadas enemigas en la grilla antes de que derriben tus naves.",
-            "scrabble": "Scrabble: Cruzá letras y armá términos de alto valor. Validá palabras complejas.",
-            "tutti_frutti": "Tutti Frutti: Completá casilleros de categorías con la letra del turno a máxima velocidad.",
-            "ahorcado": "Ahorcado: Adiviná la palabra oculta letra por letra antes de completar los 6 errores.",
-            "trivial": "Trivial: Respondé preguntas sobre Arte, Ciencia, Historia y Espectáculos."
+            "rummy": "Rummy: Combiná piernas y escaleras numéricas. Descargá tus fichas antes que los demás.",
+            "truco": "Truco: Estrategia, mentiras y picardía. Administrá los tantos.",
+            "5to jinete": "5to Jinete: El sistema base del universo Sinapsis."
         };
         const visor = document.getElementById('visor-reglas');
         const cuerpo = document.getElementById('reglasCuerpo');
@@ -671,39 +635,41 @@
         
         if (visor && cuerpo) {
             titulo.innerText = "Reglamento: " + juego.toUpperCase();
-            cuerpo.innerText = reglamentos[juego.toLowerCase()] || "Reglas en desarrollo.";
+            cuerpo.innerText = reglamentos[juego.toLowerCase()] || "Reglas en construcción.";
             visor.classList.remove('d-none');
             visor.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            alert("Reglas de " + juego.toUpperCase() + ": " + (reglamentos[juego.toLowerCase()] || "En desarrollo"));
         }
     }
 
-    function cerrarVisorReglas() {
-        document.getElementById('visor-reglas').classList.add('d-none');
+    // --- 3. ANOTADOR Y DADOS (Para que se vean como dados) ---
+    let puntos = 0;
+    function cambiarPuntos(valor) {
+        puntos += valor;
+        const disp = document.getElementById('display-puntos');
+        if(disp) disp.innerText = puntos;
     }
 
     function lanzarDadosEngine() {
         const res = Math.floor(Math.random() * 6) + 1;
-        // Ahora, en lugar de un alert, si tienes un elemento donde mostrarlo, lo usa.
-        // Si no, te muestra un mensaje más amigable.
-        const displayDado = document.getElementById('display-dado');
-        if(displayDado) displayDado.innerText = res;
-        else alert("Resultado del dado: " + res);
+        const dados = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+        const disp = document.getElementById('display-dado');
+        if(disp) disp.innerHTML = `<span style="font-size: 3rem; color: #00F0FF;">${dados[res-1]}</span>`;
+        else alert("Resultado: " + res);
     }
 
-    function validarDiccionario() {
-        const pal = document.getElementById('inputPalabra').value;
-        if(!pal) { alert("Escribí una palabra primero."); return; }
-        alert("Validando léxico: " + pal + "... ¡La palabra es válida en el Diccionario Sinapsis!");
-    }
-
+    // --- 4. RELOJ ---
+    let interval, t = 300, corriendo = false;
     function iniciarReloj() {
-        let t = 300;
         const d = document.getElementById('txtC1');
-        const i = setInterval(() => {
+        if (corriendo) { clearInterval(interval); corriendo = false; return; }
+        corriendo = true;
+        interval = setInterval(() => {
             let m = Math.floor(t / 60);
             let s = t % 60;
             if(d) d.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-            if (t <= 0) { clearInterval(i); alert("¡Tiempo cumplido!"); }
+            if (t <= 0) { clearInterval(interval); alert("Tiempo cumplido"); }
             t--;
         }, 1000);
     }
