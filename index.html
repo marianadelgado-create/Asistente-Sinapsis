@@ -600,17 +600,15 @@
 
 
 <script>
-    // --- 1. SESIÓN ---
-    function gestionarSesion() { localStorage.clear(); location.reload(); }
-    
+    // --- 1. SESIÓN Y PERFIL (Automático) ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
-        if (nombre) {
-            const el = document.getElementById('header-usuario');
-            if (el) el.innerText = nombre;
-        } else {
-            const m = document.getElementById('modalBienvenida');
-            if (m) new bootstrap.Modal(m).show();
+        const header = document.getElementById('header-usuario');
+        if (nombre && header) {
+            header.innerText = nombre;
+        } else if (!nombre) {
+            const modal = new bootstrap.Modal(document.getElementById('modalBienvenida'));
+            modal.show();
         }
     };
 
@@ -619,120 +617,56 @@
         if (n) { localStorage.setItem('user', n); location.reload(); }
     }
 
-    // --- 2. REGLAS (Aquí NO habrá errores) ---
+    // --- 2. REGLAS ---
     function verReglas(juego) {
         const bd = {
             "rummy": "Rummy: Combiná piernas y escaleras numéricas. Descargá tus fichas antes que los demás.",
-            "truco": "Truco: Estrategia, mentiras y picardía. Administrá los tantos.",
-            "5to jinete": "5to Jinete: El sistema base del universo Sinapsis."
+            "truco": "Truco: Estrategia, mentiras y picardía. Administrá los tantos de las malas y las buenas.",
+            "uno": "UNO: Deshacete de tus cartas haciendo coincidir colores o números."
         };
         const v = document.getElementById('visor-reglas'), t = document.getElementById('reglasTitulo'), c = document.getElementById('reglasCuerpo');
         if (v) {
             t.innerText = "Reglamento: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en construcción.";
+            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
             v.classList.remove('d-none');
             v.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
-    function cerrarVisorReglas() { document.getElementById('visor-reglas').classList.add('d-none'); }
-
-    // --- 3. MESA Y ANOTADOR ---
-    let puntos = 0;
+    // --- 3. ANOTADOR DENTRO DE LA TARJETA ---
+    // Esta función busca el lugar donde se abre el juego y pone el anotador ahí
     function iniciarMesa(juego) {
-        document.getElementById('contenedor-asistente').style.display = 'block';
-        document.getElementById('contenido-asistente').innerHTML = `
-            <h3>${juego.toUpperCase()} - MESA ACTIVA</h3>
-            <div class="d-flex align-items-center gap-3 my-3">
-                <button class="btn btn-danger" onclick="cambiarPuntos(-1)">-</button>
-                <span id="display-puntos" class="h2 text-white mx-3">${puntos}</span>
-                <button class="btn btn-success" onclick="cambiarPuntos(1)">+</button>
+        const contenedor = document.getElementById('contenedor-asistente');
+        if (!contenedor) return;
+        contenedor.style.display = 'block';
+        contenedor.innerHTML = `
+            <div class="p-3 bg-dark text-white border border-info rounded">
+                <h4 class="text-center">${juego.toUpperCase()}</h4>
+                <div class="d-flex justify-content-center align-items-center gap-3 my-3">
+                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
+                    <span id="puntos-dinamicos" class="h1">0</span>
+                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
+                </div>
+                <button class="btn btn-sm btn-secondary w-100" onclick="document.getElementById('contenedor-asistente').style.display='none'">Cerrar</button>
             </div>
-            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar</button>
         `;
     }
 
-    function cambiarPuntos(v) { 
-        puntos += v; 
-        const d = document.getElementById('display-puntos'); 
-        if(d) d.innerText = puntos; 
-    }
-
-    // --- 4. DADOS Y RELOJ ---
-    function lanzarDadosEngine() {
-        const d = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-        const res = Math.floor(Math.random() * 6);
-        const div = document.getElementById('display-dado');
-        if(div) div.innerHTML = `<span style="font-size: 3rem; color: #00F0FF;">${d[res]}</span>`;
-    }
-
-    let interval, t = 300;
-    function iniciarReloj() {
-        const d = document.getElementById('txtC1');
-        if(interval) { clearInterval(interval); interval = null; return; }
-        interval = setInterval(() => {
-            let m = Math.floor(t / 60), s = t % 60;
-            if(d) d.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-            if (t <= 0) clearInterval(interval);
-            t--;
-        }, 1000);
-    }
-
-    function validarDiccionario() {
-        const v = document.getElementById('inputPalabra').value;
-        if(v) alert("Validado en Sinapsis: " + v);
-    }
-    
-    // --- 1. SESIÓN ---
-    window.onload = function() {
-        const nombre = localStorage.getItem('user');
-        const header = document.getElementById('header-usuario');
-        if (nombre && header) header.innerText = nombre;
-    };
-
-    // --- 2. REGLAS ---
-    function verReglas(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Jugá por colores o números."
-        };
-        const visor = document.getElementById('visor-reglas');
-        const titulo = document.getElementById('reglasTitulo');
-        const cuerpo = document.getElementById('reglasCuerpo');
-        
-        if (visor) {
-            titulo.innerText = "Reglamento: " + juego.toUpperCase();
-            cuerpo.innerText = bd[juego.toLowerCase()] || "Reglas en construcción.";
-            visor.classList.remove('d-none');
-            visor.scrollIntoView({ behavior: 'smooth' });
+    function sumarPuntos(v) {
+        const d = document.getElementById('puntos-dinamicos');
+        if (d) {
+            let p = parseInt(d.innerText) + v;
+            d.innerText = p;
         }
     }
 
-    // --- 3. MESA Y ANOTADOR (Corregido: 'puntos' definido arriba) ---
-    // Definimos una variable global para que todos los juegos la usen
-    let contadorPuntos = 0;
-
-    function iniciarMesa(nombreJuego) {
-        contadorPuntos = 0; // Reinicia al entrar
-        document.getElementById('contenedor-asistente').style.display = 'block';
-        document.getElementById('contenido-asistente').innerHTML = `
-            <h3 class="text-white">${nombreJuego.toUpperCase()}</h3>
-            <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                <button class="btn btn-danger" onclick="actualizarPuntos(-1)">-</button>
-                <span id="display-puntos" class="h2 text-white">${contadorPuntos}</span>
-                <button class="btn btn-success" onclick="actualizarPuntos(1)">+</button>
-            </div>
-            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
-        `;
+    // --- 4. DADOS Y RELOJ ---
+    function lanzarDados() {
+        const res = Math.floor(Math.random() * 6) + 1;
+        const dados = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+        const disp = document.getElementById('display-dado');
+        if(disp) disp.innerHTML = `<span class="h1">${dados[res-1]}</span>`;
     }
-
-    function actualizarPuntos(valor) { 
-        contadorPuntos += valor; 
-        const disp = document.getElementById('display-puntos'); 
-        if (disp) disp.innerText = contadorPuntos; 
-    }
-
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
