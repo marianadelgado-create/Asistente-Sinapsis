@@ -598,24 +598,40 @@
 
 
 <script>
-    // --- 1. SESIÓN ---
-    function gestionarSesion() { localStorage.clear(); location.reload(); }
+    // --- 1. SESIÓN Y PERFIL (ACTUALIZACIÓN FORZADA) ---
+function gestionarSesion() { 
+    localStorage.clear(); 
+    location.reload(); 
+}
+
+window.onload = function() {
+    const nombre = localStorage.getItem('user');
     
-    window.onload = function() {
-        const nombre = localStorage.getItem('user');
-        if (nombre) {
-            const el = document.getElementById('header-usuario');
-            if (el) el.innerText = nombre;
-        } else {
-            const m = document.getElementById('modalBienvenida');
-            if (m) new bootstrap.Modal(m).show();
-        }
+    // Función interna para actualizar los textos
+    const actualizarPerfil = (nombreGuardado) => {
+        const elementos = document.querySelectorAll('#header-usuario, #texto-login');
+        elementos.forEach(el => {
+            if (el) el.innerText = nombreGuardado;
+        });
     };
 
-    function guardarNombre() {
-        const n = document.getElementById('inputNombre').value;
-        if (n) { localStorage.setItem('user', n); location.reload(); }
+    if (nombre) {
+        // Si hay nombre, lo ponemos inmediatamente
+        actualizarPerfil(nombre);
+    } else {
+        // Si no hay nombre, mostramos el modal
+        const modalElement = document.getElementById('modalBienvenida');
+        if (modalElement) new bootstrap.Modal(modalElement).show();
     }
+};
+
+function guardarNombre() {
+    const input = document.getElementById('inputNombre');
+    if (input && input.value) { 
+        localStorage.setItem('user', input.value); 
+        location.reload(); // Recarga para aplicar el cambio
+    }
+}
 
     // --- 2. REGLAS (Aquí NO habrá errores) ---
     function verReglas(juego) {
