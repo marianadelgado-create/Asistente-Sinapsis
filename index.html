@@ -667,6 +667,22 @@
         const disp = document.getElementById('display-dado');
         if(disp) disp.innerHTML = `<span class="h1">${dados[res-1]}</span>`;
     }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Recuperamos el nombre
+        const nombreGuardado = localStorage.getItem('user');
+        const header = document.getElementById('header-usuario');
+        
+        // 2. Si existe el nombre y el elemento, lo ponemos
+        if (header) {
+            if (nombreGuardado) {
+                header.innerText = nombreGuardado;
+            } else {
+                header.innerText = "Usuario"; // Valor por defecto
+            }
+        }
+    });
+
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
