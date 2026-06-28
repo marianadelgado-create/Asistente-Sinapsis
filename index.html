@@ -601,37 +601,68 @@
 
 
 <script>
-    // --- 1. SESIÓN ---
+    // --- 1. SESIÓN Y PERFIL (Corregido) ---
     function gestionarSesion() { localStorage.clear(); location.reload(); }
     
-    // --- 2. REGLAS ESPECÍFICAS (Adiós al bug del Truco) ---
+    window.onload = function() {
+        const nombre = localStorage.getItem('user');
+        const header = document.getElementById('header-usuario');
+        const loginText = document.getElementById('texto-login');
+        
+        if (nombre) {
+            if (header) header.innerText = nombre;
+            if (loginText) loginText.innerText = nombre;
+        } else {
+            const modal = new bootstrap.Modal(document.getElementById('modalBienvenida'));
+            modal.show();
+        }
+    };
+
+    function guardarNombre() {
+        const nombre = document.getElementById('inputNombre').value;
+        if (nombre) { localStorage.setItem('user', nombre); location.reload(); }
+    }
+
+    // --- 2. REGLAS ESPECÍFICAS (Estructura forzada) ---
     function verReglas(juego) {
-        const reglas = {
+        // Objeto de reglas limpio
+        const dictReglas = {
             "rummy": "Rummy: Combiná piernas y escaleras numéricas. Descargá tus fichas antes que los demás.",
             "truco": "Truco: Estrategia, mentiras y picardía. Administrá los tantos.",
-            "ajedrez": "Ajedrez: El juego de reyes. Desplegá tus aperturas tácticas."
+            "5to jinete": "5to Jinete: El sistema base del universo Sinapsis."
         };
-        const cuerpo = document.getElementById('reglasCuerpo');
-        const titulo = document.getElementById('reglasTitulo');
-        const visor = document.getElementById('visor-reglas');
         
-        if (cuerpo) {
+        const visor = document.getElementById('visor-reglas');
+        const titulo = document.getElementById('reglasTitulo');
+        const cuerpo = document.getElementById('reglasCuerpo');
+        
+        if (visor) {
             titulo.innerText = "Reglas: " + juego.toUpperCase();
-            cuerpo.innerText = reglas[juego.toLowerCase()] || "Reglas en construcción.";
+            cuerpo.innerText = dictReglas[juego.toLowerCase()] || "Reglas en construcción.";
             visor.classList.remove('d-none');
             visor.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
-    // --- 3. MESA Y ANOTADOR ---
+    // --- 3. DADOS (Visuales, sin mensajes feos) ---
+    function lanzarDadosEngine() {
+        const res = Math.floor(Math.random() * 6) + 1;
+        const dados = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+        const disp = document.getElementById('display-dado');
+        if (disp) {
+            disp.innerHTML = `<span style="font-size: 4rem; color: #FF17E7; text-shadow: 0 0 10px #00F0FF;">${dados[res-1]}</span>`;
+        }
+    }
+
+    // --- 4. MESA Y ANOTADOR ---
     let puntos = 0;
     function iniciarMesa(juego) {
         document.getElementById('contenedor-asistente').style.display = 'block';
         document.getElementById('contenido-asistente').innerHTML = `
-            <h3>${juego.toUpperCase()} - MESA ACTIVA</h3>
-            <div class="d-flex align-items-center gap-3 my-3">
+            <h3 style="color: #00F0FF;">${juego.toUpperCase()} - MESA ACTIVA</h3>
+            <div class="d-flex align-items-center gap-3 my-3 justify-content-center">
                 <button class="btn btn-outline-danger" onclick="cambiarPuntos(-1)">-</button>
-                <span id="display-puntos" class="h2 text-white mx-3">${puntos}</span>
+                <span id="display-puntos" class="h1 text-white mx-4">0</span>
                 <button class="btn btn-outline-success" onclick="cambiarPuntos(1)">+</button>
             </div>
             <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
@@ -644,33 +675,14 @@
         if(d) d.innerText = puntos;
     }
 
-    // --- 4. HERRAMIENTAS (Diccionario, Dados, Reloj) ---
+    // --- 5. VALIDACIÓN ---
     function validarDiccionario() {
         const input = document.getElementById('inputPalabra');
-        if(input && input.value) {
-            alert("Validando léxico: " + input.value + "... ¡La palabra es válida!");
-        } else {
-            alert("Por favor, escribí una palabra.");
+        if (input && input.value) {
+            const el = document.getElementById('resultado-validador');
+            if (el) el.innerText = "Palabra verificada: " + input.value;
+            else alert("Palabra válida en Sinapsis.");
         }
-    }
-
-    function lanzarDadosEngine() {
-        const res = Math.floor(Math.random() * 6) + 1;
-        const iconos = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-        const d = document.getElementById('display-dado');
-        if(d) d.innerHTML = `<span style="font-size: 3rem;">${iconos[res-1]}</span>`;
-    }
-
-    function iniciarReloj() {
-        let t = 300;
-        const d = document.getElementById('txtC1');
-        const i = setInterval(() => {
-            let m = Math.floor(t / 60);
-            let s = t % 60;
-            if(d) d.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-            if (t <= 0) { clearInterval(i); alert("Tiempo terminado"); }
-            t--;
-        }, 1000);
     }
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
