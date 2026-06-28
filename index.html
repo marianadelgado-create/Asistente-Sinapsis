@@ -442,11 +442,7 @@
             </div>
             <div class="p-4 rounded style-rules-box" id="reglasCuerpo"></div>
         </div>
-    </div>
-
-    
-
-        
+    </div>      
     </section>
 <section id="dashboard-seccion" class="container py-5">
     <div class="dashboard-card p-4 mb-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
@@ -460,14 +456,12 @@
                 <span class="text-cyan fw-bold font-tech" id="txtEstado">Sincronizado</span>
             </div>
         </div>
-        <div id="area-de-trabajo" class="container my-4">
-    <div id="panel-maestro" class="d-none p-4 bg-dark text-white rounded border border-cyan">
-        <h4 id="panel-titulo">Seleccioná un juego</h4>
-        <div class="d-flex align-items-center gap-3">
-            <button onclick="restarPunto()" class="btn btn-outline-danger">-</button>
-            <span id="display-puntos" class="h3">0</span>
-            <button onclick="sumarPunto()" class="btn btn-outline-success">+</button>
-        </div>
+        <div id="panel-maestro" class="p-4 bg-dark text-white rounded border border-info my-4">
+    <h4 id="panel-titulo">Anotador de Juego</h4>
+    <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+        <button onclick="cambiarPuntos(-1)" class="btn btn-outline-danger">-</button>
+        <span id="display-puntos" class="h1">0</span>
+        <button onclick="cambiarPuntos(1)" class="btn btn-outline-success">+</button>
     </div>
 </div>
 <div id="panel-maestro" class="p-3 bg-dark border border-info">
@@ -486,7 +480,7 @@
             <div class="col-md-4">
                 <div class="p-3 bg-dark rounded border border-cyan text-center">
                     <h5 class="text-cyan">Reloj Fischer</h5>
-                    <div id="txtC1" class="h2 text-white">05:00</div>
+                    <div id="display-reloj" class="h2 text-white">05:00</div>
                     <button class="btn btn-sm btn-outline-light" onclick="iniciarReloj()">Iniciar</button>
                 </div>
             </div>
@@ -624,142 +618,35 @@
         }
     };
 
-    // --- 2. MOTOR DE MESA (Unificado para todas las funciones) ---
-    window.iniciarMesa = function(juego) {
-        const contenedor = document.getElementById('contenedor-asistente');
-        if (!contenedor) return alert("Error: No se encontró el área de juego.");
-        
-        contenedor.style.display = 'block';
-        // Limpiamos el contenido anterior antes de inyectar el nuevo
-        contenedor.querySelector('#contenido-asistente').innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
-                </div>
-            </div>
-        `;
+    // --- 2. ANOTADOR ---
+    window.cambiarPuntos = function(v) {
+        const d = document.getElementById('display-puntos');
+        if(d) d.innerText = parseInt(d.innerText) + v;
     };
 
-    window.sumarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos');
-        if (d) d.innerText = parseInt(d.innerText || 0) + v;
-    };
-
-    // --- 3. REGLAS ---
-    window.verReglas = function(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Deshacete de tus cartas.",
-            "ajedrez": "Ajedrez: Juego de estrategia de reyes.",
-            "damas": "Damas: Captura piezas en diagonal.",
-            "teg": "T.E.G.: Conquistá continentes."
-        };
-        const v = document.getElementById('visor-reglas');
-        const t = document.getElementById('reglasTitulo');
-        const c = document.getElementById('reglasCuerpo');
-        if (v && t && c) {
-            t.innerText = "Reglamento: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
-            v.classList.remove('d-none');
-            v.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-    // --- 4. DADOS Y RELOJ ---
-    window.lanzarDadosEngine = function() {
-        const d = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerText = res;
-    };
-
+    // --- 3. RELOJ FISCHER ---
     window.iniciarReloj = function() {
-        let segundos = 300;
-        const disp = document.getElementById('txtC1');
-        const intervalo = setInterval(() => {
-            segundos--;
-            let m = Math.floor(segundos / 60);
-            let s = segundos % 60;
-            if (disp) disp.innerText = `${m}:${s < 10 ? '0' + s : s}`;
-            if (segundos <= 0) clearInterval(intervalo);
+        let t = 300;
+        const d = document.getElementById('display-reloj');
+        if(!d) return;
+        const interval = setInterval(() => {
+            t--;
+            d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
+            if(t <= 0) clearInterval(interval);
         }, 1000);
     };
 
-    window.abrirLibreta = function() {
-        document.getElementById('seccion-libreta').classList.remove('d-none');
-        document.getElementById('seccion-libreta').scrollIntoView({ behavior: 'smooth' });
+    // --- 4. DADOS ---
+    window.lanzarDadosEngine = function() {
+        const d = document.getElementById('display-dado');
+        if(d) d.innerText = Math.floor(Math.random() * 6) + 1;
     };
 
-    // Función auxiliar para botones genéricos
-    window.activarAsistente = function(juego) { iniciarMesa(juego); };
-    
-    // --- DIAGNÓSTICO DE SESIÓN ---
-    window.gestionarSesion = function() {
-        if (localStorage.getItem('user')) {
-            localStorage.removeItem('user');
-            location.reload();
-        } else {
-            const nombre = prompt("¿Cómo te llamas?");
-            if (nombre) {
-                localStorage.setItem('user', nombre);
-                location.reload();
-            }
-        }
+    // --- 5. VALIDADOR ---
+    window.validarDiccionario = function() {
+        const p = document.getElementById('inputPalabra').value;
+        if(p) alert("Validando: " + p);
     };
-
-    // --- DIAGNÓSTICO DE MESA ---
-    window.iniciarMesa = function(juego) {
-        // Buscamos el contenedor por el ID que tienes en el HTML (contenedor-asistente)
-        const c = document.getElementById('contenedor-asistente');
-        if (!c) {
-            alert("No encuentro el elemento con ID 'contenedor-asistente'. Revisa tu HTML.");
-            return;
-        }
-        
-        c.style.display = 'block';
-        
-        // Buscamos el elemento interno
-        const interno = document.getElementById('contenido-asistente');
-        if (!interno) {
-            alert("No encuentro el elemento 'contenido-asistente' dentro del contenedor.");
-            return;
-        }
-
-        interno.innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
-                </div>
-            </div>
-        `;
-    };
-
-    window.sumarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos');
-        if (!d) {
-            alert("No se encuentra el contador de puntos (ID: puntos-dinamicos).");
-        } else {
-            d.innerText = parseInt(d.innerText) + v;
-        }
-    };
-
-    // --- DIAGNÓSTICO DE LIBRETA ---
-    window.abrirLibreta = function() {
-        const s = document.getElementById('seccion-libreta');
-        if (!s) {
-            alert("No encuentro la sección con ID 'seccion-libreta'.");
-        } else {
-            s.classList.remove('d-none');
-            s.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
