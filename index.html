@@ -595,17 +595,18 @@
 
 
 <script>
-    // --- 1. SESIÓN Y BIENVENIDA ---
+    // --- 1. SESIÓN Y PERFIL ---
+    function gestionarSesion() { localStorage.clear(); location.reload(); }
+    
     window.onload = function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
             const headerUsuario = document.getElementById('header-usuario');
-            if (headerUsuario) headerUsuario.innerText = "Hola, " + nombre;
+            if (headerUsuario) headerUsuario.innerText = nombre;
         } else {
             const modalElement = document.getElementById('modalBienvenida');
             if (modalElement) new bootstrap.Modal(modalElement).show();
         }
-        cargarHistorial();
     };
 
     function guardarNombre() {
@@ -615,25 +616,24 @@
 
     // --- 2. NAVEGACIÓN ---
     function abrirLibreta() {
-        const seccion = document.getElementById('seccion-libreta');
-        if (seccion) { seccion.classList.remove('d-none'); seccion.scrollIntoView({ behavior: 'smooth' }); }
+        const sec = document.getElementById('seccion-libreta');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth' });
     }
 
-    // --- 3. MESA VIRTUAL (Juegos) ---
-    function iniciarMesa(nombreJuego) {
+    // --- 3. MESA DE JUEGOS Y ANOTADOR ---
+    function iniciarMesa(juego) {
         document.getElementById('contenedor-asistente').style.display = 'block';
         document.getElementById('contenido-asistente').innerHTML = `
-            <h3>${nombreJuego.toUpperCase()} - MESA ACTIVA</h3>
+            <h3>${juego.toUpperCase()} - MESA ACTIVA</h3>
             <div class="d-flex align-items-center gap-3 my-3">
                 <button class="btn btn-outline-danger" onclick="cambiarPuntos(-1)">-</button>
-                <span id="display-puntos" class="h2 text-white">0</span>
+                <span id="display-puntos" class="h2 text-white mx-3">0</span>
                 <button class="btn btn-outline-success" onclick="cambiarPuntos(1)">+</button>
             </div>
             <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
         `;
     }
 
-    // --- 4. HERRAMIENTAS (Reloj, Dados, Puntos, Reglas) ---
     let puntos = 0;
     function cambiarPuntos(valor) {
         puntos += valor;
@@ -641,36 +641,27 @@
         if(disp) disp.innerText = puntos;
     }
 
+    // --- 4. HERRAMIENTAS (Reloj, Dados, Reglas) ---
+    function verReglas(juego) {
+        const regs = { "Rummy": "Reglas Rummy: ...", "Truco": "Reglas Truco: ...", "5to Jinete": "..." };
+        alert(regs[juego] || "Reglas en desarrollo");
+    }
+
     function lanzarDadosEngine() {
         const res = Math.floor(Math.random() * 6) + 1;
-        const disp = document.getElementById('display-dado');
-        if(disp) disp.innerText = res;
-        else alert("Resultado: " + res);
+        alert("Resultado del dado: " + res);
     }
 
     function iniciarReloj() {
-        let tiempo = 300;
-        const display = document.getElementById('txtC1');
-        const interval = setInterval(() => {
-            let m = Math.floor(tiempo / 60);
-            let s = tiempo % 60;
-            if(display) display.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-            if (tiempo <= 0) clearInterval(interval);
-            tiempo--;
+        let t = 300;
+        const d = document.getElementById('txtC1');
+        const i = setInterval(() => {
+            let m = Math.floor(t / 60);
+            let s = t % 60;
+            if(d) d.textContent = `${m}:${s < 10 ? '0'+s : s}`;
+            if (t <= 0) clearInterval(i);
+            t--;
         }, 1000);
-    }
-
-    function verReglas(juego) {
-        const reglamentos = {
-            "Rummy": "Reglas Rummy: Formar tríos o escaleras.",
-            "Truco": "Reglas Truco: 3 cartas, envido, truco.",
-            "5to Jinete": "Reglas 5to Jinete: La esencia del sistema..."
-        };
-        alert(reglamentos[juego] || "Reglas en construcción.");
-    }
-
-    function cargarHistorial() {
-        console.log("Historial cargado");
     }
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
