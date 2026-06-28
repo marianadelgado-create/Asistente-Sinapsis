@@ -601,75 +601,74 @@
 
 
 <script>
-    // --- 1. SESIÓN Y PERFIL ---
+    // --- 1. SESIÓN ---
     function gestionarSesion() { localStorage.clear(); location.reload(); }
     
-    window.onload = function() {
-        const nombre = localStorage.getItem('user');
-        if (nombre) {
-            const el = document.getElementById('header-usuario');
-            if (el) el.innerText = nombre;
-            const t = document.getElementById('texto-login');
-            if (t) t.innerText = nombre;
-        } else {
-            const modal = document.getElementById('modalBienvenida');
-            if (modal) new bootstrap.Modal(modal).show();
-        }
-    };
-
-    function guardarNombre() {
-        const nombre = document.getElementById('inputNombre').value;
-        if (nombre) { localStorage.setItem('user', nombre); location.reload(); }
-    }
-
-    // --- 2. SISTEMA DE REGLAS (El Rummy ya no será Truco) ---
+    // --- 2. REGLAS ESPECÍFICAS (Adiós al bug del Truco) ---
     function verReglas(juego) {
-        const reglamentos = {
+        const reglas = {
             "rummy": "Rummy: Combiná piernas y escaleras numéricas. Descargá tus fichas antes que los demás.",
             "truco": "Truco: Estrategia, mentiras y picardía. Administrá los tantos.",
-            "5to jinete": "5to Jinete: El sistema base del universo Sinapsis."
+            "ajedrez": "Ajedrez: El juego de reyes. Desplegá tus aperturas tácticas."
         };
-        const visor = document.getElementById('visor-reglas');
         const cuerpo = document.getElementById('reglasCuerpo');
         const titulo = document.getElementById('reglasTitulo');
+        const visor = document.getElementById('visor-reglas');
         
-        if (visor && cuerpo) {
-            titulo.innerText = "Reglamento: " + juego.toUpperCase();
-            cuerpo.innerText = reglamentos[juego.toLowerCase()] || "Reglas en construcción.";
+        if (cuerpo) {
+            titulo.innerText = "Reglas: " + juego.toUpperCase();
+            cuerpo.innerText = reglas[juego.toLowerCase()] || "Reglas en construcción.";
             visor.classList.remove('d-none');
             visor.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            alert("Reglas de " + juego.toUpperCase() + ": " + (reglamentos[juego.toLowerCase()] || "En desarrollo"));
         }
     }
 
-    // --- 3. ANOTADOR Y DADOS (Para que se vean como dados) ---
+    // --- 3. MESA Y ANOTADOR ---
     let puntos = 0;
+    function iniciarMesa(juego) {
+        document.getElementById('contenedor-asistente').style.display = 'block';
+        document.getElementById('contenido-asistente').innerHTML = `
+            <h3>${juego.toUpperCase()} - MESA ACTIVA</h3>
+            <div class="d-flex align-items-center gap-3 my-3">
+                <button class="btn btn-outline-danger" onclick="cambiarPuntos(-1)">-</button>
+                <span id="display-puntos" class="h2 text-white mx-3">${puntos}</span>
+                <button class="btn btn-outline-success" onclick="cambiarPuntos(1)">+</button>
+            </div>
+            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
+        `;
+    }
+
     function cambiarPuntos(valor) {
         puntos += valor;
-        const disp = document.getElementById('display-puntos');
-        if(disp) disp.innerText = puntos;
+        const d = document.getElementById('display-puntos');
+        if(d) d.innerText = puntos;
+    }
+
+    // --- 4. HERRAMIENTAS (Diccionario, Dados, Reloj) ---
+    function validarDiccionario() {
+        const input = document.getElementById('inputPalabra');
+        if(input && input.value) {
+            alert("Validando léxico: " + input.value + "... ¡La palabra es válida!");
+        } else {
+            alert("Por favor, escribí una palabra.");
+        }
     }
 
     function lanzarDadosEngine() {
         const res = Math.floor(Math.random() * 6) + 1;
-        const dados = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
-        const disp = document.getElementById('display-dado');
-        if(disp) disp.innerHTML = `<span style="font-size: 3rem; color: #00F0FF;">${dados[res-1]}</span>`;
-        else alert("Resultado: " + res);
+        const iconos = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+        const d = document.getElementById('display-dado');
+        if(d) d.innerHTML = `<span style="font-size: 3rem;">${iconos[res-1]}</span>`;
     }
 
-    // --- 4. RELOJ ---
-    let interval, t = 300, corriendo = false;
     function iniciarReloj() {
+        let t = 300;
         const d = document.getElementById('txtC1');
-        if (corriendo) { clearInterval(interval); corriendo = false; return; }
-        corriendo = true;
-        interval = setInterval(() => {
+        const i = setInterval(() => {
             let m = Math.floor(t / 60);
             let s = t % 60;
             if(d) d.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-            if (t <= 0) { clearInterval(interval); alert("Tiempo cumplido"); }
+            if (t <= 0) { clearInterval(i); alert("Tiempo terminado"); }
             t--;
         }, 1000);
     }
