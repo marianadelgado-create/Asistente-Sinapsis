@@ -594,10 +594,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
-   <script>
-    // --- 1. GESTIÓN DE SESIÓN ---
-    function gestionarSesion() { localStorage.clear(); location.reload(); }
-
+<script>
+    // --- 1. SESIÓN Y BIENVENIDA ---
     window.onload = function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
@@ -607,6 +605,7 @@
             const modalElement = document.getElementById('modalBienvenida');
             if (modalElement) new bootstrap.Modal(modalElement).show();
         }
+        cargarHistorial();
     };
 
     function guardarNombre() {
@@ -614,35 +613,41 @@
         if (nombre) { localStorage.setItem('user', nombre); location.reload(); }
     }
 
-    // --- 2. NAVEGACIÓN Y LIBRETA ---
+    // --- 2. NAVEGACIÓN ---
     function abrirLibreta() {
-        const libreta = document.getElementById('seccion-libreta');
-        if (libreta) {
-            libreta.classList.remove('d-none');
-            libreta.scrollIntoView({ behavior: 'smooth' });
-        }
+        const seccion = document.getElementById('seccion-libreta');
+        if (seccion) { seccion.classList.remove('d-none'); seccion.scrollIntoView({ behavior: 'smooth' }); }
     }
 
-    // --- 3. SISTEMA DE MESA VIRTUAL ---
-    let mesaActual = { juego: null, jugadores: [], puntuaciones: {} };
-
+    // --- 3. MESA VIRTUAL (Juegos) ---
     function iniciarMesa(nombreJuego) {
-        let input = prompt("Jugadores (separados por coma):", "Mariana, Jugador 2");
-        if (!input) return;
-        mesaActual.juego = nombreJuego;
-        mesaActual.jugadores = input.split(',').map(n => n.trim());
         document.getElementById('contenedor-asistente').style.display = 'block';
-        renderizarTablero();
+        document.getElementById('contenido-asistente').innerHTML = `
+            <h3>${nombreJuego.toUpperCase()} - MESA ACTIVA</h3>
+            <div class="d-flex align-items-center gap-3 my-3">
+                <button class="btn btn-outline-danger" onclick="cambiarPuntos(-1)">-</button>
+                <span id="display-puntos" class="h2 text-white">0</span>
+                <button class="btn btn-outline-success" onclick="cambiarPuntos(1)">+</button>
+            </div>
+            <button class="btn btn-outline-light" onclick="location.reload()">Cerrar Mesa</button>
+        `;
     }
 
-    function renderizarTablero() {
-        const cont = document.getElementById('contenido-asistente');
-        if (cont) {
-            cont.innerHTML = `<h3>${mesaActual.juego} ACTIVO</h3><button class="btn btn-outline-light" onclick="location.reload()">Cerrar</button>`;
-        }
+    // --- 4. HERRAMIENTAS (Reloj, Dados, Puntos, Reglas) ---
+    let puntos = 0;
+    function cambiarPuntos(valor) {
+        puntos += valor;
+        const disp = document.getElementById('display-puntos');
+        if(disp) disp.innerText = puntos;
     }
 
-    // --- 4. HERRAMIENTAS LIBRETA ---
+    function lanzarDadosEngine() {
+        const res = Math.floor(Math.random() * 6) + 1;
+        const disp = document.getElementById('display-dado');
+        if(disp) disp.innerText = res;
+        else alert("Resultado: " + res);
+    }
+
     function iniciarReloj() {
         let tiempo = 300;
         const display = document.getElementById('txtC1');
@@ -655,14 +660,18 @@
         }, 1000);
     }
 
-    function lanzarDadosEngine() {
-        alert("Resultado: " + (Math.floor(Math.random() * 6) + 1));
+    function verReglas(juego) {
+        const reglamentos = {
+            "Rummy": "Reglas Rummy: Formar tríos o escaleras.",
+            "Truco": "Reglas Truco: 3 cartas, envido, truco.",
+            "5to Jinete": "Reglas 5to Jinete: La esencia del sistema..."
+        };
+        alert(reglamentos[juego] || "Reglas en construcción.");
     }
 
-    function validarDiccionario() {
-        alert("Validando: " + document.getElementById('inputPalabra').value);
+    function cargarHistorial() {
+        console.log("Historial cargado");
     }
-// Cierre del script principal
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
