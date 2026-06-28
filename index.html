@@ -613,17 +613,11 @@
         }
     }
 
-    // Inicialización al cargar la página
-    document.addEventListener("DOMContentLoaded", function() {
-        const nombre = localStorage.getItem('user');
-        const headers = document.querySelectorAll('#header-usuario, #texto-login');
-        headers.forEach(h => { if(nombre) h.innerText = nombre; });
-    });
-
     // --- 2. MOTOR DE JUEGOS Y ANOTADOR ---
-    function iniciarMesa(juego) {
+    window.iniciarMesa = function(juego) {
         const contenedor = document.getElementById('contenedor-asistente');
-        if (!contenedor) return;
+        if (!contenedor) return alert("Error: No se encontró el área de juego.");
+        
         contenedor.style.display = 'block';
         contenedor.innerHTML = `
             <div class="p-3 bg-dark text-white border border-info rounded">
@@ -633,52 +627,50 @@
                     <span id="puntos-dinamicos" class="h1">0</span>
                     <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
                 </div>
-                <button class="btn btn-sm btn-secondary w-100" onclick="this.parentElement.parentElement.style.display='none'">Cerrar</button>
+                <button class="btn btn-secondary w-100" onclick="document.getElementById('contenedor-asistente').style.display='none'">Cerrar</button>
             </div>
         `;
-    }
+    };
 
-    function sumarPuntos(v) {
+    window.sumarPuntos = function(v) {
         const d = document.getElementById('puntos-dinamicos');
         if (d) d.innerText = parseInt(d.innerText) + v;
-    }
+    };
 
-    // --- 3. REGLAS Y DADOS ---
-    function verReglas(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia y picardía.",
-            "uno": "UNO: Coincidencia de color y número."
-        };
-        const v = document.getElementById('visor-reglas'), t = document.getElementById('reglasTitulo'), c = document.getElementById('reglasCuerpo');
-        if (v && t && c) {
-            t.innerText = "Reglas: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
-            v.classList.remove('d-none');
-            v.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    function lanzarDadosEngine() {
-        const disp = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (disp) disp.innerHTML = `<span class="h1">${res}</span>`;
-    }
-
-    // --- 4. RELOJ FISCHER ---
-    function iniciarReloj() {
-        let tiempo = 300; 
+    // --- 3. RELOJ FISCHER ---
+    window.iniciarReloj = function() {
+        let tiempo = 300; // 5 min
         const d = document.getElementById('display-reloj');
-        if(!d) return alert("Reloj no encontrado en pantalla");
+        if(!d) return alert("Reloj no localizado en pantalla");
         
-        const interval = setInterval(() => {
+        // Limpiamos intervalos previos si existieran
+        if(window.timerInterval) clearInterval(window.timerInterval);
+        
+        window.timerInterval = setInterval(() => {
             tiempo--;
             let m = Math.floor(tiempo / 60);
             let s = tiempo % 60;
             d.innerText = `${m}:${s < 10 ? '0' + s : s}`;
-            if (tiempo <= 0) clearInterval(interval);
+            if (tiempo <= 0) clearInterval(window.timerInterval);
         }, 1000);
-    }
+    };
+
+    // --- 4. UTILIDADES ---
+    window.lanzarDados = function() {
+        const disp = document.getElementById('display-dado');
+        const res = Math.floor(Math.random() * 6) + 1;
+        if (disp) disp.innerText = res;
+    };
+
+    window.verReglas = function(juego) { alert("Reglas de " + juego + " activas."); };
+    window.abrirLibreta = function() { alert("Libreta abierta."); };
+
+    // --- 5. CARGA INICIAL ---
+    document.addEventListener("DOMContentLoaded", function() {
+        const nombre = localStorage.getItem('user');
+        const elements = document.querySelectorAll('#header-usuario, #texto-login');
+        elements.forEach(el => { if(nombre) el.innerText = nombre; });
+    });
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
