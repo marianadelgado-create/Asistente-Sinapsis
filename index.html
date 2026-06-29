@@ -583,8 +583,8 @@
 <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // --- 1. GESTIÓN DE USUARIO (EL LOGIN) ---
-    // Esta función maneja el ingreso y guardado del nombre
+    // --- 1. GESTIÓN DE USUARIO (UNIFICADA) ---
+    // Función para manejar login/registro y cierre de sesión
     window.gestionarSesion = function() {
         const nombreActual = localStorage.getItem('user');
         if (nombreActual) {
@@ -600,7 +600,7 @@
         location.reload();
     };
 
-    // Esto actualiza automáticamente el nombre en pantalla al cargar
+    // Actualizar nombre en pantalla automáticamente
     document.addEventListener("DOMContentLoaded", function() {
         const nombre = localStorage.getItem('user');
         const elementos = document.querySelectorAll('#header-usuario, #texto-login');
@@ -609,7 +609,11 @@
         }
     });
 
-    // --- 2. ANOTADOR Y JUEGOS ---
+    // --- 2. SISTEMA DE JUEGOS Y ANOTADOR ---
+    // Alias para conectar botones viejos (sumarPunto/restarPunto) con la lógica nueva
+    window.sumarPunto = function() { cambiarPuntos(1); };
+    window.restarPunto = function() { cambiarPuntos(-1); };
+
     window.cambiarPuntos = function(v) {
         const d = document.getElementById('display-puntos');
         if (d) {
@@ -617,14 +621,26 @@
         }
     };
 
-    // --- 3. DADOS ---
+    // Función para activar mesas
+    window.activarAsistente = function(juego) {
+        const c = document.getElementById('contenedor-asistente');
+        if (c) {
+            c.style.display = 'block';
+            const cont = document.getElementById('contenido-asistente');
+            if (cont) cont.innerHTML = `<h4>Mesa de: ${juego.toUpperCase()}</h4>`;
+        }
+    };
+    
+    // Alias para iniciarMesa
+    window.iniciarMesa = function(juego) { activarAsistente(juego); };
+
+    // --- 3. DADOS Y RELOJ ---
     window.lanzarDadosEngine = function() {
         const d = document.getElementById('display-dado');
         const res = Math.floor(Math.random() * 6) + 1;
         if (d) d.innerText = res;
     };
 
-    // --- 4. RELOJ FISCHER ---
     window.iniciarReloj = function() {
         let t = 300;
         const d = document.getElementById('display-reloj');
@@ -637,12 +653,12 @@
         }
     };
 
-    // --- 5. LIBRETA ---
+    // --- 4. LIBRETA ---
     window.abrirLibreta = function() {
-        alert("Abriendo Libreta...");
+        const lib = document.getElementById('seccion-libreta');
+        if (lib) lib.classList.remove('d-none');
     };
 </script>
-
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background-color: #21034D; border: 1px solid #00F0FF; color: white;">
