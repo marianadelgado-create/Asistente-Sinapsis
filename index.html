@@ -582,60 +582,48 @@
 <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-/**
- * SISTEMA SINAPSIS - NÚCLEO CENTRAL (Fase 1)
- * Este archivo unifica la lógica de usuario, mesas y libreta.
- */
+(function() {
+    console.log("Sistema Sinapsis iniciado correctamente.");
 
-const Sinapsis = {
-    // 1. GESTIÓN DE USUARIO
-    initAuth: function() {
-        const nombre = localStorage.getItem('user');
-        const header = document.getElementById('header-usuario');
-        if (header) header.innerText = nombre ? `Hola, ${nombre}` : "Invitado";
-    },
-
-    toggleSesion: function() {
+    // Gestión de Usuario
+    window.gestionarSesion = function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
             localStorage.removeItem('user');
-            alert("Sesión cerrada.");
         } else {
             const nuevo = prompt("¿Cómo te llamas?");
             if (nuevo) localStorage.setItem('user', nuevo);
         }
         location.reload();
-    },
+    };
 
-    // 2. SISTEMA DE MESAS (Motor Único)
-    iniciarMesa: function(tipoJuego) {
-        console.log("Iniciando:", tipoJuego);
-        // Aquí centralizamos la apertura de mesas
-        const mesa = document.getElementById('contenedor-asistente');
-        if (mesa) {
-            mesa.classList.remove('d-none');
-            // Cargar lógica específica según el juego
-            this.renderMesa(tipoJuego);
-        }
-    },
-
-    renderMesa: function(juego) {
-        // Lógica para adaptar la mesa (Truco vs Generala, etc.)
-        const panel = document.getElementById('contenido-asistente');
-        panel.innerHTML = `<h3>Mesa de ${juego}</h3><div id="display-puntos">0</div>`;
-    },
-
-    // 3. UTILIDADES (Dados, Reloj)
-    cambiarPuntos: function(v) {
+    // Anotador de puntos
+    window.cambiarPuntos = function(v) {
         const d = document.getElementById('display-puntos');
-        if (d) d.innerText = parseInt(d.innerText || 0) + v;
-    }
-};
+        if (d) {
+            d.innerText = parseInt(d.innerText || 0) + v;
+        } else {
+            alert("Error: No se encuentra el marcador (display-puntos).");
+        }
+    };
 
-// INICIALIZACIÓN
-document.addEventListener('DOMContentLoaded', () => {
-    Sinapsis.initAuth();
-});
+    // Sistema de Juegos
+    window.iniciarMesa = function(juego) {
+        const c = document.getElementById('contenedor-asistente');
+        if (c) {
+            c.style.display = 'block';
+            console.log("Iniciando mesa de: " + juego);
+        } else {
+            alert("Error: Contenedor de mesa no encontrado.");
+        }
+    };
+
+    // Funciones básicas
+    window.lanzarDadosEngine = function() {
+        const d = document.getElementById('display-dado');
+        if (d) d.innerText = Math.floor(Math.random() * 6) + 1;
+    };
+})();
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
