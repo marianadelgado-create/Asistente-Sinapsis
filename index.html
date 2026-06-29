@@ -582,72 +582,69 @@
 <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // --- 1. GESTIÓN DE USUARIO (Persistente) ---
-    function actualizarUIUsuario() {
-        const nombre = localStorage.getItem('user');
-        const display = document.getElementById('header-usuario');
-        if (display) display.innerText = nombre || "Invitado";
-    }
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Sistema Sinapsis: Cargando módulos...");
 
+    // 1. GESTIÓN DE USUARIO
     window.gestionarSesion = function() {
-        const actual = localStorage.getItem('user');
-        if (actual) {
+        const nombre = localStorage.getItem('user');
+        if (nombre) {
             localStorage.removeItem('user');
         } else {
-            const nuevo = prompt("Ingresa tu nombre:");
+            const nuevo = prompt("¿Cómo te llamas?");
             if (nuevo) localStorage.setItem('user', nuevo);
         }
         location.reload();
     };
 
-    // --- 2. ANOTADOR DE PUNTOS ---
-    window.cambiarPuntos = function(delta) {
-        const display = document.getElementById('display-puntos');
-        if (display) {
-            let valor = parseInt(display.innerText) || 0;
-            display.innerText = valor + delta;
+    const nombreGuardado = localStorage.getItem('user');
+    const displayUser = document.getElementById('header-usuario');
+    if (displayUser && nombreGuardado) displayUser.innerText = nombreGuardado;
+
+    // 2. ANOTADOR DE PUNTOS
+    window.cambiarPuntos = function(v) {
+        const d = document.getElementById('display-puntos');
+        if (d) {
+            d.innerText = parseInt(d.innerText || 0) + v;
         } else {
-            alert("Error: No encuentro el marcador de puntos en el HTML.");
+            console.error("Error: No encuentro el elemento 'display-puntos'");
         }
     };
 
-    // --- 3. MOTOR DE MESA Y PARTICIPANTES ---
-    window.iniciarMesa = function(juego) {
-        const cont = document.getElementById('contenedor-asistente');
-        if (cont) {
-            cont.classList.remove('d-none');
-            // Aquí puedes inyectar lógica de participantes si la necesitas
-            console.log("Iniciando mesa de: " + juego);
-        }
-    };
-
-    // --- 4. DADOS Y RELOJ ---
-    window.lanzarDados = function() {
+    // 3. DADOS
+    window.lanzarDadosEngine = function() {
         const d = document.getElementById('display-dado');
-        if (d) d.innerText = Math.floor(Math.random() * 6) + 1;
+        const res = Math.floor(Math.random() * 6) + 1;
+        if (d) d.innerText = res;
     };
 
+    // 4. RELOJ
     window.iniciarReloj = function() {
         let t = 300;
         const d = document.getElementById('display-reloj');
-        if (!d) return;
-        const interval = setInterval(() => {
-            t--;
-            d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
-            if (t <= 0) clearInterval(interval);
-        }, 1000);
-    };
-
-    // --- 5. VALIDADOR ---
-    window.validarDiccionario = function() {
-        const input = document.getElementById('inputPalabra');
-        if (input && input.value) {
-            alert("Validando palabra: " + input.value);
+        if (d) {
+            setInterval(() => {
+                t--;
+                d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
+            }, 1000);
         }
     };
 
-    // Inicializar al cargar
-    document.addEventListener("DOMContentLoaded", actualizarUIUsuario);
+    // 5. LIBRETA Y MESA
+    window.abrirLibreta = function() {
+        const s = document.getElementById('seccion-libreta');
+        if (s) s.classList.remove('d-none');
+    };
+
+    window.iniciarMesa = function(juego) {
+        const c = document.getElementById('contenedor-asistente');
+        if (c) {
+            c.style.display = 'block';
+            const tit = document.getElementById('panel-titulo');
+            if (tit) tit.innerText = juego;
+        }
+    };
+});
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
