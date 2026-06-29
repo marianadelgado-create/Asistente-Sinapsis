@@ -2,115 +2,62 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Sinapsis | Ecosistema Alma en Foco</title>
+    <title>SINAPSIS | Ecosistema Oficial</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root { --cyan: #00f2fe; --dark: #050505; }
-        body { background: var(--dark); color: #fff; font-family: 'Segoe UI', sans-serif; }
+        body { background: var(--dark); color: #fff; font-family: 'Inter', sans-serif; }
         
-        /* Navbar mejorada */
-        .navbar { border-bottom: 2px solid var(--cyan); background: #000; padding: 1rem 2rem; }
+        .navbar { border-bottom: 1px solid #333; background: #000; padding: 1.5rem 3rem; }
+        .brand-text { font-size: 1.5rem; letter-spacing: 2px; }
         
-        /* Tarjetas de juego con mejor contraste */
-        .card-sinapsis { 
-            background: #111; 
-            border: 1px solid #333; 
-            border-radius: 15px; 
-            padding: 30px; 
-            transition: 0.4s; 
+        /* Dashboard Mejorado */
+        .game-card { 
+            background: #0f0f0f; 
+            border: 1px solid #222; 
+            border-radius: 20px; 
+            padding: 40px; 
+            transition: 0.3s;
+            height: 100%;
         }
-        .card-sinapsis:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,242,254,0.2); }
-        .text-game-type { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        .game-card:hover { border-color: var(--cyan); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .game-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .game-subtitle { color: var(--cyan); text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem; margin-bottom: 2rem; }
         
-        /* Botón de acción */
-        .btn-cyan { background: var(--cyan); color: #000; font-weight: bold; border: none; }
-        
-        /* Área de Log */
-        .log-area { height: 300px; overflow-y: auto; background: #0a0a0a; border: 1px solid var(--cyan); padding: 20px; border-radius: 10px; font-family: 'Courier New'; color: var(--cyan); }
+        .btn-main { background: var(--cyan); color: #000; border-radius: 50px; padding: 12px 30px; font-weight: 800; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
     <nav class="navbar navbar-dark">
-        <span class="navbar-brand fw-bold fs-4">SINAPSIS v1.1 <small class="text-muted">| Alma en Foco</small></span>
+        <div class="brand-text fw-bold">SINAPSIS <span class="text-muted">| Alma en Foco</span></div>
         <div class="text-cyan fw-bold fs-5">Mariana Delgado</div>
     </nav>
 
-    <main class="container py-5">
-        <!-- Dashboard -->
-        <div id="dashboard">
-            <h2 class="mb-4 text-white">Ecosistema de Juegos</h2>
-            <div class="row g-4" id="game-gallery"></div>
-        </div>
-
-        <!-- Mesa de Control (Oculta hasta seleccionar) -->
-        <div id="mesa-view" style="display:none;" class="py-4">
-            <button class="btn btn-outline-light mb-4" onclick="Sinapsis.UI.goBack()">← Volver al Dashboard</button>
-            <h2 id="mesa-title" class="text-cyan mb-4"></h2>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="d-grid gap-3">
-                        <button class="btn btn-outline-info p-3" onclick="Sinapsis.util.lanzarDado()">🎲 Lanzar Dado</button>
-                        <button class="btn btn-outline-info p-3" onclick="Sinapsis.util.iniciarReloj()">⏱️ Reloj Fischer</button>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="log-area" id="game-log"></div>
-                </div>
-            </div>
-        </div>
+    <main class="container-fluid px-5 py-5">
+        <h1 class="mb-5 display-4 fw-bold">Ecosistema de Juegos</h1>
+        <div class="row g-4" id="gallery"></div>
     </main>
 
     <script>
-        const Sinapsis = {
-            Games: [
-                { name: "Ajedrez", type: "Clásico" },
-                { name: "Truco", type: "Clásico" },
-                { name: "Lab. Híbrido", type: "Fase 4 (IoT)" }
-            ],
+        const games = [
+            { name: "Ajedrez", type: "Clásico" },
+            { name: "Truco", type: "Clásico" },
+            { name: "Lab. Híbrido", type: "Fase 4 (IoT)" }
+        ];
 
-            UI: {
-                render: () => {
-                    const gal = document.getElementById('game-gallery');
-                    Sinapsis.Games.forEach(g => {
-                        gal.innerHTML += `
-                            <div class="col-md-4">
-                                <div class="card-sinapsis text-center">
-                                    <h3 class="text-white">${g.name}</h3>
-                                    <p class="text-game-type">${g.type}</p>
-                                    <button class="btn btn-cyan w-100 p-2" onclick="Sinapsis.UI.openTable('${g.name}')">Ingresar</button>
-                                </div>
-                            </div>`;
-                    });
-                },
-                openTable: (name) => {
-                    document.getElementById('dashboard').style.display = 'none';
-                    document.getElementById('mesa-view').style.display = 'block';
-                    document.getElementById('mesa-title').innerText = "Mesa Activa: " + name;
-                    Sinapsis.Logger.write("Sistema conectado. Mesa inicializada.");
-                },
-                goBack: () => {
-                    document.getElementById('dashboard').style.display = 'block';
-                    document.getElementById('mesa-view').style.display = 'none';
-                }
-            },
-
-            Logger: {
-                write: (msg) => {
-                    const log = document.getElementById('game-log');
-                    const entry = `<div>[${new Date().toLocaleTimeString()}] ${msg}</div>`;
-                    log.innerHTML += entry;
-                    log.scrollTop = log.scrollHeight;
-                }
-            },
-
-            util: {
-                lanzarDado: () => Sinapsis.Logger.write("Dado lanzado: " + (Math.floor(Math.random()*6)+1)),
-                iniciarReloj: () => Sinapsis.Logger.write("Reloj Fischer activado.")
-            }
-        };
-
-        Sinapsis.UI.render();
+        const container = document.getElementById('gallery');
+        games.forEach(g => {
+            container.innerHTML += `
+                <div class="col-md-4">
+                    <div class="game-card text-center">
+                        <div class="game-title">${g.name}</div>
+                        <div class="game-subtitle">${g.type}</div>
+                        <button class="btn btn-main w-100">Ingresar</button>
+                    </div>
+                </div>
+            `;
+        });
     </script>
 </body>
 </html>
