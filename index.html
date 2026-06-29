@@ -101,8 +101,6 @@
         <div class="col-md-6"><div class="game-card-premium"><h5>AJEDREZ</h5><button onclick="iniciarMesa('Ajedrez')">Jugar</button></div></div>
     </div>
 </section>
-
-
 <!-- FIN SECCIÓN HÍBRIDOS -->
   <!-- SECCIÓN: MESA DE JUEGOS CATEGORIZADA -->
     <section id="galeria" class="container py-5">
@@ -464,11 +462,7 @@
         <button onclick="cambiarPuntos(1)" class="btn btn-outline-success">+</button>
     </div>
 </div>
-<div id="panel-maestro" class="p-3 bg-dark border border-info">
-    <button onclick="cambiarPuntos(-1)">-</button>
-    <span id="display-puntos" class="h2">0</span>
-    <button onclick="cambiarPuntos(1)">+</button>
-</div>
+
         <div class="row g-4">
             <div class="col-md-4">
                 <div class="p-3 bg-dark rounded border border-cyan">
@@ -586,111 +580,60 @@
             </div>
         </div>
     </footer>
-
-
-
-    <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
+<!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <script>
     // --- 1. GESTIÓN DE USUARIO ---
-    document.addEventListener("DOMContentLoaded", function() {
-        const nombre = localStorage.getItem('user');
-        const h = document.getElementById('header-usuario');
-        const t = document.getElementById('texto-login');
-        if (nombre) {
-            if (h) h.innerText = nombre;
-            if (t) t.innerText = nombre;
-        }
-    });
-
     window.gestionarSesion = function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
             localStorage.removeItem('user');
-            location.reload();
         } else {
             const nuevo = prompt("¿Cómo te llamas?");
-            if (nuevo) {
-                localStorage.setItem('user', nuevo);
-                location.reload();
-            }
+            if (nuevo) localStorage.setItem('user', nuevo);
         }
+        location.reload();
     };
 
-    // --- 2. MOTOR DE MESA (Unificado) ---
-    window.iniciarMesa = function(juego) {
-        const c = document.getElementById('contenedor-asistente');
-        if (!c) return alert("Error: El contenedor de juego no existe.");
-        c.style.display = 'block';
-        c.querySelector('#contenido-asistente').innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="cambiarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="cambiarPuntos(1)">+</button>
-                </div>
-            </div>
-        `;
-    };
-
-    // Alias para que funcionen los botones que llaman a 'activarAsistente'
-    window.activarAsistente = function(juego) { iniciarMesa(juego); };
-
-    // --- 3. ANOTADOR DE PUNTOS ---
-    window.cambiarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos') || document.getElementById('display-puntos');
-        if (d) d.innerText = parseInt(d.innerText || 0) + v;
-    };
-    // Alias para compatibilidad con botones viejos
+    // --- 2. ANOTADOR UNIVERSAL (Funciona con cualquier botón) ---
+    // Este maneja sumarPunto, restarPunto, cambiarPuntos, etc.
     window.sumarPunto = function() { cambiarPuntos(1); };
     window.restarPunto = function() { cambiarPuntos(-1); };
+    window.cambiarPuntos = function(v) {
+        // Busca cualquier elemento que tenga el ID de puntos
+        const d = document.getElementById('display-puntos');
+        if (d) d.innerText = parseInt(d.innerText) + v;
+    };
 
-    // --- 4. REGLAS ---
-    window.verReglas = function(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Deshacete de tus cartas.",
-            "ajedrez": "Ajedrez: Juego de estrategia.",
-            "damas": "Damas: Captura piezas.",
-            "teg": "T.E.G.: Conquistá continentes."
-        };
-        const v = document.getElementById('visor-reglas');
-        const t = document.getElementById('reglasTitulo');
-        const c = document.getElementById('reglasCuerpo');
-        if (v && t && c) {
-            t.innerText = "Reglamento: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
-            v.classList.remove('d-none');
-            v.scrollIntoView({ behavior: 'smooth' });
+    // --- 3. MESA DE JUEGO ---
+    window.iniciarMesa = function(juego) {
+        const c = document.getElementById('contenedor-asistente');
+        if (c) {
+            c.style.display = 'block';
+            console.log("Iniciando mesa de: " + juego);
+        } else {
+            alert("El contenedor de juego no existe en tu HTML. ¿Se llama 'contenedor-asistente'?");
         }
     };
 
-    // --- 5. DADOS Y RELOJ ---
+    // --- 4. DADOS Y RELOJ ---
     window.lanzarDadosEngine = function() {
         const d = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerText = res;
+        if (d) d.innerText = Math.floor(Math.random() * 6) + 1;
     };
 
     window.iniciarReloj = function() {
         let t = 300;
-        const d = document.getElementById('txtC1');
-        if (!d) return;
-        const interval = setInterval(() => {
-            t--;
-            d.innerText = Math.floor(t / 60) + ":" + (t % 60).toString().padStart(2, '0');
-            if (t <= 0) clearInterval(interval);
-        }, 1000);
-    };
-
-    window.abrirLibreta = function() {
-        const s = document.getElementById('seccion-libreta');
-        if (s) s.classList.remove('d-none');
+        const d = document.getElementById('display-reloj');
+        if (d) {
+            setInterval(() => {
+                t--;
+                d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
+            }, 1000);
+        }
     };
 </script>
+
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background-color: #21034D; border: 1px solid #00F0FF; color: white;">
