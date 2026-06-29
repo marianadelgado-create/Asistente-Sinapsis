@@ -7,37 +7,54 @@
     <style>
         :root { --cyan: #00f2fe; --dark: #050505; }
         body { background: var(--dark); color: #fff; font-family: 'Segoe UI', sans-serif; }
-        .card-sinapsis { background: #111; border: 1px solid #333; border-radius: 15px; padding: 20px; transition: 0.3s; }
-        .card-sinapsis:hover { border-color: var(--cyan); box-shadow: 0 0 15px rgba(0,242,254,0.3); }
-        .log-area { height: 250px; overflow-y: auto; background: #000; border: 1px solid var(--cyan); padding: 15px; border-radius: 10px; font-family: 'Courier New'; color: var(--cyan); }
+        
+        /* Navbar mejorada */
+        .navbar { border-bottom: 2px solid var(--cyan); background: #000; padding: 1rem 2rem; }
+        
+        /* Tarjetas de juego con mejor contraste */
+        .card-sinapsis { 
+            background: #111; 
+            border: 1px solid #333; 
+            border-radius: 15px; 
+            padding: 30px; 
+            transition: 0.4s; 
+        }
+        .card-sinapsis:hover { border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,242,254,0.2); }
+        .text-game-type { color: #888; font-size: 0.9rem; margin-bottom: 20px; }
+        
+        /* Botón de acción */
+        .btn-cyan { background: var(--cyan); color: #000; font-weight: bold; border: none; }
+        
+        /* Área de Log */
+        .log-area { height: 300px; overflow-y: auto; background: #0a0a0a; border: 1px solid var(--cyan); padding: 20px; border-radius: 10px; font-family: 'Courier New'; color: var(--cyan); }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-dark border-bottom border-info p-3">
-        <span class="navbar-brand fw-bold">SINAPSIS v1.1 <span class="text-muted">| Alma en Foco</span></span>
-        <div id="user-display" class="text-info fw-bold"></div>
+    <nav class="navbar navbar-dark">
+        <span class="navbar-brand fw-bold fs-4">SINAPSIS v1.1 <small class="text-muted">| Alma en Foco</small></span>
+        <div class="text-cyan fw-bold fs-5">Mariana Delgado</div>
     </nav>
 
-    <main class="container py-4">
+    <main class="container py-5">
         <!-- Dashboard -->
         <div id="dashboard">
-            <h3 class="mb-4 text-cyan">Ecosistema de Juegos</h3>
+            <h2 class="mb-4 text-white">Ecosistema de Juegos</h2>
             <div class="row g-4" id="game-gallery"></div>
         </div>
 
-        <!-- Mesa de Control (Modo Híbrido) -->
-        <div id="mesa-view" style="display:none;">
-            <button class="btn btn-sm btn-secondary mb-3" onclick="Sinapsis.UI.goBack()">← Volver</button>
+        <!-- Mesa de Control (Oculta hasta seleccionar) -->
+        <div id="mesa-view" style="display:none;" class="py-4">
+            <button class="btn btn-outline-light mb-4" onclick="Sinapsis.UI.goBack()">← Volver al Dashboard</button>
             <h2 id="mesa-title" class="text-cyan mb-4"></h2>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-outline-info" onclick="Sinapsis.util.lanzarDado()">🎲 Lanzar Dado</button>
-                        <button class="btn btn-outline-info" onclick="Sinapsis.util.iniciarReloj()">⏱️ Reloj Fischer</button>
+                <div class="col-md-3">
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-outline-info p-3" onclick="Sinapsis.util.lanzarDado()">🎲 Lanzar Dado</button>
+                        <button class="btn btn-outline-info p-3" onclick="Sinapsis.util.iniciarReloj()">⏱️ Reloj Fischer</button>
                     </div>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="log-area" id="game-log"></div>
                 </div>
             </div>
@@ -46,37 +63,31 @@
 
     <script>
         const Sinapsis = {
-            // Módulo de Sesión
-            User: {
-                name: "Mariana Delgado",
-                init: () => {
-                    document.getElementById('user-display').innerText = Sinapsis.User.name;
-                }
-            },
-
-            // Módulo de Juegos
             Games: [
                 { name: "Ajedrez", type: "Clásico" },
                 { name: "Truco", type: "Clásico" },
                 { name: "Lab. Híbrido", type: "Fase 4 (IoT)" }
             ],
 
-            // Módulo de Lógica
             UI: {
                 render: () => {
                     const gal = document.getElementById('game-gallery');
                     Sinapsis.Games.forEach(g => {
-                        gal.innerHTML += `<div class="col-md-4"><div class="card-sinapsis text-center">
-                            <h5>${g.name}</h5><p class="text-muted">${g.type}</p>
-                            <button class="btn btn-info w-100" onclick="Sinapsis.UI.openTable('${g.name}')">Ingresar</button>
-                        </div></div>`;
+                        gal.innerHTML += `
+                            <div class="col-md-4">
+                                <div class="card-sinapsis text-center">
+                                    <h3 class="text-white">${g.name}</h3>
+                                    <p class="text-game-type">${g.type}</p>
+                                    <button class="btn btn-cyan w-100 p-2" onclick="Sinapsis.UI.openTable('${g.name}')">Ingresar</button>
+                                </div>
+                            </div>`;
                     });
                 },
                 openTable: (name) => {
                     document.getElementById('dashboard').style.display = 'none';
                     document.getElementById('mesa-view').style.display = 'block';
-                    document.getElementById('mesa-title').innerText = "Mesa: " + name;
-                    Sinapsis.Logger.write(`Acceso a ${name} exitoso.`);
+                    document.getElementById('mesa-title').innerText = "Mesa Activa: " + name;
+                    Sinapsis.Logger.write("Sistema conectado. Mesa inicializada.");
                 },
                 goBack: () => {
                     document.getElementById('dashboard').style.display = 'block';
@@ -84,14 +95,12 @@
                 }
             },
 
-            // Módulo de Logger (Persistencia)
             Logger: {
                 write: (msg) => {
                     const log = document.getElementById('game-log');
-                    const entry = `[${new Date().toLocaleTimeString()}] ${msg}`;
-                    log.innerHTML += `<div>${entry}</div>`;
-                    // Persistencia: Guardar log en LocalStorage
-                    localStorage.setItem('sinapsis_log', log.innerHTML);
+                    const entry = `<div>[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+                    log.innerHTML += entry;
+                    log.scrollTop = log.scrollHeight;
                 }
             },
 
@@ -101,8 +110,6 @@
             }
         };
 
-        // Inicio automático
-        Sinapsis.User.init();
         Sinapsis.UI.render();
     </script>
 </body>
