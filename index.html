@@ -582,68 +582,59 @@
 <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    console.log("Sistema Sinapsis: Cargando módulos...");
+/**
+ * SISTEMA SINAPSIS - NÚCLEO CENTRAL (Fase 1)
+ * Este archivo unifica la lógica de usuario, mesas y libreta.
+ */
 
+const Sinapsis = {
     // 1. GESTIÓN DE USUARIO
-    window.gestionarSesion = function() {
+    initAuth: function() {
+        const nombre = localStorage.getItem('user');
+        const header = document.getElementById('header-usuario');
+        if (header) header.innerText = nombre ? `Hola, ${nombre}` : "Invitado";
+    },
+
+    toggleSesion: function() {
         const nombre = localStorage.getItem('user');
         if (nombre) {
             localStorage.removeItem('user');
+            alert("Sesión cerrada.");
         } else {
             const nuevo = prompt("¿Cómo te llamas?");
             if (nuevo) localStorage.setItem('user', nuevo);
         }
         location.reload();
-    };
+    },
 
-    const nombreGuardado = localStorage.getItem('user');
-    const displayUser = document.getElementById('header-usuario');
-    if (displayUser && nombreGuardado) displayUser.innerText = nombreGuardado;
+    // 2. SISTEMA DE MESAS (Motor Único)
+    iniciarMesa: function(tipoJuego) {
+        console.log("Iniciando:", tipoJuego);
+        // Aquí centralizamos la apertura de mesas
+        const mesa = document.getElementById('contenedor-asistente');
+        if (mesa) {
+            mesa.classList.remove('d-none');
+            // Cargar lógica específica según el juego
+            this.renderMesa(tipoJuego);
+        }
+    },
 
-    // 2. ANOTADOR DE PUNTOS
-    window.cambiarPuntos = function(v) {
+    renderMesa: function(juego) {
+        // Lógica para adaptar la mesa (Truco vs Generala, etc.)
+        const panel = document.getElementById('contenido-asistente');
+        panel.innerHTML = `<h3>Mesa de ${juego}</h3><div id="display-puntos">0</div>`;
+    },
+
+    // 3. UTILIDADES (Dados, Reloj)
+    cambiarPuntos: function(v) {
         const d = document.getElementById('display-puntos');
-        if (d) {
-            d.innerText = parseInt(d.innerText || 0) + v;
-        } else {
-            console.error("Error: No encuentro el elemento 'display-puntos'");
-        }
-    };
+        if (d) d.innerText = parseInt(d.innerText || 0) + v;
+    }
+};
 
-    // 3. DADOS
-    window.lanzarDadosEngine = function() {
-        const d = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerText = res;
-    };
-
-    // 4. RELOJ
-    window.iniciarReloj = function() {
-        let t = 300;
-        const d = document.getElementById('display-reloj');
-        if (d) {
-            setInterval(() => {
-                t--;
-                d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
-            }, 1000);
-        }
-    };
-
-    // 5. LIBRETA Y MESA
-    window.abrirLibreta = function() {
-        const s = document.getElementById('seccion-libreta');
-        if (s) s.classList.remove('d-none');
-    };
-
-    window.iniciarMesa = function(juego) {
-        const c = document.getElementById('contenedor-asistente');
-        if (c) {
-            c.style.display = 'block';
-            const tit = document.getElementById('panel-titulo');
-            if (tit) tit.innerText = juego;
-        }
-    };
+// INICIALIZACIÓN
+document.addEventListener('DOMContentLoaded', () => {
+    Sinapsis.initAuth();
 });
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
