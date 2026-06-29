@@ -618,34 +618,77 @@
         }
     };
 
-    // --- 2. ANOTADOR ---
-    window.cambiarPuntos = function(v) {
-        const d = document.getElementById('display-puntos');
-        if(d) d.innerText = parseInt(d.innerText) + v;
+    // --- 2. MOTOR DE MESA (Unificado) ---
+    window.iniciarMesa = function(juego) {
+        const c = document.getElementById('contenedor-asistente');
+        if (!c) return alert("Error: El contenedor de juego no existe.");
+        c.style.display = 'block';
+        c.querySelector('#contenido-asistente').innerHTML = `
+            <div class="p-3 bg-dark text-white border border-info rounded">
+                <h4 class="text-center">${juego.toUpperCase()}</h4>
+                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
+                    <button class="btn btn-danger" onclick="cambiarPuntos(-1)">-</button>
+                    <span id="puntos-dinamicos" class="h1">0</span>
+                    <button class="btn btn-success" onclick="cambiarPuntos(1)">+</button>
+                </div>
+            </div>
+        `;
     };
 
-    // --- 3. RELOJ FISCHER ---
+    // Alias para que funcionen los botones que llaman a 'activarAsistente'
+    window.activarAsistente = function(juego) { iniciarMesa(juego); };
+
+    // --- 3. ANOTADOR DE PUNTOS ---
+    window.cambiarPuntos = function(v) {
+        const d = document.getElementById('puntos-dinamicos') || document.getElementById('display-puntos');
+        if (d) d.innerText = parseInt(d.innerText || 0) + v;
+    };
+    // Alias para compatibilidad con botones viejos
+    window.sumarPunto = function() { cambiarPuntos(1); };
+    window.restarPunto = function() { cambiarPuntos(-1); };
+
+    // --- 4. REGLAS ---
+    window.verReglas = function(juego) {
+        const bd = {
+            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
+            "truco": "Truco: Estrategia, mentiras y picardía.",
+            "uno": "UNO: Deshacete de tus cartas.",
+            "ajedrez": "Ajedrez: Juego de estrategia.",
+            "damas": "Damas: Captura piezas.",
+            "teg": "T.E.G.: Conquistá continentes."
+        };
+        const v = document.getElementById('visor-reglas');
+        const t = document.getElementById('reglasTitulo');
+        const c = document.getElementById('reglasCuerpo');
+        if (v && t && c) {
+            t.innerText = "Reglamento: " + juego.toUpperCase();
+            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
+            v.classList.remove('d-none');
+            v.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    // --- 5. DADOS Y RELOJ ---
+    window.lanzarDadosEngine = function() {
+        const d = document.getElementById('display-dado');
+        const res = Math.floor(Math.random() * 6) + 1;
+        if (d) d.innerText = res;
+    };
+
     window.iniciarReloj = function() {
         let t = 300;
-        const d = document.getElementById('display-reloj');
-        if(!d) return;
+        const d = document.getElementById('txtC1');
+        if (!d) return;
         const interval = setInterval(() => {
             t--;
-            d.innerText = Math.floor(t/60) + ":" + (t%60).toString().padStart(2, '0');
-            if(t <= 0) clearInterval(interval);
+            d.innerText = Math.floor(t / 60) + ":" + (t % 60).toString().padStart(2, '0');
+            if (t <= 0) clearInterval(interval);
         }, 1000);
     };
 
-    // --- 4. DADOS ---
-    window.lanzarDadosEngine = function() {
-        const d = document.getElementById('display-dado');
-        if(d) d.innerText = Math.floor(Math.random() * 6) + 1;
-    };
-
-    // --- 5. VALIDADOR ---
-    window.validarDiccionario = function() {
-        const p = document.getElementById('inputPalabra').value;
-        if(p) alert("Validando: " + p);
+    window.abrirLibreta = function() {
+        const s = document.getElementById('seccion-libreta');
+        if (s) s.classList.remove('d-none');
     };
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
