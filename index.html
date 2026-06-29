@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sinapsis - Universo Fígital V2</title>
+    <title>Sinapsis - Universo Fígital</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-    <!-- TU CSS -->
-    <link rel="stylesheet" href="style.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 
 <body>
@@ -22,201 +27,542 @@
 <div class="glow-blue"></div>
 <div class="glow-coral"></div>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top glass-nav">
+
     <div class="container">
 
-        <a href="#" class="navbar-brand d-flex align-items-center gap-2">
-            <img src="img/logo sinapsis.png" style="height:55px;">
-            <span class="fw-bold">SINAPSIS</span>
+        <a class="navbar-brand d-flex align-items-center gap-3" href="#">
+            <img src="img/logo-sinapsis.png" class="logo-img">
+            <span class="logo-text">SINAPSIS</span>
         </a>
 
-        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#menuPrincipal">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto gap-2">
-                <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
-                <li class="nav-item"><a class="nav-link" href="#galeria">Mesa</a></li>
-                <li class="nav-item"><a class="nav-link" href="#dashboard-seccion">Libreta</a></li>
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#hero">Inicio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#juegos">Mesa</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#laboratorio">Laboratorio</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#libreta">Libreta</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#premium">Premium</a>
+                </li>
+
             </ul>
 
             <!-- PERFIL -->
-            <div class="ms-lg-3 dropdown">
-                <button class="btn-profile-pill dropdown-toggle" data-bs-toggle="dropdown">
-                    <div class="avatar-dot" id="avatar-icon">?</div>
-                    <span id="texto-login">Mi Perfil</span>
+
+            <div class="dropdown ms-lg-4">
+
+                <button
+                    class="btn-profile dropdown-toggle"
+                    data-bs-toggle="dropdown">
+
+                    <div id="avatar" class="avatar-circle">
+                        ?
+                    </div>
+
+                    <span id="userNameLabel">
+                        Invitado
+                    </span>
+
                 </button>
 
-                <ul class="dropdown-menu dropdown-menu-dark">
-                    <li><h6 class="dropdown-header" id="header-usuario">Invitado</h6></li>
-                    <li><a class="dropdown-item" onclick="abrirLibreta()">Libreta</a></li>
+                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+
+                    <li>
+                        <h6 class="dropdown-header" id="profileName">
+                            Invitado
+                        </h6>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="#libreta">
+                            Mi libreta
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="#estadisticas">
+                            Estadísticas
+                        </a>
+                    </li>
+
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item text-danger" onclick="gestionarSesion()">Salir</a></li>
+
+                    <li>
+                        <a class="dropdown-item text-danger"
+                           onclick="logout()">
+                            Cerrar sesión
+                        </a>
+                    </li>
+
                 </ul>
+
             </div>
 
         </div>
+
     </div>
+
 </nav>
 
-<!-- HERO -->
-<header id="comunidad" class="container py-5 text-center">
-    <h1 class="text-white">Sinapsis V2</h1>
-    <p class="text-muted">Sistema de juegos híbridos + libreta digital</p>
-    <a href="#galeria" class="btn btn-cyan-premium">Entrar</a>
-</header>
+<!-- ================= HERO ================= -->
 
-<!-- MESA DE JUEGO -->
-<section id="galeria" class="container py-5">
+<section id="hero" class="hero-section">
 
-    <h2 class="text-white mb-4">Mesa de Juegos</h2>
+    <div class="container">
 
-    <div class="row g-3">
+        <div class="row align-items-center">
 
-        <div class="col-md-4">
-            <div class="game-card-premium p-3">
-                <h4>Rummy</h4>
-                <button class="btn btn-sm btn-cyan-premium" onclick="iniciarMesa('Rummy')">Jugar</button>
+            <div class="col-lg-7">
+
+                <span class="hero-badge">
+                    RED FÍGITAL DE JUEGOS DE MESA
+                </span>
+
+                <h1 class="hero-title">
+
+                    Conectá,
+                    jugá
+                    y registrá tus partidas
+                    en
+
+                    <span class="text-cyan">
+                        Sinapsis
+                    </span>
+
+                </h1>
+
+                <p class="hero-description">
+
+                    La plataforma para organizar
+                    encuentros,
+                    registrar partidas,
+                    administrar puntajes
+                    y experimentar
+                    juegos híbridos.
+
+                </p>
+
+                <div class="hero-buttons">
+
+                    <button class="btn btn-cyan"
+                            onclick="scrollToSection('juegos')">
+
+                        Mesa de Juegos
+
+                    </button>
+
+                    <button class="btn btn-outline-light"
+                            onclick="scrollToSection('laboratorio')">
+
+                        Laboratorio Híbrido
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-5 text-center">
+
+                <div class="hero-orb">
+
+                    <i class="bi bi-dice-6-fill"></i>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ========================================= -->
+<!-- LABORATORIO HÍBRIDO -->
+<!-- ========================================= -->
+
+<section id="laboratorio" class="container py-5">
+
+    <div class="text-center mb-5">
+        <span class="badge badge-tech mb-3">LABORATORIO HÍBRIDO</span>
+        <h2 class="text-white font-tech">Experiencias Fígitales</h2>
+        <p class="text-muted-custom">
+            Juegos físicos potenciados mediante herramientas digitales.
+        </p>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-lg-4">
+            <div class="dashboard-card p-4 text-center h-100">
+                <i class="bi bi-controller display-4 text-info"></i>
+                <h4 class="mt-3">5to Jinete</h4>
+                <p class="text-muted-custom">
+                    Prototipo híbrido narrativo actualmente en desarrollo.
+                </p>
+                <span class="badge bg-warning text-dark">ALPHA</span>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="game-card-premium p-3">
-                <h4>Truco</h4>
-                <button class="btn btn-sm btn-cyan-premium" onclick="iniciarMesa('Truco')">Jugar</button>
+        <div class="col-lg-4">
+            <div class="dashboard-card p-4 text-center h-100">
+                <i class="bi bi-cpu display-4 text-info"></i>
+                <h4 class="mt-3">Motor Sinapsis</h4>
+                <p class="text-muted-custom">
+                    Sistema de asistencia para juegos de mesa.
+                </p>
+                <span class="badge bg-success">ACTIVO</span>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="game-card-premium p-3">
-                <h4>Ajedrez</h4>
-                <button class="btn btn-sm btn-cyan-premium" onclick="iniciarMesa('Ajedrez')">Jugar</button>
+        <div class="col-lg-4">
+            <div class="dashboard-card p-4 text-center h-100">
+                <i class="bi bi-vr display-4 text-info"></i>
+                <h4 class="mt-3">Experiencias AR</h4>
+                <p class="text-muted-custom">
+                    Integraciones futuras con realidad aumentada.
+                </p>
+                <span class="badge bg-secondary">ROADMAP</span>
             </div>
         </div>
 
     </div>
+
 </section>
 
-<!-- LIBRETA -->
-<section id="dashboard-seccion" class="container py-5 d-none">
+<!-- ========================================= -->
+<!-- PREMIUM -->
+<!-- ========================================= -->
 
-    <div class="dashboard-card p-4">
-        <h2 class="text-white">Libreta Virtual</h2>
+<section id="premium" class="container py-5">
 
-        <p class="text-muted">Usuario activo: <span id="user-label"></span></p>
+    <div class="text-center mb-5">
+        <span class="badge badge-tech mb-3">SINAPSIS PREMIUM</span>
+        <h2 class="text-white font-tech">
+            Estadísticas y progreso
+        </h2>
+    </div>
 
-        <div class="mt-3">
-            <button class="btn btn-outline-success" onclick="sumar()">+</button>
-            <span id="display-puntos" class="mx-3 text-white fs-3">0</span>
-            <button class="btn btn-outline-danger" onclick="restar()">-</button>
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="dashboard-card p-4 text-center">
+                <h3 id="xp-total">0</h3>
+                <small>XP Total</small>
+            </div>
         </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-card p-4 text-center">
+                <h3 id="nivel-usuario">1</h3>
+                <small>Nivel</small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-card p-4 text-center">
+                <h3 id="partidas-jugadas">0</h3>
+                <small>Partidas</small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="dashboard-card p-4 text-center">
+                <h3 id="victorias">0</h3>
+                <small>Victorias</small>
+            </div>
+        </div>
+
     </div>
 
 </section>
 
-<!-- MESA ACTIVA -->
-<div id="contenedor-asistente" class="container my-4 d-none">
-    <div class="dashboard-card p-4 text-white">
-        <h3 id="mesa-juego"></h3>
+<!-- ========================================= -->
+<!-- COMUNIDAD -->
+<!-- ========================================= -->
 
-        <div class="d-flex gap-3 align-items-center">
-            <button onclick="cambiarPuntos(-1)" class="btn btn-danger">-</button>
-            <span id="display-puntos" class="fs-3">0</span>
-            <button onclick="cambiarPuntos(1)" class="btn btn-success">+</button>
+<section id="comunidad-pro" class="container py-5">
+
+    <div class="text-center mb-5">
+        <span class="badge badge-tech mb-3">COMUNIDAD</span>
+        <h2 class="text-white font-tech">
+            Jugadores conectados
+        </h2>
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+            <div class="dashboard-card p-4 text-center">
+                <i class="bi bi-people-fill display-4 text-info"></i>
+                <h4 class="mt-3">Buscar Jugadores</h4>
+                <button class="btn btn-cyan-premium mt-3">
+                    Explorar
+                </button>
+            </div>
         </div>
 
-        <button class="btn btn-light mt-3" onclick="cerrarMesa()">Cerrar</button>
-    </div>
-</div>
-
-<!-- MODAL LOGIN -->
-<div class="modal fade" id="modalBienvenida">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-3">
-            <h5>Bienvenido</h5>
-            <input id="inputNombre" class="form-control mt-2" placeholder="Tu nombre">
-            <button class="btn btn-cyan-premium mt-3" onclick="guardarNombre()">Entrar</button>
+        <div class="col-md-4">
+            <div class="dashboard-card p-4 text-center">
+                <i class="bi bi-trophy-fill display-4 text-warning"></i>
+                <h4 class="mt-3">Torneos</h4>
+                <button class="btn btn-cyan-premium mt-3">
+                    Ver Torneos
+                </button>
+            </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="dashboard-card p-4 text-center">
+                <i class="bi bi-discord display-4 text-primary"></i>
+                <h4 class="mt-3">Discord Oficial</h4>
+                <button class="btn btn-cyan-premium mt-3">
+                    Unirse
+                </button>
+            </div>
+        </div>
+
     </div>
+
+</section>
+
+<!-- ========================================= -->
+<!-- NEWSLETTER -->
+<!-- ========================================= -->
+
+<section id="newsletter" class="container py-5">
+
+    <div class="dashboard-card p-5 text-center">
+
+        <h2 class="text-white mb-3">
+            Comunidad Exclusiva Sinapsis
+        </h2>
+
+        <p class="text-muted-custom mb-4">
+            Recibí noticias, prototipos y acceso anticipado.
+        </p>
+
+        <form id="newsletter-form">
+
+            <div class="row justify-content-center">
+
+                <div class="col-lg-6">
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        class="form-control input-dark"
+                        placeholder="Tu email..."
+                        required>
+                </div>
+
+                <div class="col-lg-2 mt-3 mt-lg-0">
+                    <button class="btn btn-cyan-premium w-100">
+                        Unirme
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+<!-- ========================================= -->
+<!-- FOOTER -->
+<!-- ========================================= -->
+
+<footer class="footer-premium mt-5">
+
+    <div class="container py-5">
+
+        <div class="row">
+
+            <div class="col-lg-6">
+                <h4 class="font-tech text-white">
+                    SINAPSIS
+                </h4>
+
+                <p class="text-muted-custom">
+                    Universo Fígital para juegos de mesa.
+                </p>
+            </div>
+
+            <div class="col-lg-6 text-lg-end">
+
+                <div class="d-flex gap-3 justify-content-lg-end justify-content-center">
+
+                    <a href="#" class="social-icon-link">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+
+                    <a href="#" class="social-icon-link">
+                        <i class="bi bi-discord"></i>
+                    </a>
+
+                    <a href="#" class="social-icon-link">
+                        <i class="bi bi-youtube"></i>
+                    </a>
+
+                    <a href="#" class="social-icon-link">
+                        <i class="bi bi-github"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="text-center text-muted-custom small">
+            © 2026 SINAPSIS · Todos los derechos reservados.
+        </div>
+
+    </div>
+
+</footer>
+
+<!-- ========================================= -->
+<!-- CHATBOT -->
+<!-- ========================================= -->
+
+<div class="chatbot-trigger" onclick="abrirChatbot()">
+    <i class="bi bi-robot"></i>
 </div>
 
+<!-- ========================================= -->
+<!-- CHATBOT MODAL -->
+<!-- ========================================= -->
+
+<div
+class="modal fade"
+id="chatbotModal"
+tabindex="-1">
+
+<div class="modal-dialog modal-dialog-centered">
+
+<div class="modal-content modal-custom">
+
+<div class="modal-header">
+<h5 class="text-white">Sinapsis Bot</h5>
+
+<button
+type="button"
+class="btn-close btn-close-white"
+data-bs-dismiss="modal">
+</button>
+
+</div>
+
+<div class="modal-body">
+
+<p class="text-muted-custom">
+Hola 👋 Soy el asistente de Sinapsis.
+</p>
+
+<div class="d-grid gap-2">
+
+<button class="btn btn-outline-info">
+Reglas rápidas
+</button>
+
+<button class="btn btn-outline-info">
+Buscar juego
+</button>
+
+<button class="btn btn-outline-info">
+Ayuda
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- ========================================= -->
 <!-- BOOTSTRAP -->
+<!-- ========================================= -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- JS FIXED -->
+<!-- ========================================= -->
+<!-- SCRIPT PRINCIPAL -->
+<!-- ========================================= -->
+
+<script src="script.js"></script>
+
+<!-- ========================================= -->
+<!-- FUNCIONES AUXILIARES -->
+<!-- ========================================= -->
+
 <script>
-let usuario = null;
-let puntos = 0;
 
-window.addEventListener("DOMContentLoaded", () => {
-    usuario = localStorage.getItem("user");
+function abrirChatbot(){
+    new bootstrap.Modal(
+        document.getElementById(
+            'chatbotModal'
+        )
+    ).show();
+}
 
-    if (usuario) {
-        setUser(usuario);
-        document.getElementById("dashboard-seccion").classList.remove("d-none");
-    } else {
-        new bootstrap.Modal(document.getElementById("modalBienvenida")).show();
+document.getElementById(
+    "newsletter-form"
+).addEventListener(
+    "submit",
+    function(e){
+        e.preventDefault();
+
+        const email =
+        document.getElementById(
+            "newsletter-email"
+        ).value;
+
+        localStorage.setItem(
+            "newsletter",
+            email
+        );
+
+        alert(
+            "Email registrado correctamente."
+        );
+
+        this.reset();
     }
-});
-
-function guardarNombre() {
-    const val = document.getElementById("inputNombre").value;
-    if (!val) return;
-
-    localStorage.setItem("user", val);
-    setUser(val);
-
-    bootstrap.Modal.getInstance(document.getElementById("modalBienvenida")).hide();
-}
-
-function setUser(name) {
-    usuario = name;
-    document.getElementById("header-usuario").innerText = name;
-    document.getElementById("texto-login").innerText = name;
-    document.getElementById("avatar-icon").innerText = name[0].toUpperCase();
-    document.getElementById("user-label").innerText = name;
-}
-
-function gestionarSesion() {
-    localStorage.removeItem("user");
-    location.reload();
-}
-
-function abrirLibreta() {
-    document.getElementById("dashboard-seccion").classList.remove("d-none");
-    document.getElementById("dashboard-seccion").scrollIntoView({behavior:"smooth"});
-}
-
-/* MESA */
-function iniciarMesa(juego) {
-    puntos = 0;
-
-    document.getElementById("contenedor-asistente").classList.remove("d-none");
-    document.getElementById("mesa-juego").innerText = juego;
-
-    actualizar();
-}
-
-function cambiarPuntos(v) {
-    puntos += v;
-    actualizar();
-}
-
-function actualizar() {
-    document.querySelectorAll("#display-puntos").forEach(el => el.innerText = puntos);
-}
-
-function cerrarMesa() {
-    document.getElementById("contenedor-asistente").classList.add("d-none");
-}
-
-function sumar(){ puntos++; actualizar(); }
-function restar(){ puntos--; actualizar(); }
+);
 
 </script>
 
 </body>
 </html>
-
