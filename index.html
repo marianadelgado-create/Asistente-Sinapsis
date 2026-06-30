@@ -34,7 +34,7 @@
                     <li class="nav-item"><a class="nav-link" href="#comunidad">Comunidad</a></li>
                     <li class="nav-item"><a class="nav-link" href="#galeria">Mesa de Juegos</a></li>
                     <li class="nav-item"><a class="nav-link" href="#laboratorio">Laboratorio Híbrido</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#" onclick="abrirLibreta()">Libreta Virtual</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#seccion-libreta" onclick="abrirLibreta()">Libreta Virtual</a></li>
                 </ul>
               <!-- Reemplaza todo tu bloque anterior por este -->
 <div class="ms-lg-4 d-flex align-items-center mt-2 mt-lg-0" id="wrapperPerfilAccion">
@@ -69,7 +69,7 @@
                 <span class="badge badge-tech mb-3">RED DE JUEGOS DE MESA</span>
                 <h1 class="display-4 fw-bold text-white mb-3">Conectá, jugá y registrá en <span class="text-gradient">Comunidad.</span></h1>
                 <p class="text-muted-custom lead mb-4">
-                    Sinapsis nace para unir a los apasionados de los juegos de mesa. Creá tu perfil para armar tardes de juego, desafiar a otros jugadores y registrar cada punto en tu libreta virtual.
+                    Sinapsis nace para unir a los apasionados de los juegos de mesa. Creá tu perfil para armar tardes de juego, desafiar a otros jugadores y registrar cada punto en tu libreta vir[...]
                 </p>
                 <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
                     <a href="#galeria" class="btn btn-cyan-premium px-4 py-3">Mesa de Juegos</a>
@@ -88,23 +88,23 @@
 
 
 
-    <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS (NOVEDADES Y FUTURO FÍGITAL) -->
-   <section id="laboratorio" class="container py-5">
-    <div class="row mb-5">
-        <div class="col-12 col-lg-8 mx-auto">
-            <div class="game-card-hero" style="border: 2px solid #00f2fe; border-radius: 20px; overflow: hidden;">
-                <img src="img/5to-jinete-preview.jpg" alt="5to Jinete" class="img-fluid w-100">
-                <div class="p-4 bg-dark">
-                    <h3>5TO JINETE</h3>
-                    <button class="btn btn-cyan-premium btn-lg" onclick="iniciarMesa('5to Jinete')">Jugar Prototipo</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row g-4">
-        <div class="col-md-6"><div class="game-card-premium"><h5>RUMMY (MVP)</h5><button onclick="iniciarMesa('Rummy')">Iniciar</button></div></div>
-        <div class="col-md-6"><div class="game-card-premium"><h5>AJEDREZ</h5><button onclick="iniciarMesa('Ajedrez')">Jugar</button></div></div>
-    </div>
+     <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS (NOVEDADES Y FUTURO FÍGITAL) -->
+    <section id="laboratorio" class="container py-5">
+     <div class="row mb-5">
+         <div class="col-12 col-lg-8 mx-auto">
+             <div class="game-card-hero" style="border: 2px solid #00f2fe; border-radius: 20px; overflow: hidden;">
+                 <img src="img/5to-jinete-preview.jpg" alt="5to Jinete" class="img-fluid w-100">
+                 <div class="p-4 bg-dark">
+                     <h3>5TO JINETE</h3>
+                     <button class="btn btn-cyan-premium btn-lg" onclick="iniciarMesa('5to Jinete')">Jugar Prototipo</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+     <div class="row g-4">
+         <div class="col-md-6"><div class="game-card-premium"><h5>RUMMY (MVP)</h5><button onclick="iniciarMesa('Rummy')">Iniciar</button></div></div>
+         <div class="col-md-6"><div class="game-card-premium"><h5>AJEDREZ</h5><button onclick="iniciarMesa('Ajedrez')">Jugar</button></div></div>
+     </div>
 </section>
 
 
@@ -460,9 +460,9 @@
    
 
 
+
        
-    </section>
-<section id="dashboard-seccion" class="container py-5">
+<section id="dashboard-seccion" class="container py-5 d-none">
     <div class="dashboard-card p-4 mb-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
             <div>
@@ -476,21 +476,6 @@
         </div>
         <div class="mt-3">
     <input type="text" id="input-jugadores" class="form-control input-dark" placeholder="Nombres de jugadores (separados por coma)">
-</div>
-        <div id="area-de-trabajo" class="container my-4">
-    <div id="panel-maestro" class="d-none p-4 bg-dark text-white rounded border border-cyan">
-        <h4 id="panel-titulo">Seleccioná un juego</h4>
-        <div class="d-flex align-items-center gap-3">
-            <button onclick="restarPunto()" class="btn btn-outline-danger">-</button>
-            <span id="display-puntos" class="h3">0</span>
-            <button onclick="sumarPunto()" class="btn btn-outline-success">+</button>
-        </div>
-    </div>
-</div>
-<div id="panel-maestro" class="p-3 bg-dark border border-info">
-    <button onclick="cambiarPuntos(-1)">-</button>
-    <span id="display-puntos" class="h2">0</span>
-    <button onclick="cambiarPuntos(1)">+</button>
 </div>
         <div class="row g-4">
             <div class="col-md-4">
@@ -508,10 +493,9 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div id="display-dado" class="text-center"></div>
                 <div class="p-3 bg-dark rounded border border-cyan text-center">
-                    <span id="display-dado"></span>
                     <h5 class="text-cyan">Dados</h5>
+                    <div id="display-dado"></div>
                     <button class="btn btn-info w-100 mt-2" onclick="lanzarDadosEngine()">Lanzar</button>
                 </div>
             </div>
@@ -525,7 +509,7 @@
             <i class="bi bi-shield-lock-fill display-4 text-coral mb-3 d-block"></i>
             <h3 class="text-white fw-bold mb-3 font-tech">¿Querés ser parte de la comunidad más grande de juegos de mesa?</h3>
             <p class="text-muted-custom small mb-4">
-                Registrate en segundos para desbloquear tu <strong>Libreta Virtual</strong>. Vas a poder computar tus partidas en tiempo real, sincronizar coeficientes de juego y resguardar tu historial de victorias de forma completamente intuitiva.
+                Registrate en segundos para desbloquear tu <strong>Libreta Virtual</strong>. Vas a poder computar tus partidas en tiempo real, sincronizar coeficientes de juego y resguardar tu hi[...]
             </p>
             <button class="btn btn-lg btn-cyan-premium px-5" onclick="abrirAuthModal()"><i class="bi bi-person-plus-fill me-2"></i>Ingresar a la Red</button>
         </div>
@@ -538,12 +522,12 @@
         <span class="chatbot-pulse"></span>
     </div>
  <!-- AUTH MODAL -->
-     <!-- Sección Libreta Virtual -->
+      <!-- Sección Libreta Virtual -->
 <section id="seccion-libreta" class="d-none container my-5 p-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
     <h3 class="text-white font-tech">Libreta Virtual</h3>
     <p class="text-muted">Aquí podrás registrar tus avances, anotaciones de partidas y estrategias fígitales.</p>
 </section>
-     
+      
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content modal-custom border-0">
@@ -607,67 +591,6 @@
         </div>
     </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    window.addEventListener('load', () => {
-        // Inicialización de usuario
-        const nombreGuardado = localStorage.getItem('usuarioSinapsis');
-        if (nombreGuardado) {
-            actualizarUI(nombreGuardado);
-        } else {
-            const modalEl = document.getElementById('modalBienvenida');
-            if(modalEl) new bootstrap.Modal(modalEl).show();
-        }
-    });
-
-    function guardarNombre() {
-        const input = document.getElementById('inputNombre');
-        if (input && input.value) {
-            localStorage.setItem('usuarioSinapsis', input.value);
-            actualizarUI(input.value);
-            const modal = bootstrap.Modal.getInstance(document.getElementById('modalBienvenida'));
-            if(modal) modal.hide();
-        }
-    }
-
-    function actualizarUI(nombre) {
-        const txt = document.getElementById('texto-login');
-        const av = document.getElementById('avatar-icon');
-        const bloq = document.getElementById('estado-bloqueado');
-        if(txt) txt.innerText = nombre;
-        if(av) av.innerText = nombre.charAt(0);
-        if(bloq) bloq.classList.add('d-none');
-    }
-
-    // Funciones de mesa
-    function activarAsistente(juego) {
-        const panel = document.getElementById('panel-maestro');
-        if(panel) {
-            panel.classList.remove('d-none');
-            document.getElementById('panel-titulo').innerText = "Mesa: " + juego.toUpperCase();
-            panel.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-</script>
-
-<div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background-color: #21034D; border: 1px solid #00F0FF; color: white;">
-      <div class="modal-header border-0">
-        <h5 class="modal-title">Bienvenido a Sinapsis</h5>
-      </div>
-      <div class="modal-body">
-        <p>Conectando tecnología y encuentro.</p>
-        <input type="text" id="inputNombre" class="form-control" placeholder="Ingresa tu nombre..." style="background: transparent; color: white; border: 1px solid #FF17E7;">
-      </div>
-      <div class="modal-footer border-0">
-        <button type="button" class="btn" onclick="guardarNombre()" style="background-color: #FF17E7; color: white;">Comenzar</button>
-      </div>
-    </div>
-  </div>
-</div>
+<script src="app.js"></script>
 </body>
 </html>
-
-
-
