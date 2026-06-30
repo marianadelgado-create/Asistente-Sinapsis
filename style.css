@@ -225,8 +225,8 @@ body {
 
 /* SECCIÓN MÓDULO HÍBRIDO */
 .border-glow-hybrid { border-color: rgba(168, 85, 247, 0.3) !important; box-shadow: 0 0 25px rgba(168, 85, 247, 0.1); }
-.badge-prototype { top: 12px; right: 12px; background: var(--accent-hybrid); color: white; font-family: var(--font-tech); font-size: 9px; padding: 4px 10px; border-radius: 4px; font-weight: bold; }
-.hybrid-icon-orb { width: 90px; height: 90px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 32px; color: var(--accent-hybrid); margin: 0 auto; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3)); }
+.badge-prototype { position: absolute; top: 12px; right: 12px; background: var(--accent-hybrid); color: white; font-family: var(--font-tech); font-size: 9px; padding: 4px 10px; border-radius: 4px; font-weight: bold; }
+.hybrid-icon-orb { width: 90px; height: 90px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
 
 /* BOTONERAS */
@@ -274,4 +274,50 @@ body {
 .font-tech { font-family: var(--font-tech); }
 .btn-xs { padding: 4px 12px; font-size: 12px; border-radius: 50px; }
 
+/* BORDER Y ESTILOS ADICIONALES */
+.border-bottom-dark { border-bottom: 1px solid rgba(255,255,255,0.1) !important; }
+.border-cyan { border-color: var(--accent-cyan) !important; }
+.text-cyan { color: var(--accent-cyan) !important; }
+.text-coral { color: var(--accent-coral) !important; }
+.text-white { color: #FFFFFF !important; }
 
+/* Estilos para dropdown */
+.dropdown-menu-dark {
+    background: rgba(3, 6, 15, 0.95) !important;
+    border: 1px solid var(--border-glass) !important;
+    backdrop-filter: blur(20px);
+}
+.dropdown-item {
+    color: var(--text-muted) !important;
+    transition: all 0.2s ease;
+}
+.dropdown-item:hover {
+    background: rgba(0, 242, 254, 0.1) !important;
+    color: var(--accent-cyan) !important;
+}
+
+/* Max width helper */
+.max-width-md {
+    max-width: 580px;
+}
+
+/* Contenedor asistente flotante */
+#contenedor-asistente {
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    z-index: 9999;
+    max-width: 600px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #contenedor-asistente {
+        left: 5%;
+        width: 90%;
+    }
+    .header-hero {
+        padding: 40px 0;
+    }
+}
