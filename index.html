@@ -617,88 +617,61 @@
 
 
 <script>
-    // --- 1. GESTIÓN DE USUARIO ---
-    document.addEventListener("DOMContentLoaded", function() {
-        const nombre = localStorage.getItem('user');
-        const h = document.getElementById('header-usuario');
-        const t = document.getElementById('texto-login');
-        if (nombre) {
-            if (h) h.innerText = nombre;
-            if (t) t.innerText = nombre;
-        }
-    });
+    // --- ESTADO GLOBAL ---
+let puntos = 0;
+let usuario = "Invitado";
 
+// --- LOGIN (Navegación usuario) ---
+function procesarAuth() {
+    const nombre = document.getElementById('nombreUsuario').value;
+    if (nombre) {
+        usuario = nombre;
+        document.getElementById('texto-login').innerText = nombre;
+        document.getElementById('avatar-icon').innerText = nombre.charAt(0);
+        document.getElementById('estado-bloqueado').classList.add('d-none');
+        bootstrap.Modal.getInstance(document.getElementById('authModal')).hide();
+    }
+}
 
-    window.gestionarSesion = function() {
-        const nombre = localStorage.getItem('user');
-        if (nombre) {
-            localStorage.removeItem('user');
-            location.reload();
-        } else {
-            const nuevo = prompt("¿Cómo te llamas?");
-            if (nuevo) {
-                localStorage.setItem('user', nuevo);
-                location.reload();
-            }
-        }
-    };
+// --- MESA DE JUEGOS Y CONTROL ---
+function activarAsistente(juego) {
+    const panel = document.getElementById('panel-maestro');
+    panel.classList.remove('d-none');
+    document.getElementById('panel-titulo').innerText = "Mesa: " + juego.toUpperCase();
+    puntos = 0;
+    document.getElementById('display-puntos').innerText = puntos;
+    panel.scrollIntoView({ behavior: 'smooth' });
+}
 
+function cerrarPanel() {
+    document.getElementById('panel-maestro').classList.add('d-none');
+}
 
-    // --- 2. ANOTADOR Y JUEGOS ---
-    window.iniciarMesa = function(juego) {
-        const c = document.getElementById('contenedor-asistente');
-        if (!c) return alert("Error: El contenedor de juego no existe.");
-        c.style.display = 'block';
-        c.innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
-                </div>
-                <button class="btn btn-secondary w-100" onclick="this.parentElement.parentElement.style.display='none'">Cerrar</button>
-            </div>
-        `;
-    };
+function sumarPunto() { puntos++; document.getElementById('display-puntos').innerText = puntos; }
+function restarPunto() { puntos--; document.getElementById('display-puntos').innerText = puntos; }
 
+// --- LIBRETA VIRTUAL ---
+function abrirLibreta() {
+    const seccion = document.getElementById('seccion-libreta');
+    seccion.classList.remove('d-none');
+    seccion.scrollIntoView({ behavior: 'smooth' });
+}
 
-    window.sumarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos');
-        if (d) d.innerText = parseInt(d.innerText) + v;
-    };
+// --- UTILIDADES ---
+function iniciarReloj() {
+    let tiempo = 300;
+    const display = document.getElementById('txtC1');
+    setInterval(() => {
+        tiempo--;
+        let m = Math.floor(tiempo / 60);
+        let s = tiempo % 60;
+        display.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    }, 1000);
+}
 
-
-    // --- 3. REGLAS ---
-    window.verReglas = function(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Deshacete de tus cartas."
-        };
-        const v = document.getElementById('visor-reglas');
-        const t = document.getElementById('reglasTitulo');
-        const c = document.getElementById('reglasCuerpo');
-        if (v && t && c) {
-            t.innerText = "Reglamento: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
-            v.classList.remove('d-none');
-            v.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-
-    // --- 4. DADOS Y LIBRETA ---
-    window.lanzarDados = function() {
-        const d = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerHTML = `<span class="h1">${res}</span>`;
-    };
-
-
-    window.abrirLibreta = function() {
-        alert("Abriendo Libreta Virtual...");
-    };
+function lanzarDadosEngine() {
+    alert("Resultado: " + (Math.floor(Math.random() * 6) + 1));
+}
 </script>
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
