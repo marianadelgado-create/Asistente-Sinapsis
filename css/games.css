@@ -1,0 +1,239 @@
+/* ESTILOS ESPECÍFICOS PARA JUEGOS Y CAMPEONATO */
+
+.campeonato-modal-custom {
+    background: rgba(10, 15, 28, 0.98);
+    border: 2px solid rgba(0, 240, 255, 0.3);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+}
+
+.campeonato-header {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1) 0%, rgba(64, 0, 193, 0.1) 100%);
+    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    padding: 20px;
+    border-radius: 20px 20px 0 0;
+}
+
+.campeonato-title {
+    font-family: var(--font-tech);
+    color: var(--accent-cyan);
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.anotador-container {
+    background: var(--surface-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.anotador-titulo {
+    font-family: var(--font-tech);
+    color: var(--accent-cyan);
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+/* RUMMY ESPECÍFICO */
+.rummy-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+.rummy-tabla th {
+    background: rgba(64, 0, 193, 0.2);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    color: var(--accent-cyan);
+    padding: 12px;
+    text-align: left;
+    font-family: var(--font-tech);
+    font-size: 12px;
+}
+
+.rummy-tabla td {
+    border: 1px solid var(--border-glass);
+    padding: 12px;
+    color: var(--text-pure);
+}
+
+.rummy-tabla tr:hover {
+    background: rgba(0, 240, 255, 0.05);
+}
+
+.puntos-input {
+    width: 100%;
+    max-width: 100px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    border-radius: 6px;
+    color: var(--text-pure);
+    text-align: center;
+    font-family: var(--font-tech);
+}
+
+.puntos-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+.rummy-resumen {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.08) 0%, rgba(64, 0, 193, 0.08) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.resumen-item:last-child {
+    border-bottom: none;
+}
+
+.resumen-label {
+    color: var(--text-muted);
+}
+
+.resumen-valor {
+    font-family: var(--font-tech);
+    color: var(--accent-cyan);
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.ganador-badge {
+    background: linear-gradient(135deg, #FFB84D 0%, #FF8C42 100%);
+    color: #03060f;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 12px;
+}
+
+/* SELECTOR DE JUGADORES */
+.jugadores-selector {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.jugadores-selector-title {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+.jugadores-input-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.jugadores-input-group input {
+    flex: 1;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    border-radius: 6px;
+    color: var(--text-pure);
+}
+
+.jugadores-input-group button {
+    padding: 10px 16px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--accent-cyan);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+}
+
+.jugadores-input-group button:hover {
+    background: rgba(0, 240, 255, 0.2);
+}
+
+.jugadores-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.jugador-chip-campeonato {
+    background: rgba(64, 0, 193, 0.3);
+    border: 1px solid rgba(64, 0, 193, 0.5);
+    color: var(--text-pure);
+    padding: 8px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.jugador-chip-campeonato .remove {
+    cursor: pointer;
+    color: var(--accent-coral);
+    font-weight: bold;
+}
+
+.mesa-controles {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-iniciar-campeonato {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
+    color: #03060f;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-tech);
+}
+
+.btn-iniciar-campeonato:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 240, 255, 0.3);
+}
+
+.btn-iniciar-campeonato:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .rummy-tabla {
+        font-size: 12px;
+    }
+    
+    .rummy-tabla th,
+    .rummy-tabla td {
+        padding: 8px;
+    }
+    
+    .mesa-controles {
+        flex-direction: column;
+    }
+}

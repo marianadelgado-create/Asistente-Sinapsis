@@ -1,0 +1,410 @@
+/* LIBRETA VIRTUAL - ESTILOS ESPECÍFICOS */
+
+.libreta-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.libreta-header {
+    background: linear-gradient(135deg, rgba(64, 0, 193, 0.1) 0%, rgba(0, 240, 255, 0.05) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.libreta-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid var(--border-glass);
+    padding-bottom: 12px;
+}
+
+.libreta-tab {
+    padding: 8px 16px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--font-tech);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.libreta-tab.active {
+    color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+}
+
+.libreta-tab:hover {
+    color: var(--text-pure);
+}
+
+/* PARTIDAS CARD */
+.partida-card {
+    background: var(--surface-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.partida-card:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.partida-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.partida-titulo {
+    font-family: var(--font-tech);
+    color: var(--accent-cyan);
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.partida-fecha {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.partida-resultado {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.resultado-badge {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--accent-cyan);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.resultado-badge.ganador {
+    background: rgba(255, 184, 77, 0.1);
+    border-color: rgba(255, 184, 77, 0.3);
+    color: #FFB84D;
+}
+
+.partida-jugadores {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 12px 0;
+}
+
+.jugador-tag {
+    background: rgba(64, 0, 193, 0.2);
+    border: 1px solid rgba(64, 0, 193, 0.3);
+    color: #B19CD9;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 11px;
+}
+
+.partida-puntajes {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.puntaje-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border-glass);
+}
+
+.puntaje-item:last-child {
+    border-bottom: none;
+}
+
+.puntaje-jugador {
+    color: var(--text-pure);
+}
+
+.puntaje-valor {
+    font-family: var(--font-tech);
+    color: var(--accent-cyan);
+    font-weight: 700;
+}
+
+.partida-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.btn-sm-libreta {
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-edit {
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--accent-cyan);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.btn-edit:hover {
+    background: rgba(0, 240, 255, 0.2);
+}
+
+.btn-delete {
+    background: rgba(255, 23, 231, 0.1);
+    color: var(--accent-coral);
+    border: 1px solid rgba(255, 23, 231, 0.3);
+}
+
+.btn-delete:hover {
+    background: rgba(255, 23, 231, 0.2);
+}
+
+/* FORMULARIO NUEVA PARTIDA */
+.partida-form {
+    background: var(--surface-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    color: var(--text-pure);
+    font-family: var(--font-base);
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.jugadores-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.jugadores-input input {
+    flex: 1;
+}
+
+.btn-add-jugador {
+    padding: 10px 16px;
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.3);
+    color: var(--accent-cyan);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-add-jugador:hover {
+    background: rgba(0, 240, 255, 0.2);
+}
+
+.jugadores-list {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.jugador-chip {
+    background: rgba(64, 0, 193, 0.3);
+    border: 1px solid rgba(64, 0, 193, 0.5);
+    color: var(--text-pure);
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.jugador-chip .remove {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--accent-coral);
+}
+
+.puntajes-input {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.puntaje-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.puntaje-input-group label {
+    color: var(--text-muted);
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.puntaje-input-group input {
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    border-radius: 6px;
+    color: var(--text-pure);
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    flex: 1;
+    padding: 12px;
+    background: linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
+    color: #03060f;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 240, 255, 0.3);
+}
+
+.btn-cancel {
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancel:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+}
+
+/* AGENDA */
+.evento-card {
+    background: var(--surface-glass);
+    border: 1px solid rgba(255, 23, 231, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.evento-card:hover {
+    border-color: var(--accent-coral);
+    box-shadow: 0 0 20px rgba(255, 23, 231, 0.1);
+}
+
+.evento-tiempo {
+    font-family: var(--font-tech);
+    color: var(--accent-coral);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.evento-info {
+    color: var(--text-muted);
+    font-size: 13px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, rgba(64, 0, 193, 0.05) 100%);
+    border: 1px solid rgba(0, 240, 255, 0.2);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+
+.stat-value {
+    font-family: var(--font-tech);
+    font-size: 28px;
+    color: var(--accent-cyan);
+    margin: 8px 0;
+}
+
+.stat-label {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .libreta-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
