@@ -619,91 +619,65 @@
     <!-- Esto es lo que hace que el menú caiga (Bootstrap JS) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <script>
-    // --- 1. GESTIÓN DE USUARIO ---
-    document.addEventListener("DOMContentLoaded", function() {
-        const nombre = localStorage.getItem('user');
-        const h = document.getElementById('header-usuario');
-        const t = document.getElementById('texto-login');
-        if (nombre) {
-            if (h) h.innerText = nombre;
-            if (t) t.innerText = nombre;
+    // --- ESTADO INICIAL ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const nombreGuardado = localStorage.getItem('usuarioSinapsis');
+        if (nombreGuardado) {
+            actualizarUI(nombreGuardado);
+        } else {
+            new bootstrap.Modal(document.getElementById('modalBienvenida')).show();
         }
     });
 
-
-    window.gestionarSesion = function() {
-        const nombre = localStorage.getItem('user');
+    // --- LOGIN PERSISTENTE ---
+    function guardarNombre() {
+        const nombre = document.getElementById('inputNombre').value;
         if (nombre) {
-            localStorage.removeItem('user');
-            location.reload();
-        } else {
-            const nuevo = prompt("¿Cómo te llamas?");
-            if (nuevo) {
-                localStorage.setItem('user', nuevo);
-                location.reload();
-            }
+            localStorage.setItem('usuarioSinapsis', nombre);
+            actualizarUI(nombre);
+            bootstrap.Modal.getInstance(document.getElementById('modalBienvenida')).hide();
         }
-    };
+    }
 
+    function actualizarUI(nombre) {
+        document.getElementById('texto-login').innerText = nombre;
+        document.getElementById('avatar-icon').innerText = nombre.charAt(0);
+        document.getElementById('estado-bloqueado')?.classList.add('d-none');
+    }
 
-    // --- 2. ANOTADOR Y JUEGOS ---
-    window.iniciarMesa = function(juego) {
-        const c = document.getElementById('contenedor-asistente');
-        if (!c) return alert("Error: El contenedor de juego no existe.");
-        c.style.display = 'block';
-        c.innerHTML = `
-            <div class="p-3 bg-dark text-white border border-info rounded">
-                <h4 class="text-center">${juego.toUpperCase()}</h4>
-                <div class="d-flex align-items-center justify-content-center gap-3 my-3">
-                    <button class="btn btn-danger" onclick="sumarPuntos(-1)">-</button>
-                    <span id="puntos-dinamicos" class="h1">0</span>
-                    <button class="btn btn-success" onclick="sumarPuntos(1)">+</button>
-                </div>
-                <button class="btn btn-secondary w-100" onclick="this.parentElement.parentElement.style.display='none'">Cerrar</button>
-            </div>
-        `;
-    };
+    // --- MESA DE JUEGOS Y PUNTOS ---
+    function activarAsistente(juego) {
+        const panel = document.getElementById('panel-maestro');
+        panel?.classList.remove('d-none');
+        document.getElementById('panel-titulo').innerText = "Mesa: " + juego.toUpperCase();
+        document.getElementById('display-puntos').innerText = "0";
+        panel.scrollIntoView({ behavior: 'smooth' });
+    }
 
+    function sumarPunto() {
+        let display = document.getElementById('display-puntos');
+        display.innerText = parseInt(display.innerText) + 1;
+    }
 
-    window.sumarPuntos = function(v) {
-        const d = document.getElementById('puntos-dinamicos');
-        if (d) d.innerText = parseInt(d.innerText) + v;
-    };
+    function restarPunto() {
+        let display = document.getElementById('display-puntos');
+        display.innerText = parseInt(display.innerText) - 1;
+    }
 
+    // --- LIBRETA ---
+    function abrirLibreta() {
+        const seccion = document.getElementById('seccion-libreta');
+        seccion?.classList.remove('d-none');
+        seccion.scrollIntoView({ behavior: 'smooth' });
+    }
 
-    // --- 3. REGLAS ---
-    window.verReglas = function(juego) {
-        const bd = {
-            "rummy": "Rummy: Combiná piernas y escaleras numéricas.",
-            "truco": "Truco: Estrategia, mentiras y picardía.",
-            "uno": "UNO: Deshacete de tus cartas."
-        };
-        const v = document.getElementById('visor-reglas');
-        const t = document.getElementById('reglasTitulo');
-        const c = document.getElementById('reglasCuerpo');
-        if (v && t && c) {
-            t.innerText = "Reglamento: " + juego.toUpperCase();
-            c.innerText = bd[juego.toLowerCase()] || "Reglas en desarrollo.";
-            v.classList.remove('d-none');
-            v.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
-
-
-    // --- 4. DADOS Y LIBRETA ---
-    window.lanzarDados = function() {
-        const d = document.getElementById('display-dado');
-        const res = Math.floor(Math.random() * 6) + 1;
-        if (d) d.innerHTML = `<span class="h1">${res}</span>`;
-    };
-
-
-    window.abrirLibreta = function() {
-        alert("Abriendo Libreta Virtual...");
-    };
+    function cerrarPanel() {
+        document.getElementById('panel-maestro')?.classList.add('d-none');
+        document.getElementById('seccion-libreta')?.classList.add('d-none');
+    }
 </script>
+
 <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content" style="background-color: #21034D; border: 1px solid #00F0FF; color: white;">
