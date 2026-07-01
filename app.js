@@ -5,6 +5,37 @@ let juegoActual = '';
 let puntos = 0;
 let jugadores = [];
 let tiempoActivo = false;
+let partidaActual = null;
+let equiposActuales = [];
+
+// NUEVA ESTRUCTURA DE DATOS: PARTIDA
+class Partida {
+    constructor(nombre, jugadores, modo) {
+        this.id = Date.now();
+        this.nombreJuego = nombre;
+        this.jugadores = jugadores;
+        this.modo = modo; // 'individual' o 'equipos'
+        this.puntuaciones = {};
+        this.fechaInicio = new Date();
+        this.estado = 'activa';
+        
+        jugadores.forEach(j => {
+            this.puntuaciones[j.nombre] = 0;
+        });
+    }
+    
+    agregarPunto(jugador, cantidad = 1) {
+        if (this.puntuaciones[jugador] !== undefined) {
+            this.puntuaciones[jugador] += cantidad;
+        }
+    }
+    
+    guardar() {
+        let historial = JSON.parse(localStorage.getItem('historialesPartidas') || '[]');
+        historial.push(this);
+        localStorage.setItem('historialesPartidas', JSON.stringify(historial));
+    }
+}
 
 // Gestión de sesión
 window.gestionarSesion = function() {
@@ -15,7 +46,233 @@ window.gestionarSesion = function() {
     }
 };
 
-// Iniciar una mesa de juego
+// ========== MODAL DE CONFIGURACIÓN DE CAMPEONATO ==========
+window.abrirModalCampeonato = function(nombreJuego) {
+    juegoActual = nombreJuego;
+    
+    const modal = document.getElementById('modalCampeonato');
+    const titulo = document.getElementById('campeonatoTitulo');
+    const modoTab = document.getElementById('tabModoIndividual');
+    
+    if (modal && titulo) {
+        titulo.innerText = `Configurar ${nombreJuego.toUpperCase()}`;
+        modal.classList.remove('d-none');
+        modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+};
+
+window.cerrarModalCampeonato = function() {
+    const modal = document.getElementById('modalCampeonato');
+    if (modal) modal.classList.add('d-none');
+};
+
+// Cambiar modo (individual o equipos)
+window.cambiarModoCampeonato = function(modo) {
+    const btnIndividual = document.getElementById('btnModoIndividual');
+    const btnEquipos = document.getElementById('btnModoEquipos');
+    const formIndividual = document.getElementById('formIndividual');
+    const formEquipos = document.getElementById('formEquipos');
+    
+    if (modo === 'individual') {
+        btnIndividual.classList.add('active');
+        btnEquipos.classList.remove('active');
+        formIndividual.classList.remove('d-none');
+        formEquipos.classList.add('d-none');
+    } else {
+        btnEquipos.classList.add('active');
+        btnIndividual.classList.remove('active');
+        formEquipos.classList.remove('d-none');
+        formIndividual.classList.add('d-none');
+    }
+};
+
+// Agregar campo de jugador
+window.agregarCampoJugador = function() {
+    const contenedor = document.getElementById('listaJugadores');
+    const cantidad = contenedor.querySelectorAll('input').length + 1;
+    
+    const campo = document.createElement('div');
+    campo.className = 'input-group mb-2';
+    campo.innerHTML = `
+        <input type="text" class="form-control input-dark" placeholder="Jugador ${cantidad}" value="Jugador ${cantidad}">
+        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+    `;
+    contenedor.appendChild(campo);
+};
+
+// Agregar campo de equipo
+window.agregarCampoEquipo = function() {
+    const contenedor = document.getElementById('listaEquipos');
+    const cantidad = contenedor.querySelectorAll('input').length + 1;
+    
+    const campo = document.createElement('div');
+    campo.className = 'input-group mb-2';
+    campo.innerHTML = `
+        <input type="text" class="form-control input-dark" placeholder="Equipo ${cantidad}" value="Equipo ${cantidad}">
+        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+    `;
+    contenedor.appendChild(campo);
+};
+
+// Iniciar partida desde modal
+window.iniciarPartidaCampeonato = function() {
+    const modoActive = document.getElementById('btnModoIndividual').classList.contains('active') ? 'individual' : 'equipos';
+    let nombres = [];
+    
+    if (modoActive === 'individual') {
+        const inputs = document.getElementById('listaJugadores').querySelectorAll('input');
+        nombres = Array.from(inputs).map(i => ({ nombre: i.value || 'Sin nombre', tipo: 'jugador' }));
+    } else {
+        const inputs = document.getElementById('listaEquipos').querySelectorAll('input');
+        nombres = Array.from(inputs).map(i => ({ nombre: i.value || 'Sin nombre', tipo: 'equipo' }));
+    }
+    
+    if (nombres.length === 0) {
+        alert('Debes agregar al menos un jugador o equipo');
+        return;
+    }
+    
+    // Crear partida
+    partidaActual = new Partida(juegoActual, nombres, modoActive);
+    equiposActuales = nombres;
+    
+    // Cerrar modal
+    cerrarModalCampeonato();
+    
+    // Abrir anotador según juego
+    abrirAnotador(juegoActual);
+};
+
+// ========== SISTEMAS DE ANOTACIÓN POR JUEGO ==========
+const sistemasAnotacion = {
+    'Truco': {
+        tipo: 'tantos',
+        descripcion: 'Registra malas y buenas',
+        campos: ['Malas', 'Buenas']
+    },
+    'Rummy': {
+        tipo: 'puntos',
+        descripcion: 'Suma de puntos acumulados',
+        campos: ['Puntos']
+    },
+    'Ajedrez': {
+        tipo: 'resultados',
+        descripcion: 'Registra: Gana, Empata, Pierde',
+        campos: ['Victorias', 'Empates', 'Derrotas']
+    },
+    'Generala': {
+        tipo: 'tabla',
+        descripcion: 'Tabla de combinaciones',
+        campos: ['Total']
+    },
+    'Damas': {
+        tipo: 'resultados',
+        descripcion: 'Registra resultados de partidas',
+        campos: ['Gana', 'Pierde']
+    },
+    'T.E.G.': {
+        tipo: 'puntos',
+        descripcion: 'Puntos de conquista',
+        campos: ['Puntos']
+    }
+};
+
+window.abrirAnotador = function(juego) {
+    const contenedor = document.getElementById('contenedor-anotador');
+    const titulo = document.getElementById('anotadorTitulo');
+    const tablaJugadores = document.getElementById('tablaJugadores');
+    const config = sistemasAnotacion[juego] || { tipo: 'puntos', descripcion: 'Sistema genérico', campos: ['Puntos'] };
+    
+    if (!contenedor || !tablaJugadores) return;
+    
+    // Título
+    titulo.innerText = `Anotador: ${juego.toUpperCase()}`;
+    
+    // Construir tabla dinámicamente
+    let html = `
+        <div class="table-responsive">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-cyan">Jugador/Equipo</th>
+                        ${config.campos.map(f => `<th class="text-cyan">${f}</th>`).join('')}
+                        <th class="text-cyan">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+    
+    equiposActuales.forEach(eq => {
+        html += `
+            <tr>
+                <td class="text-white fw-bold">${eq.nombre}</td>
+                ${config.campos.map(f => `<td><span class="pts-${eq.nombre.replace(/ /g, '_')}" data-campo="${f}">0</span></td>`).join('')}
+                <td>
+                    <button class="btn btn-sm btn-outline-success" onclick="sumarPuntoAnotador('${eq.nombre}', 1)">+1</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="restarPuntoAnotador('${eq.nombre}', 1)">-1</button>
+                </td>
+            </tr>
+        `;
+    });
+    
+    html += `
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-cyan-premium" onclick="guardarPartida()">Finalizar Partida</button>
+            <button class="btn btn-outline-light ms-2" onclick="cerrarAnotador()">Volver</button>
+        </div>
+    `;
+    
+    tablaJugadores.innerHTML = html;
+    contenedor.classList.remove('d-none');
+    contenedor.scrollIntoView({ behavior: 'smooth' });
+};
+
+window.sumarPuntoAnotador = function(nombre, cantidad = 1) {
+    if (partidaActual) {
+        partidaActual.agregarPunto(nombre, cantidad);
+        actualizarVistaAnotador();
+    }
+};
+
+window.restarPuntoAnotador = function(nombre, cantidad = 1) {
+    if (partidaActual) {
+        const nuevoValor = (partidaActual.puntuaciones[nombre] || 0) - cantidad;
+        partidaActual.puntuaciones[nombre] = Math.max(0, nuevoValor);
+        actualizarVistaAnotador();
+    }
+};
+
+window.actualizarVistaAnotador = function() {
+    if (!partidaActual) return;
+    
+    Object.keys(partidaActual.puntuaciones).forEach(nombre => {
+        const selector = `.pts-${nombre.replace(/ /g, '_')}`;
+        const elementos = document.querySelectorAll(selector);
+        elementos.forEach(el => {
+            el.innerText = partidaActual.puntuaciones[nombre];
+        });
+    });
+};
+
+window.guardarPartida = function() {
+    if (partidaActual) {
+        partidaActual.guardar();
+        alert('¡Partida guardada exitosamente!');
+        cerrarAnotador();
+        location.reload();
+    }
+};
+
+window.cerrarAnotador = function() {
+    const contenedor = document.getElementById('contenedor-anotador');
+    if (contenedor) contenedor.classList.add('d-none');
+    partidaActual = null;
+};
+
+// Iniciar una mesa de juego (versión clásica)
 window.iniciarMesa = function(nombreJuego, listaJugadores = []) {
     juegoActual = nombreJuego;
     puntos = 0;

@@ -148,10 +148,7 @@
             </div>
             <div class="d-flex gap-2">
             <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('rummy')">Reglas</button>
-            <button class="btn btn-sm btn-cyan-premium w-50"
-            onclick="iniciarMesa('Rummy', ['Mariana', 'Jugador 2', 'Jugador 3'])">
-            Campeonato
-            </button>
+            <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Rummy')">Campeonato</button>
             </div>
                             </div>
                         </div>
@@ -171,7 +168,7 @@
                 </div>
                 <div class="d-flex gap-2">
                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('truco')">Reglas</button>
-                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="iniciarMesa('Truco')">Campeonato</button>
+                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Truco')">Campeonato</button>
                 </div>
             </div>
         </div>
@@ -221,7 +218,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('ajedrez')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('ajedrez')">Campeonato</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Ajedrez')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -242,7 +239,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('damas')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('damas')">Anotador</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="abrirModalCampeonato('Damas')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -263,7 +260,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('teg')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('teg')">Campeonato</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('T.E.G.')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -292,7 +289,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('generala')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('generala')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Generala')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +339,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('scrabble')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('scrabble')">Campeonato</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Scrabble')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -413,7 +410,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('trivial')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('trivial')">Campeonato</button>
+                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="abrirModalCampeonato('Trivial')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -434,7 +431,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('pictionary')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('pictionary')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalCampeonato('Pictionary')">Campeonato</button>
                                 </div>
                             </div>
                         </div>
@@ -521,13 +518,74 @@
         <i class="bi bi-chat-left-dots-fill"></i>
         <span class="chatbot-pulse"></span>
     </div>
+
+    <!-- MODAL CAMPEONATO (NUEVA SECCIÓN) -->
+    <div id="modalCampeonato" class="modal-overlay d-none" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; display: flex; align-items: center; justify-content: center;">
+        <div class="modal-content" style="background: rgba(13, 22, 41, 0.95); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 20px; padding: 30px; max-width: 600px; width: 90%; backdrop-filter: blur(20px);">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3 id="campeonatoTitulo" class="text-cyan font-tech">Configurar Campeonato</h3>
+                <button onclick="cerrarModalCampeonato()" style="background: none; border: none; color: white; font-size: 24px;">&times;</button>
+            </div>
+
+            <div class="btn-group w-100 mb-4" role="group">
+                <button id="btnModoIndividual" class="btn btn-outline-cyan active" onclick="cambiarModoCampeonato('individual')">Individual</button>
+                <button id="btnModoEquipos" class="btn btn-outline-cyan" onclick="cambiarModoCampeonato('equipos')">Equipos</button>
+            </div>
+
+            <!-- FORMULARIO INDIVIDUAL -->
+            <div id="formIndividual" class="mb-4">
+                <label class="text-cyan mb-2">Jugadores</label>
+                <div id="listaJugadores">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control input-dark" placeholder="Jugador 1" value="Jugador 1">
+                        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control input-dark" placeholder="Jugador 2" value="Jugador 2">
+                        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-outline-cyan w-100 mt-2" onclick="agregarCampoJugador()">+ Agregar Jugador</button>
+            </div>
+
+            <!-- FORMULARIO EQUIPOS -->
+            <div id="formEquipos" class="mb-4 d-none">
+                <label class="text-cyan mb-2">Equipos</label>
+                <div id="listaEquipos">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control input-dark" placeholder="Equipo 1" value="Equipo 1">
+                        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+                    </div>
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control input-dark" placeholder="Equipo 2" value="Equipo 2">
+                        <button class="btn btn-outline-danger" onclick="this.parentElement.remove()">✕</button>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-outline-cyan w-100 mt-2" onclick="agregarCampoEquipo()">+ Agregar Equipo</button>
+            </div>
+
+            <div class="d-flex gap-2 mt-4">
+                <button class="btn btn-cyan-premium w-100" onclick="iniciarPartidaCampeonato()">Iniciar Partida</button>
+                <button class="btn btn-outline-light w-100" onclick="cerrarModalCampeonato()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANOTADOR DINÁMICO -->
+    <div id="contenedor-anotador" class="container mt-5 d-none" style="position: fixed; top: 10%; left: 10%; width: 80%; max-width: 800px; z-index: 9999; max-height: 80vh; overflow-y: auto;">
+        <div class="card p-4 bg-dark text-white border-cyan">
+            <h3 id="anotadorTitulo" class="text-cyan mb-4 font-tech">Anotador</h3>
+            <div id="tablaJugadores" class="mb-3"></div>
+        </div>
+    </div>
+
  <!-- AUTH MODAL -->
-      <!-- Sección Libreta Virtual -->
+       <!-- Sección Libreta Virtual -->
 <section id="seccion-libreta" class="d-none container my-5 p-4" style="background: rgba(255,255,255,0.05); border-radius: 20px;">
     <h3 class="text-white font-tech">Libreta Virtual</h3>
     <p class="text-muted">Aquí podrás registrar tus avances, anotaciones de partidas y estrategias fígitales.</p>
 </section>
-      
+       
     <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content modal-custom border-0">
