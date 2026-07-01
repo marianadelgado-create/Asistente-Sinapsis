@@ -80,24 +80,110 @@
         </div>
     </header>
 
-    <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS (NOVEDADES Y FUTURO FÍGITAL) -->
+    <!-- SECCIÓN: LABORATORIO DE HÍBRIDOS - ESTÉTICA PREMIUM TIPO PAÑO DIGITAL -->
     <section id="laboratorio" class="container py-5">
-     <div class="row mb-5">
-         <div class="col-12 col-lg-8 mx-auto">
-             <div class="game-card-hero" style="border: 2px solid #00f2fe; border-radius: 20px; overflow: hidden;">
-                 <img src="img/5to-jinete-preview.jpg" alt="5to Jinete" class="img-fluid w-100">
-                 <div class="p-4 bg-dark">
-                     <h3>5TO JINETE</h3>
-                     <button class="btn btn-cyan-premium btn-lg" onclick="iniciarMesa('5to Jinete')">Jugar Prototipo</button>
-                 </div>
-             </div>
-         </div>
-     </div>
-     <div class="row g-4">
-         <div class="col-md-6"><div class="game-card-premium"><h5>RUMMY (MVP)</h5><button onclick="iniciarMesa('Rummy')">Iniciar</button></div></div>
-         <div class="col-md-6"><div class="game-card-premium"><h5>AJEDREZ</h5><button onclick="iniciarMesa('Ajedrez')">Jugar</button></div></div>
-     </div>
-</section>
+        <div class="text-center mb-5">
+            <h2 class="h1 text-white fw-bold font-tech">Laboratorio Híbrido</h2>
+            <p class="text-muted-custom">Prototipos fígitales que fusionan lo físico con lo digital</p>
+        </div>
+
+        <!-- PAÑO DIGITAL HERO -->
+        <div class="row mb-5">
+            <div class="col-12 col-lg-10 mx-auto">
+                <div class="hybrid-mat-container">
+                    <!-- El Paño / Mat Digital -->
+                    <div class="hybrid-mat">
+                        <div class="mat-grid"></div>
+                        <div class="mat-content">
+                            <div class="mat-game-showcase">
+                                <div class="mat-icon">
+                                    <i class="bi bi-lightning-charge-fill"></i>
+                                </div>
+                                <h3 class="text-white font-tech">5TO JINETE</h3>
+                                <p class="small text-muted">Prototipo de Debate Híbrido</p>
+                            </div>
+                        </div>
+                        <!-- Efecto de conexión digital -->
+                        <div class="mat-glow"></div>
+                    </div>
+
+                    <!-- Pantalla Digital Acoplada (derecha) -->
+                    <div class="hybrid-screen">
+                        <div class="screen-header">
+                            <div class="screen-dot"></div>
+                            <div class="screen-dot"></div>
+                            <div class="screen-dot"></div>
+                        </div>
+                        <div class="screen-content">
+                            <h4 class="text-cyan font-tech mb-3">FASE DE DISCUSIÓN</h4>
+                            <div class="timer-display">01:23</div>
+                            <div class="players-status mt-3">
+                                <div class="player-status">
+                                    <span class="badge bg-success">ACTIVO</span> Mateo
+                                </div>
+                                <div class="player-status">
+                                    <span class="badge bg-success">ACTIVO</span> Andrea
+                                </div>
+                            </div>
+                            <button class="btn btn-sm btn-outline-cyan mt-3 w-100">FINALIZAR DEBATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TARJETAS PROTOTIPO MENORES -->
+        <div class="row g-4 mb-5">
+            <!-- PROTOTIPO 1: RUMMY -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="hybrid-prototype-card">
+                    <div class="proto-icon">
+                        <i class="bi bi-layers-half"></i>
+                    </div>
+                    <h5 class="proto-title">RUMMY MVP</h5>
+                    <p class="small text-muted mb-3">Sistema de fichas híbrido con AR</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-cyan flex-grow-1" onclick="verReglas('rummy')">Reglas</button>
+                        <button class="btn btn-sm btn-cyan-premium flex-grow-1" onclick="abrirModalSeleccion('Rummy')">Jugar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROTOTIPO 2: AJEDREZ -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="hybrid-prototype-card">
+                    <div class="proto-icon">
+                        <i class="bi bi-person-workspace"></i>
+                    </div>
+                    <h5 class="proto-title">AJEDREZ DIGITAL</h5>
+                    <p class="small text-muted mb-3">Tablero con seguimiento en tiempo real</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-cyan flex-grow-1" onclick="verReglas('ajedrez')">Reglas</button>
+                        <button class="btn btn-sm btn-cyan-premium flex-grow-1" onclick="abrirModalSeleccion('Ajedrez')">Jugar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROTOTIPO 3: SCRABBLE -->
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="hybrid-prototype-card">
+                    <div class="proto-icon">
+                        <i class="bi bi-sort-alpha-down"></i>
+                    </div>
+                    <h5 class="proto-title">SCRABBLE HÍBRIDO</h5>
+                    <p class="small text-muted mb-3">Validación de palabras en vivo</p>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-cyan flex-grow-1" onclick="verReglas('scrabble')">Reglas</button>
+                        <button class="btn btn-sm btn-cyan-premium flex-grow-1" onclick="abrirModalSeleccion('Scrabble')">Jugar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <p class="text-muted-custom small">Más prototipos en desarrollo...</p>
+        </div>
+    </section>
 
     <!-- SECCIÓN: MESA DE JUEGOS CATEGORIZADA -->
     <section id="galeria" class="container py-5">
@@ -118,7 +204,7 @@
     </section>
 
         <!-- CATEGORÍA: CLÁSICOS DE CARTAS -->
-<section>
+<section class="container mb-5">
         <div class="mb-5">
             <h3 class="h4 text-cyan font-tech mb-4"><i class="bi bi-suit-spade-fill me-2"></i> Clásicos de Cartas y Fichas</h3>
             <div class="row g-4">
@@ -178,7 +264,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('uno')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('uno')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Uno')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +312,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('damas')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="abrirModalSeleccion('Damas')">Jugar</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Damas')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -247,7 +333,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('teg')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('T.E.G.')">Jugar</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('TEG')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -296,7 +382,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('batalla_naval')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('batalla_naval')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Batalla Naval')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +431,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('tutti_frutti')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="activarAsistente('tutti_frutti')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Tutti Frutti')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -366,7 +452,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('ahorcado')">Reglas</button>
-                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="activarAsistente('ahorcado')">Anotador</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Ahorcado')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -394,7 +480,7 @@
                                 </div>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-sm btn-outline-light w-50" onclick="verReglas('trivial')">Reglas</button>
-                                    <button class="btn btn-sm btn-coral-premium w-50 text-white" onclick="abrirModalSeleccion('Trivial')">Jugar</button>
+                                    <button class="btn btn-sm btn-cyan-premium w-50" onclick="abrirModalSeleccion('Trivial')">Jugar</button>
                                 </div>
                             </div>
                         </div>
@@ -450,10 +536,10 @@
                     </button>
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-cyan-premium w-100 py-3" style="border-radius: 12px;">
+                    <button class="btn btn-cyan-premium w-100 py-3" onclick="seleccionarModo('campeonato')" style="border-radius: 12px;">
                         <i class="bi bi-trophy-fill me-2"></i>
                         <strong>Campeonato</strong>
-                        <p class="small mt-2 mb-0" onclick="seleccionarModo('campeonato')">Guarda puntos y estadísticas</p>
+                        <p class="small mt-2 mb-0">Guarda puntos y estadísticas</p>
                     </button>
                 </div>
             </div>
