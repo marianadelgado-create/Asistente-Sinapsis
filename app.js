@@ -10,11 +10,12 @@ let equiposActuales = [];
 
 // NUEVA ESTRUCTURA DE DATOS: PARTIDA
 class Partida {
-    constructor(nombre, jugadores, modo) {
+    constructor(nombre, jugadores, modo, tipo = 'campeonato') {
         this.id = Date.now();
         this.nombreJuego = nombre;
         this.jugadores = jugadores;
         this.modo = modo; // 'individual' o 'equipos'
+        this.tipo = tipo; // 'rapida' o 'campeonato'
         this.puntuaciones = {};
         this.fechaInicio = new Date();
         this.estado = 'activa';
@@ -46,13 +47,43 @@ window.gestionarSesion = function() {
     }
 };
 
+// ========== MODAL DE SELECCIÓN: PARTIDA RÁPIDA O CAMPEONATO ==========
+window.abrirModalSeleccion = function(nombreJuego) {
+    juegoActual = nombreJuego;
+    
+    const modal = document.getElementById('modalSeleccion');
+    const titulo = document.getElementById('modalSeleccionTitulo');
+    
+    if (modal && titulo) {
+        titulo.innerText = `${nombreJuego.toUpperCase()} - ¿Cómo querés jugar?`;
+        modal.classList.remove('d-none');
+        modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+};
+
+window.cerrarModalSeleccion = function() {
+    const modal = document.getElementById('modalSeleccion');
+    if (modal) modal.classList.add('d-none');
+};
+
+window.seleccionarModo = function(modo) {
+    cerrarModalSeleccion();
+    
+    if (modo === 'rapida') {
+        // Modo partida rápida: sin guardar
+        abrirAnotadorRapido(juegoActual);
+    } else if (modo === 'campeonato') {
+        // Modo campeonato: abre modal para configurar
+        abrirModalCampeonato(juegoActual);
+    }
+};
+
 // ========== MODAL DE CONFIGURACIÓN DE CAMPEONATO ==========
 window.abrirModalCampeonato = function(nombreJuego) {
     juegoActual = nombreJuego;
     
     const modal = document.getElementById('modalCampeonato');
     const titulo = document.getElementById('campeonatoTitulo');
-    const modoTab = document.getElementById('tabModoIndividual');
     
     if (modal && titulo) {
         titulo.innerText = `Configurar ${nombreJuego.toUpperCase()}`;
@@ -132,15 +163,52 @@ window.iniciarPartidaCampeonato = function() {
         return;
     }
     
-    // Crear partida
-    partidaActual = new Partida(juegoActual, nombres, modoActive);
+    // Crear partida (tipo campeonato)
+    partidaActual = new Partida(juegoActual, nombres, modoActive, 'campeonato');
     equiposActuales = nombres;
     
     // Cerrar modal
     cerrarModalCampeonato();
     
     // Abrir anotador según juego
-    abrirAnotador(juegoActual);
+    abrirAnotador(juegoActual, 'campeonato');
+};
+
+// ========== MODO PARTIDA RÁPIDA ==========
+window.abrirAnotadorRapido = function(juego) {
+    const contenedor = document.getElementById('contenedor-anotador');
+    const titulo = document.getElementById('anotadorTitulo');
+    const tablaJugadores = document.getElementById('tablaJugadores');
+    
+    if (!contenedor || !tablaJugadores) return;
+    
+    // Título
+    titulo.innerText = `Partida Rápida: ${juego.toUpperCase()}`;
+    
+    // Para partida rápida, solo mostrar panel simple
+    let html = `
+        <div class="alert alert-info">
+            <i class="bi bi-lightning-charge-fill me-2"></i>
+            <strong>Modo Rápido:</strong> Esta partida NO será guardada en tu historial
+        </div>
+        <div class="text-center">
+            <div class="p-3 bg-dark rounded border border-cyan">
+                <h3 class="text-cyan mb-3">Panel de Puntos</h3>
+                <div class="d-flex justify-content-center align-items-center gap-3">
+                    <button class="btn btn-lg btn-outline-danger" onclick="restarPunto()">-</button>
+                    <span id="display-puntos-rapido" class="display-4 text-cyan">0</span>
+                    <button class="btn btn-lg btn-outline-success" onclick="sumarPunto()">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3">
+            <button class="btn btn-outline-light w-100" onclick="cerrarAnotador()">Volver</button>
+        </div>
+    `;
+    
+    tablaJugadores.innerHTML = html;
+    contenedor.classList.remove('d-none');
+    contenedor.scrollIntoView({ behavior: 'smooth' });
 };
 
 // ========== SISTEMAS DE ANOTACIÓN POR JUEGO ==========
@@ -177,7 +245,7 @@ const sistemasAnotacion = {
     }
 };
 
-window.abrirAnotador = function(juego) {
+window.abrirAnotador = function(juego, tipoPartida = 'campeonato') {
     const contenedor = document.getElementById('contenedor-anotador');
     const titulo = document.getElementById('anotadorTitulo');
     const tablaJugadores = document.getElementById('tablaJugadores');
@@ -186,7 +254,7 @@ window.abrirAnotador = function(juego) {
     if (!contenedor || !tablaJugadores) return;
     
     // Título
-    titulo.innerText = `Anotador: ${juego.toUpperCase()}`;
+    titulo.innerText = `Anotador: ${juego.toUpperCase()} (${tipoPartida === 'campeonato' ? 'Campeonato' : 'Rápido'})`;
     
     // Construir tabla dinámicamente
     let html = `
@@ -220,7 +288,7 @@ window.abrirAnotador = function(juego) {
             </table>
         </div>
         <div class="mt-3">
-            <button class="btn btn-cyan-premium" onclick="guardarPartida()">Finalizar Partida</button>
+            ${tipoPartida === 'campeonato' ? `<button class="btn btn-cyan-premium" onclick="guardarPartida()">Finalizar Partida</button>` : ''}
             <button class="btn btn-outline-light ms-2" onclick="cerrarAnotador()">Volver</button>
         </div>
     `;
@@ -296,14 +364,18 @@ window.iniciarMesa = function(nombreJuego, listaJugadores = []) {
 window.sumarPunto = function() {
     puntos++;
     const display = document.getElementById('display-puntos');
+    const displayRapido = document.getElementById('display-puntos-rapido');
     if (display) display.innerText = puntos;
+    if (displayRapido) displayRapido.innerText = puntos;
 };
 
 window.restarPunto = function() {
     if (puntos > 0) {
         puntos--;
         const display = document.getElementById('display-puntos');
+        const displayRapido = document.getElementById('display-puntos-rapido');
         if (display) display.innerText = puntos;
+        if (displayRapido) displayRapido.innerText = puntos;
     }
 };
 
@@ -427,6 +499,149 @@ window.abrirLibreta = function() {
         seccion.classList.remove('d-none');
         seccion.scrollIntoView({ behavior: 'smooth' });
     }
+};
+
+// ========== DROPDOWN DEL PERFIL: MIS JUEGOS ==========
+window.abrirMisJuegos = function(event) {
+    event.preventDefault();
+    
+    const modal = document.getElementById('modalMisJuegos');
+    const contenido = document.getElementById('contenidoMisJuegos');
+    
+    if (!modal || !contenido) return;
+    
+    const historial = JSON.parse(localStorage.getItem('historialesPartidas') || '[]');
+    
+    if (historial.length === 0) {
+        contenido.innerHTML = `<p class="text-muted">Aún no has jugado ninguna partida guardada.</p>`;
+    } else {
+        let html = `<div class="table-responsive"><table class="table table-dark table-sm">
+            <thead><tr><th>Juego</th><th>Fecha</th><th>Modo</th><th>Ganador</th></tr></thead><tbody>`;
+        
+        historial.forEach(partida => {
+            const fecha = new Date(partida.fechaInicio).toLocaleDateString('es-AR');
+            const ganador = Object.keys(partida.puntuaciones).reduce((a, b) => 
+                partida.puntuaciones[a] > partida.puntuaciones[b] ? a : b
+            );
+            html += `<tr>
+                <td>${partida.nombreJuego}</td>
+                <td>${fecha}</td>
+                <td>${partida.modo === 'individual' ? 'Individual' : 'Equipos'}</td>
+                <td><strong>${ganador}</strong></td>
+            </tr>`;
+        });
+        
+        html += `</tbody></table></div>`;
+        contenido.innerHTML = html;
+    }
+    
+    modal.classList.remove('d-none');
+};
+
+// ========== DROPDOWN DEL PERFIL: MIS PUNTOS ==========
+window.abrirMisPuntos = function(event) {
+    event.preventDefault();
+    
+    const modal = document.getElementById('modalMisPuntos');
+    const contenido = document.getElementById('contenidoMisPuntos');
+    
+    if (!modal || !contenido) return;
+    
+    const historial = JSON.parse(localStorage.getItem('historialesPartidas') || '[]');
+    
+    // Agrupar puntuaciones por juego
+    const estadisticas = {};
+    
+    historial.forEach(partida => {
+        if (!estadisticas[partida.nombreJuego]) {
+            estadisticas[partida.nombreJuego] = {
+                totalPartidas: 0,
+                puntosPromedio: 0,
+                maxPuntos: 0,
+                totalPuntos: 0
+            };
+        }
+        
+        const stats = estadisticas[partida.nombreJuego];
+        stats.totalPartidas++;
+        
+        const puntosPorPartida = Object.values(partida.puntuaciones);
+        const promedio = puntosPorPartida.reduce((a, b) => a + b, 0) / puntosPorPartida.length;
+        const max = Math.max(...puntosPorPartida);
+        
+        stats.puntosPromedio += promedio;
+        stats.totalPuntos += max;
+        if (max > stats.maxPuntos) stats.maxPuntos = max;
+    });
+    
+    // Calcular promedios
+    Object.keys(estadisticas).forEach(juego => {
+        estadisticas[juego].puntosPromedio = (estadisticas[juego].puntosPromedio / estadisticas[juego].totalPartidas).toFixed(2);
+    });
+    
+    if (Object.keys(estadisticas).length === 0) {
+        contenido.innerHTML = `<p class="text-muted">Aún no tienes estadísticas registradas.</p>`;
+    } else {
+        let html = `<div class="table-responsive"><table class="table table-dark table-sm">
+            <thead><tr><th>Juego</th><th>Partidas</th><th>Pts. Promedio</th><th>Max Pts</th></tr></thead><tbody>`;
+        
+        Object.entries(estadisticas).forEach(([juego, stats]) => {
+            html += `<tr>
+                <td>${juego}</td>
+                <td>${stats.totalPartidas}</td>
+                <td>${stats.puntosPromedio}</td>
+                <td><strong>${stats.maxPuntos}</strong></td>
+            </tr>`;
+        });
+        
+        html += `</tbody></table></div>`;
+        contenido.innerHTML = html;
+    }
+    
+    modal.classList.remove('d-none');
+};
+
+// ========== DROPDOWN DEL PERFIL: CAMPEONATOS ==========
+window.abrirCampeonatos = function(event) {
+    event.preventDefault();
+    
+    const modal = document.getElementById('modalCampeonatosGestion');
+    const contenido = document.getElementById('contenidoCampeonatos');
+    
+    if (!modal || !contenido) return;
+    
+    const historial = JSON.parse(localStorage.getItem('historialesPartidas') || '[]');
+    const campeonatos = historial.filter(p => p.tipo === 'campeonato');
+    
+    if (campeonatos.length === 0) {
+        contenido.innerHTML = `<p class="text-muted">No tienes campeonatos registrados aún.</p>`;
+    } else {
+        let html = `<div class="row g-3">`;
+        
+        campeonatos.forEach(campeonato => {
+            const fecha = new Date(campeonato.fechaInicio).toLocaleDateString('es-AR');
+            const ganador = Object.keys(campeonato.puntuaciones).reduce((a, b) => 
+                campeonato.puntuaciones[a] > campeonato.puntuaciones[b] ? a : b
+            );
+            
+            html += `<div class="col-md-6">
+                <div class="card bg-dark border-cyan">
+                    <div class="card-body">
+                        <h5 class="card-title text-cyan">${campeonato.nombreJuego}</h5>
+                        <p class="small text-muted mb-2">Fecha: ${fecha}</p>
+                        <p class="small mb-2"><strong>Ganador:</strong> ${ganador}</p>
+                        <p class="small mb-3"><strong>Modo:</strong> ${campeonato.modo === 'individual' ? 'Individual' : 'Equipos'}</p>
+                        <button class="btn btn-sm btn-outline-cyan" onclick="alert('Detalle del campeonato: ' + JSON.stringify(campeonato.puntuaciones))">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>`;
+        });
+        
+        html += `</div>`;
+        contenido.innerHTML = html;
+    }
+    
+    modal.classList.remove('d-none');
 };
 
 // Autenticación - Modal
